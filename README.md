@@ -2,6 +2,8 @@
 
 Pindou 拼豆工具 — **Web 端**（Vue 3 + Vite），独立仓库版本。
 
+在线演示：<https://dandanpindou.netlify.app>
+
 ## 快速开始
 
 ```bash
@@ -22,75 +24,122 @@ npm run dev
 | `npm run preview` | 预览 `dist` |
 | `npm run type-check` | `vue-tsc` 类型检查 |
 | `npm run test` | 运行 `bead-core` 单元测试 |
+| `npm run test:ai` | 运行 AI 预处理服务单元测试 |
 | `npm run generate:palette` | 生成色板数据 |
 
 ## 环境变量
 
-在项目根目录创建 `.env.local`：
+复制 `.env.example` 为 `.env.local`（勿提交）：
 
 ```env
-VITE_SITE_URL=https://your-domain.com
+# 构建与 SEO（Netlify 环境变量中同样配置）
+VITE_SITE_URL=https://dandanpindou.netlify.app
 
-# 开发：Canvas 本地模拟 AI（无需后端与 API Key）
+# 开发：Canvas 本地模拟 AI（无需后端与凭证）
 # VITE_AI_MOCK=true
 
 # 开发：联调本地 AI 服务（npm run dev:ai）
 # VITE_AI_PREPROCESS_URL=http://127.0.0.1:8787/api/ai-preprocess
-
-# 生产（Netlify）：默认同域 /.netlify/functions/ai-preprocess，一般无需配置
-# VITE_AI_PREPROCESS_URL=/.netlify/functions/ai-preprocess
 ```
+
+生产环境（Netlify）前端默认同域 `/.netlify/functions/ai-preprocess`，一般无需配置 `VITE_AI_PREPROCESS_URL`。
 
 ### AI 预处理（二期，BYOK）
 
 默认拼豆流程在浏览器本地完成。启用 **AI 预处理** 时：
 
-1. 用户在 [火山引擎控制台](https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey) 申请 API Key
-2. 在工作台「AI 预处理」面板粘贴 Key（仅存本机 `localStorage`）
-3. 图片经 Netlify Function 转发至火山即梦 API 处理
+1. 在火山引擎开通 [图像生成大模型](https://www.volcengine.com/docs/86081/1804465?lang=zh)，创建 IAM AccessKey（绑定 `CVFullAccess`）
+2. 在工作台「AI 预处理」面板粘贴 `AccessKey.txt` 全文（仅存本机 `localStorage`）
+3. 图片经 Netlify Function 转发至火山 SeedEdit 图生图 API 处理
+
+| 风格 | 说明 | 适用场景 |
+|------|------|----------|
+| `enhance` | 清晰增强，最贴近原图 | 真人照片（推荐首选） |
+| `sketch` | 线稿强化，轮廓清晰 | 需要明显填色边界 |
+| `cartoon` | 卡通扁平，大色块 | 插画、可爱图案 |
+| `flat` | 色块简化，颜色更少 | 海报风、极简图案 |
 
 详见 [server/ai-preprocess/README.md](server/ai-preprocess/README.md)。
 
 ## Netlify 部署
 
-1. 连接本仓库，Build command: `npm run build`，Publish directory: `dist`
-2. 配置 `VITE_SITE_URL` 为正式域名
-3. `netlify.toml` 已包含 Functions 与 SPA 路由配置
+1. 在 [Netlify](https://app.netlify.com/) 导入 GitHub 仓库 `whr810012/pindou-web`，分支 `main`
+2. `netlify.toml` 已配置构建与 Functions，一般无需手改：
+   - **Build command**: `npx playwright install chromium && npm run build`
+   - **Publish directory**: `dist`
+   - **Functions**: `netlify/functions`
+3. **环境变量**（Site configuration → Environment variables）：
 
-可选环境变量 `ALLOWED_ORIGIN` 限制 CORS 来源。
+| 变量 | 说明 |
+|------|------|
+| `VITE_SITE_URL` | 正式站点 URL，如 `https://dandanpindou.netlify.app` |
+| `ALLOWED_ORIGIN` | CORS 来源（可选，默认 `*`） |
+
+**不要**在生产环境配置 `JIMENG_ACCESS_KEY_ID` / `JIMENG_API_KEY`（BYOK 由用户提供凭证）。
+
+改环境变量后需 **Trigger deploy → Clear cache and deploy site** 重新构建。
+
+### Function 超时说明
+
+AI 图生图可能需 10～25 秒。`netlify.toml` 中 `ai-preprocess` 已设 `timeout = 26`（**Pro 计划**生效）。免费版上限约 10 秒，可能出现 504。
+
+## SEO
+
+站点 SEO 由 `seo.config.json` + `scripts/generate-seo.mjs` + Playwright 预渲染共同完成。
+
+**构建时生成：**
+
+- `public/sitemap.xml`、`public/robots.txt`
+- `dist/index.html` 注入 meta / JSON-LD
+- 预渲染 `/`、`/gallery`、`/workspace` 静态 HTML
+
+**关键配置：**
+
+- `seo.config.json` → `defaultSiteUrl`、标题、描述、关键词、FAQ
+- `VITE_SITE_URL` → 构建时覆盖 `defaultSiteUrl`（sitemap、canonical、OG 图）
+
+**上线后提交收录（新站通常需 1～4 周）：**
+
+1. [Google Search Console](https://search.google.com/search-console) → 添加资源 → 提交 `https://你的域名/sitemap.xml`
+2. [Bing Webmaster](https://www.bing.com/webmasters) → 同样提交 sitemap
+
+绑定自定义域名后，同步更新 `VITE_SITE_URL` 与 `seo.config.json` 中的 `defaultSiteUrl`。
 
 ## 主要路由
 
-| 路径 | 页面 |
-|------|------|
-| `/` | 落地页 |
-| `/home` | 功能主页 |
-| `/workspace` | 工作台 |
-| `/editor` | 精修编辑器 |
-| `/focus` | 专心拼豆 |
-| `/preview3d` | 3D 预览 |
-| `/projects` | 我的项目 |
-| `/gallery` | 探索画廊 |
-| `/palette` | 自定义色板 |
+| 路径 | 页面 | SEO |
+|------|------|-----|
+| `/` | 落地页 | 索引 |
+| `/gallery` | 探索画廊 | 索引 |
+| `/workspace` | 工作台 | 索引 |
+| `/home` | 功能主页 | noindex |
+| `/editor` | 精修编辑器 | noindex |
+| `/focus` | 专心拼豆 | noindex |
+| `/preview3d` | 3D 预览 | noindex |
+| `/projects` | 我的项目 | noindex |
+| `/palette` | 自定义色板 | noindex |
+
+画廊案例另有静态落地页：`/gallery/demo-cat/` 等。
 
 ## 目录结构
 
 ```
 pindou-web/
 ├── netlify/
-│   └── functions/      # Netlify Functions（AI 预处理）
+│   ├── functions/          # Netlify Functions（AI 预处理）
+│   └── netlify.toml
 ├── server/
-│   └── ai-preprocess/  # AI 服务端逻辑与本地 dev-server
+│   └── ai-preprocess/      # AI 服务端逻辑、提示词、本地 dev-server
 ├── packages/
-│   ├── app-shared/     # 共享 store、工具、平台抽象
-│   └── bead-core/      # 像素化、填充等核心算法
+│   ├── app-shared/         # 共享 store、工具、平台抽象
+│   └── bead-core/          # 像素化、填充等核心算法
 ├── public/
-├── scripts/            # SEO、预渲染、画廊页、OG 图
+├── scripts/                # SEO、预渲染、画廊页、OG 图
 ├── src/
-│   ├── adapters/       # H5 图片加载与 Canvas 渲染
+│   ├── adapters/           # H5 图片加载与 Canvas 渲染
 │   ├── components/
 │   ├── pages/
-│   ├── platform/       # Web 平台 Port 实现
+│   ├── platform/           # Web 平台 Port 实现
 │   ├── router/
 │   ├── stores/
 │   ├── styles/
@@ -106,6 +155,7 @@ pindou-web/
 - **Canvas 渲染**：`src/adapters/image-web.ts`、`src/components/BeadCanvas.vue`
 - **设计令牌**：`src/styles/tokens.scss`（SCSS 全局注入）
 - **Vite 别名**：`@pindou/app-shared`、`@pindou/bead-core` 指向 `packages/*/src`
+- **页面 SEO**：`src/utils/seo.ts` 运行时更新 title / meta / canonical
 
 ## 构建产物
 
@@ -114,7 +164,7 @@ npm run build
 # → dist/
 ```
 
-构建流程：编译共享包 → 生成 OG 图 / 画廊页 → Vite 打包 → 注入 SEO meta → Playwright 预渲染。
+构建流程：编译共享包 → Playwright 生成 OG 图 → 画廊静态页 → sitemap/robots → Vite 打包 → 注入 SEO meta → Playwright 预渲染关键路由。
 
 ## 致谢
 

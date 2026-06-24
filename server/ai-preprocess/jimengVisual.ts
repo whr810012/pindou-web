@@ -1,5 +1,5 @@
 import { Service } from '@volcengine/openapi'
-import { styleToPrompt } from './jimeng'
+import { styleEditScale, styleToPrompt } from './prompts'
 
 const VISUAL_HOST = 'visual.volcengineapi.com'
 const VISUAL_REGION = 'cn-north-1'
@@ -38,7 +38,7 @@ export async function callJimengVisualApi(options: {
   const base64 = stripDataUrl(options.image)
   const reqKey = resolveVisualReqKey(options.reqKey)
 
-  const submitBody = buildVisualSubmitBody(reqKey, prompt, base64)
+  const submitBody = buildVisualSubmitBody(reqKey, prompt, base64, options.style)
 
   const submit = await signedVisualRequest(
     options.accessKeyId,
@@ -140,12 +140,17 @@ function formatVisualApiError(data: VisualResponse): string {
   return message || code || '即梦 API 调用失败'
 }
 
-function buildVisualSubmitBody(reqKey: string, prompt: string, base64: string): Record<string, unknown> {
+function buildVisualSubmitBody(
+  reqKey: string,
+  prompt: string,
+  base64: string,
+  style: string,
+): Record<string, unknown> {
   const body: Record<string, unknown> = {
     req_key: reqKey,
     prompt,
     binary_data_base64: [base64],
-    scale: 0.65,
+    scale: styleEditScale(style),
     seed: -1,
   }
   if (reqKey.startsWith('jimeng_')) {

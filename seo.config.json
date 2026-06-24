@@ -1,10 +1,10 @@
 {
   "siteName": "Pindou 拼豆",
-  "defaultSiteUrl": "https://pindou.app",
-  "defaultTitle": "Pindou 拼豆 - 免费在线图片转拼豆图纸生成器",
-  "defaultDescription": "Pindou 免费在线拼豆图纸生成器：上传图片一键转像素豆图纸，支持 MARD、COCO 等多品牌色卡、在线编辑与 PDF 导出，本地处理保护隐私，H5/小程序/App 三端可用。",
-  "ogDescription": "上传图片一键生成带色号的拼豆图纸，支持多品牌色卡与 PDF 导出，图片本地处理不上传服务器。",
-  "defaultKeywords": "拼豆,拼豆图纸,图片转拼豆,像素豆,perler beads,拼豆图纸生成器,MARD色号,拼豆色号,拼豆工具,拼豆图纸制作,在线拼豆",
+  "defaultSiteUrl": "https://dandanpindou.netlify.app",
+  "defaultTitle": "Pindou 拼豆 - 免费在线照片转拼豆图纸生成器",
+  "defaultDescription": "Pindou 免费在线拼豆图纸生成器：上传照片一键转拼豆像素图，支持 MARD、COCO、漫漫等主流色号，在线编辑画笔精修、导出 PDF 采购清单。图片默认本地处理保护隐私，可选 AI 预处理优化效果。",
+  "ogDescription": "免费把照片变成带色号的拼豆图纸。支持 MARD/COCO 色卡、在线编辑与 PDF 导出，浏览器本地处理更安心。",
+  "defaultKeywords": "拼豆,拼豆图纸,拼豆图纸生成器,照片转拼豆,图片转拼豆,像素豆,perler beads,拼豆工具,拼豆色号,MARD色号,COCO色号,在线拼豆,拼豆图案,拼豆像素化,免费拼豆",
   "ogImagePath": "/static/seo/og-cover.png",
   "themeColor": "#5B6CFF",
   "publicPages": [
@@ -16,18 +16,27 @@
     {
       "path": "/gallery",
       "changefreq": "weekly",
-      "priority": "0.8"
+      "priority": "0.9"
+    },
+    {
+      "path": "/workspace",
+      "changefreq": "weekly",
+      "priority": "0.85"
     }
   ],
   "galleryLandingPrefix": "/gallery",
   "faq": [
     {
       "q": "Pindou 是什么？",
-      "a": "Pindou 是一款免费拼豆图纸生成器，可将照片或插画转为带色号的像素豆图纸，支持 H5、微信小程序与 App。"
+      "a": "Pindou（拼豆）是一款免费在线拼豆图纸生成器，可将照片、插画转为带色号的像素拼豆图，支持网页直接使用，无需安装。"
+    },
+    {
+      "q": "如何把照片变成拼豆图纸？",
+      "a": "在 Pindou 工作台上传图片，选择 MARD 或 COCO 等色卡与格数，系统自动像素化生成图纸，可用画笔精修后导出 PNG 或 PDF。"
     },
     {
       "q": "图片会上传到服务器吗？",
-      "a": "默认在本地浏览器完成像素化处理，图片不会上传。仅在使用 AI 预处理时，图片会通过本站 Netlify Function 转发至火山引擎即梦 API 处理；API Key 由用户自行提供并仅存于本机浏览器。"
+      "a": "默认在本地浏览器完成像素化处理，图片不会上传。仅在使用 AI 预处理时，图片会通过本站转发至火山引擎图像 API；凭证由用户自备并仅存本机。"
     },
     {
       "q": "支持哪些拼豆色卡品牌？",
@@ -36,32 +45,37 @@
     {
       "q": "如何导出带色号的拼豆图纸？",
       "a": "在工作台生成图纸后，可导出带色号的高清 PNG、采购清单，H5/App 端还支持 PDF 图纸导出。"
+    },
+    {
+      "q": "拼豆图纸生成器免费吗？",
+      "a": "Pindou 核心功能免费使用。AI 预处理为可选功能，需用户自行配置火山引擎凭证，费用由用户账号承担。"
     }
   ],
   "howTo": {
-    "name": "如何用 Pindou 制作拼豆图纸",
-    "description": "三步完成图片转拼豆图纸：上传、生成编辑、导出。",
+    "name": "如何用 Pindou 把照片做成拼豆图纸",
+    "description": "三步完成照片转拼豆：上传、生成编辑、导出图纸。",
     "steps": [
       {
-        "name": "上传图片",
-        "text": "从相册或拍照选择图片，自动压缩后在本地处理。"
+        "name": "上传照片",
+        "text": "从相册或文件选择图片，可选 AI 预处理优化色块与轮廓，随后在本地像素化。"
       },
       {
-        "name": "生成与编辑",
-        "text": "选择 MARD、COCO 等色卡，智能像素化后可在线画笔精修。"
+        "name": "选择色卡并编辑",
+        "text": "选择 MARD、COCO 等色卡与格数，智能像素化后用画笔换色、填充精修。"
       },
       {
-        "name": "导出图纸",
-        "text": "导出带色号高清图纸、采购清单或 PDF，开始拼豆制作。"
+        "name": "导出拼豆图纸",
+        "text": "导出带色号高清图纸、豆子采购清单或 PDF，打印后开始拼豆。"
       }
     ]
   },
   "features": [
-    "图片转拼豆图纸",
+    "照片转拼豆图纸",
+    "图片转拼豆像素图",
     "MARD/COCO 多品牌色卡",
     "在线画笔编辑",
-    "PDF 图纸导出",
+    "PDF 图纸与采购清单导出",
     "本地隐私处理",
-    "AI 预处理（可选，BYOK）"
+    "AI 预处理优化（可选）"
   ]
 }

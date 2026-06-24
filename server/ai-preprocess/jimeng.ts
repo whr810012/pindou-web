@@ -7,27 +7,15 @@
  */
 
 import type { JimengCredentials } from './credentials'
-import type { AiPreprocessStyle } from './types'
 import { callJimengVisualApi } from './jimengVisual'
+import { styleToPrompt } from './prompts'
+
+export { styleToPrompt } from './prompts'
 
 export const DEFAULT_JIMENG_ENDPOINT =
   'https://ark.cn-beijing.volces.com/api/v3/images/generations'
 
 export const DEFAULT_JIMENG_MODEL = 'doubao-seedream-4-0-250828'
-
-const STYLE_PROMPTS: Record<AiPreprocessStyle, string> = {
-  cartoon:
-    '将图片转换为扁平卡通风格，减少渐变和细节，使用少量纯色色块，适合拼豆像素画制作，保持主体清晰',
-  sketch:
-    '将图片转换为清晰线稿风格，强化轮廓与色块边界，简化阴影，适合拼豆图纸',
-  flat: '将图片海报化，使用扁平纯色块，去除噪点与复杂渐变，适合手工拼豆',
-  enhance:
-    '增强图片边缘清晰度与对比度，简化细节，使图像更适合转换为像素拼豆图案',
-}
-
-export function styleToPrompt(style: string): string {
-  return STYLE_PROMPTS[style as AiPreprocessStyle] ?? STYLE_PROMPTS.cartoon
-}
 
 interface JimengImageData {
   url?: string

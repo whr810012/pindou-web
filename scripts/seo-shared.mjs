@@ -31,12 +31,25 @@ export function buildJsonLd(config, siteUrl) {
     '@context': 'https://schema.org',
     '@graph': [
       {
-        '@type': 'WebApplication',
+        '@type': 'WebSite',
         name: config.siteName,
         url: `${siteUrl}/`,
-        description: '免费在线拼豆图纸生成器，图片转像素豆图纸，支持多品牌色卡、在线编辑与 PDF 导出。',
+        description: config.defaultDescription,
+        inLanguage: 'zh-CN',
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${siteUrl}/gallery?q={search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      {
+        '@type': 'WebApplication',
+        name: config.siteName,
+        url: `${siteUrl}/workspace`,
+        description: config.defaultDescription,
         applicationCategory: 'DesignApplication',
-        operatingSystem: 'Web, iOS, Android, WeChat',
+        operatingSystem: 'Web',
+        browserRequirements: 'Requires JavaScript',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'CNY' },
         featureList: config.features,
       },

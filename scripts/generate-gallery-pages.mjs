@@ -38,7 +38,6 @@ for (const item of galleryItems) {
   <meta property="og:description" content="${escapeHtml(item.description)}" />
   <meta property="og:image" content="${siteUrl}${item.thumbnail}" />
   <meta property="og:url" content="${pageUrl}" />
-  <meta http-equiv="refresh" content="0; url=${siteUrl}/#/pages/gallery/gallery" />
   <script type="application/ld+json">
 ${JSON.stringify(
     {
@@ -62,7 +61,7 @@ ${JSON.stringify(
     <p>${escapeHtml(item.description)}</p>
     <p>标签：${escapeHtml(tags)}</p>
     <img src="${item.thumbnail}" alt="${escapeHtml(item.title)}拼豆图案例" width="320" height="320" />
-    <p><a href="${siteUrl}/#/pages/gallery/gallery">在 Pindou 画廊查看全部案例</a> · <a href="${siteUrl}/#/pages/index/index">返回首页</a></p>
+    <p><a href="${siteUrl}/workspace">用此案例参数开始制作</a> · <a href="${siteUrl}/gallery">查看更多拼豆案例</a> · <a href="${siteUrl}/">返回首页</a></p>
   </main>
 </body>
 </html>

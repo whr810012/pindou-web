@@ -18,6 +18,15 @@ const ROUTES = [
     description:
       '浏览像素小猫、花朵、风景等拼豆图案例与推荐参数，支持 MARD、COCO 色卡预设，一键应用到工作台快速开始拼豆创作。',
   },
+  {
+    path: '/workspace',
+    outDir: 'workspace',
+    outFile: 'index.html',
+    injectSelector: '#app',
+    title: '在线拼豆工作台 - 上传图片生成拼豆图纸 | Pindou',
+    description:
+      '免费在线拼豆工作台：上传照片生成带 MARD、COCO 色号的拼豆图纸，调整格数与色板，支持 AI 预处理、画笔精修与 PDF 导出。',
+  },
 ]
 
 function contentType(filePath) {

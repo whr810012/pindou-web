@@ -16,10 +16,10 @@ const ENDPOINT =
 export const AI_PREPROCESS_ENABLED = Boolean(ENDPOINT) && !AI_MOCK_ENABLED
 
 export const AI_STYLE_OPTIONS: Array<{ label: string; value: AiPreprocessStyle; desc: string }> = [
-  { label: '卡通扁平', value: 'cartoon', desc: '减少渐变，适合拼豆' },
-  { label: '线稿强化', value: 'sketch', desc: '突出轮廓与色块' },
-  { label: '色块简化', value: 'flat', desc: '降低细节噪点' },
-  { label: '清晰增强', value: 'enhance', desc: '提升边缘清晰度' },
+  { label: '卡通扁平', value: 'cartoon', desc: '大色块卡通，适合可爱图案' },
+  { label: '线稿强化', value: 'sketch', desc: '轮廓清晰，方便填色' },
+  { label: '色块简化', value: 'flat', desc: '海报扁平，颜色更少' },
+  { label: '清晰增强', value: 'enhance', desc: '贴近原图，锐化边缘' },
 ]
 
 export function isAiPreprocessAvailable(credentialsDraft = ''): boolean {

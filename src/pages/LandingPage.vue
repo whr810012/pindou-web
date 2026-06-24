@@ -37,9 +37,9 @@ function goGallery() {
     <main class="landing__main">
       <section class="landing__hero">
         <p class="landing__eyebrow">免费 · 本地处理 · 网页可用</p>
-        <h1 class="landing__title">把照片变成<br />可拼的豆图纸</h1>
+        <h1 class="landing__title">把照片变成<br />可拼的拼豆图纸</h1>
         <p class="landing__lead">
-          上传图片，一键映射 MARD / COCO 等主流色号，在线精修、导出 PDF，全程在浏览器本地完成。
+          免费在线拼豆图纸生成器：上传照片一键转像素豆图，映射 MARD / COCO 等主流色号，在线精修、导出 PDF，默认在浏览器本地完成。
         </p>
         <div class="landing__cta">
           <PButton type="primary" size="lg" text="进入应用，开始制作" @click="enterApp" />

@@ -7,6 +7,10 @@
   node_bundler = "esbuild"
   included_files = ["server/**"]
 
+[functions."ai-preprocess"]
+  # 图生图轮询较慢；免费版上限 10s，Pro 可调至 26s
+  timeout = 26
+
 [build.environment]
   NODE_VERSION = "20"
   PLAYWRIGHT_BROWSERS_PATH = "0"

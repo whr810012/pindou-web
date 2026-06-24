@@ -48,9 +48,9 @@ const PAGE_ROUTES: Record<
   },
   workspace: {
     path: '/workspace',
-    title: '拼豆工作台 - Pindou',
-    description: '上传图片、调整像素化参数并生成带色号的拼豆图纸，支持多品牌色卡、原图对比与导出。',
-    noindex: true,
+    title: '在线拼豆工作台 - 上传图片生成拼豆图纸 | Pindou',
+    description:
+      '免费在线拼豆工作台：上传照片生成带 MARD、COCO 色号的拼豆图纸，调整格数与色板，支持 AI 预处理、画笔精修与 PDF 导出。',
   },
   editor: {
     path: '/editor',
@@ -88,7 +88,7 @@ export function siteOrigin(): string {
   const fromEnv = import.meta.env.VITE_SITE_URL as string | undefined
   if (fromEnv) return fromEnv.replace(/\/$/, '')
   if (typeof window !== 'undefined') return window.location.origin
-  return ''
+  return seoConfig.defaultSiteUrl.replace(/\/$/, '')
 }
 
 function setMeta(attr: 'name' | 'property', key: string, content: string) {

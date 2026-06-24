@@ -18,7 +18,7 @@ function writePublicAssets() {
   mkdirSync(publicDir, { recursive: true })
 
   const galleryItems = JSON.parse(
-    readFileSync(join(root, 'src', 'static', 'gallery', 'gallery.json'), 'utf8'),
+    readFileSync(join(root, 'public', 'static', 'gallery', 'gallery.json'), 'utf8'),
   ).items
 
   const galleryUrls = galleryItems.map(

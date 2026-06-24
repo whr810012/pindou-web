@@ -6,14 +6,18 @@
   "scripts": {
     "build:packages": "npm run build --prefix packages/bead-core && npm run build --prefix packages/app-shared",
     "dev": "vite",
+    "dev:ai": "tsx --env-file=.env.local server/ai-preprocess/dev-server.ts",
     "build": "npm run build:packages && node scripts/generate-og-png.mjs && node scripts/generate-gallery-pages.mjs && node scripts/generate-seo.mjs --pre && vite build && node scripts/generate-seo.mjs --post && node scripts/prerender.mjs",
     "preview": "vite preview",
     "generate:palette": "node scripts/generate-palette.mjs",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "test": "npm run test --prefix packages/bead-core && vitest run",
+    "test:ai": "vitest run server/ai-preprocess"
   },
   "dependencies": {
     "@pindou/app-shared": "file:./packages/app-shared",
     "@pindou/bead-core": "file:./packages/bead-core",
+    "@volcengine/openapi": "^1.36.2",
     "jspdf": "^4.2.1",
     "pinia": "^2.1.7",
     "three": "^0.184.0",
@@ -21,13 +25,16 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
+    "@netlify/functions": "^2.8.2",
     "@types/three": "^0.184.1",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/tsconfig": "^0.5.1",
     "playwright": "^1.61.0",
     "sass": "^1.77.8",
+    "tsx": "^4.19.2",
     "typescript": "^5.4.5",
     "vite": "^5.2.8",
+    "vitest": "^1.6.0",
     "vue-tsc": "^2.0.6"
   }
 }

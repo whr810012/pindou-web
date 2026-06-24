@@ -16,10 +16,12 @@ npm run dev
 | 命令 | 说明 |
 |------|------|
 | `npm run dev` | 开发服务器 |
+| `npm run dev:ai` | 本地 AI 预处理 API（端口 8787） |
 | `npm run build` | 生产构建（含共享包编译、SEO / 预渲染） |
 | `npm run build:packages` | 仅编译 `packages/bead-core` 与 `packages/app-shared` |
 | `npm run preview` | 预览 `dist` |
 | `npm run type-check` | `vue-tsc` 类型检查 |
+| `npm run test` | 运行 `bead-core` 单元测试 |
 | `npm run generate:palette` | 生成色板数据 |
 
 ## 环境变量
@@ -28,9 +30,34 @@ npm run dev
 
 ```env
 VITE_SITE_URL=https://your-domain.com
-VITE_AI_MOCK=true
+
+# 开发：Canvas 本地模拟 AI（无需后端与 API Key）
+# VITE_AI_MOCK=true
+
+# 开发：联调本地 AI 服务（npm run dev:ai）
 # VITE_AI_PREPROCESS_URL=http://127.0.0.1:8787/api/ai-preprocess
+
+# 生产（Netlify）：默认同域 /.netlify/functions/ai-preprocess，一般无需配置
+# VITE_AI_PREPROCESS_URL=/.netlify/functions/ai-preprocess
 ```
+
+### AI 预处理（二期，BYOK）
+
+默认拼豆流程在浏览器本地完成。启用 **AI 预处理** 时：
+
+1. 用户在 [火山引擎控制台](https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey) 申请 API Key
+2. 在工作台「AI 预处理」面板粘贴 Key（仅存本机 `localStorage`）
+3. 图片经 Netlify Function 转发至火山即梦 API 处理
+
+详见 [server/ai-preprocess/README.md](server/ai-preprocess/README.md)。
+
+## Netlify 部署
+
+1. 连接本仓库，Build command: `npm run build`，Publish directory: `dist`
+2. 配置 `VITE_SITE_URL` 为正式域名
+3. `netlify.toml` 已包含 Functions 与 SPA 路由配置
+
+可选环境变量 `ALLOWED_ORIGIN` 限制 CORS 来源。
 
 ## 主要路由
 
@@ -50,6 +77,10 @@ VITE_AI_MOCK=true
 
 ```
 pindou-web/
+├── netlify/
+│   └── functions/      # Netlify Functions（AI 预处理）
+├── server/
+│   └── ai-preprocess/  # AI 服务端逻辑与本地 dev-server
 ├── packages/
 │   ├── app-shared/     # 共享 store、工具、平台抽象
 │   └── bead-core/      # 像素化、填充等核心算法

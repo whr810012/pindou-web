@@ -1,5 +1,5 @@
 import { createServer } from 'node:http'
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { DIST_DIR, loadSeoConfig, resolveSiteUrl } from './seo-shared.mjs'
@@ -36,7 +36,10 @@ function createStaticServer(distDir, port) {
     const server = createServer((req, res) => {
       const urlPath = decodeURIComponent((req.url || '/').split('?')[0])
       let filePath = join(distDir, urlPath === '/' ? 'index.html' : urlPath.replace(/^\//, ''))
-      if (!existsSync(filePath) || urlPath.endsWith('/')) {
+      if (existsSync(filePath) && statSync(filePath).isDirectory()) {
+        const indexInDir = join(filePath, 'index.html')
+        filePath = existsSync(indexInDir) ? indexInDir : join(distDir, 'index.html')
+      } else if (!existsSync(filePath) || urlPath.endsWith('/')) {
         filePath = join(distDir, 'index.html')
       }
       if (!existsSync(filePath)) {

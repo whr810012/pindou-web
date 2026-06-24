@@ -8,7 +8,7 @@ const root = join(__dirname, '..')
 const config = loadSeoConfig()
 const siteUrl = resolveSiteUrl(config)
 const galleryItems = JSON.parse(
-  readFileSync(join(root, 'src', 'static', 'gallery', 'gallery.json'), 'utf8'),
+  readFileSync(join(root, 'public', 'static', 'gallery', 'gallery.json'), 'utf8'),
 ).items
 
 function escapeHtml(value) {

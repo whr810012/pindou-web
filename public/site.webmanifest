@@ -1,0 +1,23 @@
+{
+  "name": "Pindou 拼豆 - 免费在线图片转拼豆图纸生成器",
+  "short_name": "Pindou 拼豆",
+  "description": "上传图片一键生成带色号的拼豆图纸，支持多品牌色卡与 PDF 导出，图片本地处理不上传服务器。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "lang": "zh-CN",
+  "background_color": "#F5F6FA",
+  "theme_color": "#5B6CFF",
+  "categories": [
+    "design",
+    "utilities"
+  ],
+  "icons": [
+    {
+      "src": "/static/gallery/demo-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

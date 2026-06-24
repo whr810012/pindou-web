@@ -1,0 +1,271 @@
+
+:root,
+body {
+  --pindou-primary: #{$pindou-primary};
+  --pindou-primary-light: #{$pindou-primary-light};
+  --pindou-accent: #{$pindou-accent};
+  --pindou-bg-page: #{$pindou-bg-page};
+  --pindou-bg-card: #{$pindou-bg-card};
+  --pindou-text: #{$pindou-text};
+  --pindou-text-muted: #{$pindou-text-muted};
+  --pindou-radius-md: #{$pindou-radius-md};
+  --pindou-safe-bottom: env(safe-area-inset-bottom);
+  --pindou-content-max: #{$pindou-content-max};
+
+  margin: 0;
+  background-color: $pindou-bg-page;
+  color: $pindou-text;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  font-size: $pindou-font-md;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid rgba($pindou-primary, 0.55);
+  outline-offset: 2px;
+}
+
+.pindou-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 80px;
+  transform: translateX(-50%) translateY(12px);
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+
+  &--show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.page {
+  min-height: calc(100vh - 56px);
+  padding: $pindou-space-lg $pindou-space-md;
+  box-sizing: border-box;
+}
+
+.page--app {
+  padding-top: $pindou-space-md;
+  padding-bottom: 40px;
+}
+
+.page--hero {
+  padding: $pindou-space-xl $pindou-space-lg 40px;
+}
+
+/* 预渲染 SEO 内容：保留在 HTML 源码中，对用户隐藏 */
+#prerender {
+  display: none;
+}
+
+.page--dock {
+  padding-bottom: calc(72px + var(--pindou-safe-bottom));
+}
+
+.page--editor {
+  padding-bottom: calc(220px + var(--pindou-safe-bottom));
+}
+
+/* —— 卡片 —— */
+.card {
+  background: $pindou-bg-card;
+  border-radius: $pindou-radius-md;
+  padding: $pindou-space-md;
+  margin-bottom: $pindou-space-md;
+  box-shadow: $pindou-shadow-sm;
+  border: 1px solid $pindou-border;
+}
+
+.card--flat {
+  box-shadow: none;
+  border-color: $pindou-border-light;
+}
+
+.card-hint {
+  background: $pindou-warning-bg;
+  border-radius: $pindou-radius-sm;
+  padding: $pindou-space-sm $pindou-space-md;
+  margin-bottom: $pindou-space-sm;
+  font-size: $pindou-font-sm;
+  color: $pindou-warning;
+}
+
+/* —— 排版 —— */
+.text-display {
+  display: block;
+  font-size: $pindou-font-display;
+  font-weight: 700;
+  color: $pindou-text;
+  line-height: 1.25;
+}
+
+.text-title {
+  display: block;
+  font-size: $pindou-font-lg;
+  font-weight: 600;
+  color: $pindou-text;
+}
+
+.text-subtitle {
+  display: block;
+  font-size: $pindou-font-md;
+  color: $pindou-text-secondary;
+}
+
+.text-muted {
+  color: $pindou-text-muted;
+}
+
+.text-hint {
+  color: $pindou-text-hint;
+  font-size: $pindou-font-sm;
+}
+
+.text-xs {
+  font-size: $pindou-font-xs;
+}
+
+.text-sm {
+  font-size: $pindou-font-sm;
+}
+
+/* —— 空状态 —— */
+.empty-state {
+  padding: 48px $pindou-space-lg;
+  text-align: center;
+  color: $pindou-text-muted;
+  font-size: $pindou-font-md;
+}
+
+/* —— 徽章 —— */
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: $pindou-radius-pill;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.badge--ok {
+  background: $pindou-success-bg;
+  color: $pindou-success;
+}
+
+.badge--warn {
+  background: $pindou-warning-bg;
+  color: $pindou-warning;
+}
+
+/* —— 芯片 / 标签 —— */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: $pindou-radius-pill;
+  background: $pindou-bg-muted;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-secondary;
+}
+
+.chip--active {
+  background: $pindou-primary;
+  color: #fff;
+}
+
+.chip--outline-active {
+  outline: 2px solid $pindou-primary;
+  background: $pindou-bg-card;
+}
+
+/* —— 底部操作栏 —— */
+.bottom-dock {
+  position: fixed;
+  left: $pindou-space-md;
+  right: $pindou-space-md;
+  bottom: calc(#{$pindou-space-md} + var(--pindou-safe-bottom));
+  display: flex;
+  gap: $pindou-space-sm;
+  padding: $pindou-space-sm;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: $pindou-radius-lg;
+  box-shadow: $pindou-shadow-dock;
+  backdrop-filter: blur(8px);
+  z-index: 100;
+}
+
+/* —— 分隔 —— */
+.divider-h {
+  height: 1px;
+  background: $pindou-border-light;
+  margin: $pindou-space-sm 0;
+}
+
+/* —— 加载 —— */
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid $pindou-border;
+  border-top-color: $pindou-primary;
+  border-radius: 50%;
+  animation: pindou-spin 0.8s linear infinite;
+}
+
+@keyframes pindou-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* —— 隐藏画布（导出等） —— */
+.hidden-canvas {
+  position: fixed;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* uni scroll-view 属性兼容为横向/纵向滚动 */
+[scroll-x],
+.scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+
+[scroll-y],
+.scroll-y {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 50vh;
+}

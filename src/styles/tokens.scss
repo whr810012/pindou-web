@@ -1,0 +1,68 @@
+// Pindou 设计令牌 — 通过 vite additionalData 全局注入
+
+// 品牌色
+$pindou-primary: #5b6cff;
+$pindou-primary-dark: #4557e8;
+$pindou-primary-light: #eef0ff;
+$pindou-accent: #ff9a7a;
+$pindou-success: #2e7d32;
+$pindou-success-bg: #e8f5e9;
+$pindou-warning: #e65100;
+$pindou-warning-bg: #fff3e0;
+$pindou-error: #d32f2f;
+
+// 背景
+$pindou-bg-page: #f5f6fa;
+$pindou-bg-card: #ffffff;
+$pindou-bg-muted: #f5f6fa;
+$pindou-bg-subtle: #fafbfc;
+
+// 文字
+$pindou-text: #1a1a2e;
+$pindou-text-secondary: #666666;
+$pindou-text-muted: #888888;
+$pindou-text-hint: #aaaaaa;
+
+// 边框
+$pindou-border: #eef0f4;
+$pindou-border-light: #f0f0f0;
+
+// 圆角
+$pindou-radius-sm: 8px;
+$pindou-radius-md: 12px;
+$pindou-radius-lg: 16px;
+$pindou-radius-pill: 999px;
+
+// 间距
+$pindou-space-xs: 4px;
+$pindou-space-sm: 8px;
+$pindou-space-md: 12px;
+$pindou-space-lg: 16px;
+$pindou-space-xl: 24px;
+
+// 阴影
+$pindou-shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.04);
+$pindou-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+$pindou-shadow-dock: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+// 字号
+$pindou-font-xs: 11px;
+$pindou-font-sm: 12px;
+$pindou-font-md: 14px;
+$pindou-font-lg: 16px;
+$pindou-font-xl: 18px;
+$pindou-font-display: 28px;
+
+// 布局
+$pindou-content-max: 720px;
+$pindou-content-wide: 1080px;
+
+// 同步 uni / uView 主题（须在 theme.scss 之前定义）
+$uni-color-primary: $pindou-primary;
+$uni-bg-color-grey: $pindou-bg-page;
+$uni-text-color: $pindou-text;
+$uni-text-color-grey: $pindou-text-muted;
+$u-primary: $pindou-primary;
+$u-primary-dark: $pindou-primary-dark;
+$u-primary-light: $pindou-primary-light;
+$u-bg-color: $pindou-bg-page;

@@ -1,0 +1,6453 @@
+{
+  "id": "pindou-full",
+  "name": "Pindou 全色系",
+  "count": 586,
+  "entries": [
+    {
+      "id": "neutral-000",
+      "hex": "#F4.CCCCCCCCCCC8F4.CCCCCCCCCCC8F4.CCCCCCCCCCC8",
+      "codes": {
+        "MARD": "N1",
+        "COCO": "N1",
+        "MANMAN": "N1",
+        "PANPAN": "N1",
+        "MIXIAOWO": "N1"
+      }
+    },
+    {
+      "id": "neutral-001",
+      "hex": "#E0.66666666666E0.66666666666E0.66666666666",
+      "codes": {
+        "MARD": "N2",
+        "COCO": "N2",
+        "MANMAN": "N2",
+        "PANPAN": "N2",
+        "MIXIAOWO": "N2"
+      }
+    },
+    {
+      "id": "neutral-002",
+      "hex": "#C6.E6666666666C6.E6666666666C6.E6666666666",
+      "codes": {
+        "MARD": "N3",
+        "COCO": "N3",
+        "MANMAN": "N3",
+        "PANPAN": "N3",
+        "MIXIAOWO": "N3"
+      }
+    },
+    {
+      "id": "neutral-003",
+      "hex": "#AD.66666666666AD.66666666666AD.66666666666",
+      "codes": {
+        "MARD": "N4",
+        "COCO": "N4",
+        "MANMAN": "N4",
+        "PANPAN": "N4",
+        "MIXIAOWO": "N4"
+      }
+    },
+    {
+      "id": "neutral-004",
+      "hex": "#93.E666666666693.E666666666693.E6666666666",
+      "codes": {
+        "MARD": "N5",
+        "COCO": "N5",
+        "MANMAN": "N5",
+        "PANPAN": "N5",
+        "MIXIAOWO": "N5"
+      }
+    },
+    {
+      "id": "neutral-005",
+      "hex": "#7A.6666666666647A.6666666666647A.666666666664",
+      "codes": {
+        "MARD": "N6",
+        "COCO": "N6",
+        "MANMAN": "N6",
+        "PANPAN": "N6",
+        "MIXIAOWO": "N6"
+      }
+    },
+    {
+      "id": "neutral-006",
+      "hex": "#60.E6666666666460.E6666666666460.E66666666664",
+      "codes": {
+        "MARD": "N7",
+        "COCO": "N7",
+        "MANMAN": "N7",
+        "PANPAN": "N7",
+        "MIXIAOWO": "N7"
+      }
+    },
+    {
+      "id": "neutral-007",
+      "hex": "#47.66666666666447.66666666666447.666666666664",
+      "codes": {
+        "MARD": "N8",
+        "COCO": "N8",
+        "MANMAN": "N8",
+        "PANPAN": "N8",
+        "MIXIAOWO": "N8"
+      }
+    },
+    {
+      "id": "neutral-008",
+      "hex": "#2D.E666666666662D.E666666666662D.E66666666666",
+      "codes": {
+        "MARD": "N9",
+        "COCO": "N9",
+        "MANMAN": "N9",
+        "PANPAN": "N9",
+        "MIXIAOWO": "N9"
+      }
+    },
+    {
+      "id": "neutral-009",
+      "hex": "#14.66666666666614.66666666666614.666666666666",
+      "codes": {
+        "MARD": "N10",
+        "COCO": "N10",
+        "MANMAN": "N10",
+        "PANPAN": "N10",
+        "MIXIAOWO": "N10"
+      }
+    },
+    {
+      "id": "color-010",
+      "hex": "#341919",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-011",
+      "hex": "#602E2E",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-012",
+      "hex": "#914646",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-013",
+      "hex": "#B96E6E",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-014",
+      "hex": "#D19F9F",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-015",
+      "hex": "#EBD6D6",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-016",
+      "hex": "#3B1111",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-017",
+      "hex": "#6F2020",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-018",
+      "hex": "#A63030",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-019",
+      "hex": "#CF5959",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-020",
+      "hex": "#DF9090",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-021",
+      "hex": "#F1D0D0",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-022",
+      "hex": "#430A0A",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-023",
+      "hex": "#7D1212",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-024",
+      "hex": "#BB1B1B",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-025",
+      "hex": "#E44444",
+      "codes": {
+        "MARD": "A1",
+        "COCO": "A1-C",
+        "MANMAN": "A1-M",
+        "PANPAN": "A1-P",
+        "MIXIAOWO": "A1-M"
+      }
+    },
+    {
+      "id": "color-026",
+      "hex": "#ED8282",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-027",
+      "hex": "#F7C9C9",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-028",
+      "hex": "#490303",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-029",
+      "hex": "#890606",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-030",
+      "hex": "#CE0909",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-031",
+      "hex": "#F63131",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-032",
+      "hex": "#F97676",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-033",
+      "hex": "#FDC4C4",
+      "codes": {
+        "MARD": "A2",
+        "COCO": "A2-C",
+        "MANMAN": "A2-M",
+        "PANPAN": "A2-P",
+        "MIXIAOWO": "A2-M"
+      }
+    },
+    {
+      "id": "color-034",
+      "hex": "#342019",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-035",
+      "hex": "#603B2E",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-036",
+      "hex": "#915846",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-037",
+      "hex": "#B9816E",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-038",
+      "hex": "#D1AB9F",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-039",
+      "hex": "#EBDBD6",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-040",
+      "hex": "#3B1C11",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-041",
+      "hex": "#6F3420",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-042",
+      "hex": "#A64E30",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-043",
+      "hex": "#CF7659",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-044",
+      "hex": "#DFA490",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-045",
+      "hex": "#F1D8D0",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-046",
+      "hex": "#43180A",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-047",
+      "hex": "#7D2D12",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-048",
+      "hex": "#BB431B",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-049",
+      "hex": "#E46C44",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-050",
+      "hex": "#ED9D82",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-051",
+      "hex": "#F7D5C9",
+      "codes": {
+        "MARD": "B2",
+        "COCO": "B2-C",
+        "MANMAN": "B2-M",
+        "PANPAN": "B2-P",
+        "MIXIAOWO": "B2-M"
+      }
+    },
+    {
+      "id": "color-052",
+      "hex": "#491503",
+      "codes": {
+        "MARD": "B3",
+        "COCO": "B3-C",
+        "MANMAN": "B3-M",
+        "PANPAN": "B3-P",
+        "MIXIAOWO": "B3-M"
+      }
+    },
+    {
+      "id": "color-053",
+      "hex": "#892706",
+      "codes": {
+        "MARD": "B3",
+        "COCO": "B3-C",
+        "MANMAN": "B3-M",
+        "PANPAN": "B3-P",
+        "MIXIAOWO": "B3-M"
+      }
+    },
+    {
+      "id": "color-054",
+      "hex": "#CE3A09",
+      "codes": {
+        "MARD": "B3",
+        "COCO": "B3-C",
+        "MANMAN": "B3-M",
+        "PANPAN": "B3-P",
+        "MIXIAOWO": "B3-M"
+      }
+    },
+    {
+      "id": "color-055",
+      "hex": "#F66331",
+      "codes": {
+        "MARD": "B3",
+        "COCO": "B3-C",
+        "MANMAN": "B3-M",
+        "PANPAN": "B3-P",
+        "MIXIAOWO": "B3-M"
+      }
+    },
+    {
+      "id": "color-056",
+      "hex": "#F99776",
+      "codes": {
+        "MARD": "B3",
+        "COCO": "B3-C",
+        "MANMAN": "B3-M",
+        "PANPAN": "B3-P",
+        "MIXIAOWO": "B3-M"
+      }
+    },
+    {
+      "id": "color-057",
+      "hex": "#FDD2C4",
+      "codes": {
+        "MARD": "B3",
+        "COCO": "B3-C",
+        "MANMAN": "B3-M",
+        "PANPAN": "B3-P",
+        "MIXIAOWO": "B3-M"
+      }
+    },
+    {
+      "id": "color-058",
+      "hex": "#342619",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-059",
+      "hex": "#60472E",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-060",
+      "hex": "#916B46",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-061",
+      "hex": "#B9946E",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-062",
+      "hex": "#D1B89F",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-063",
+      "hex": "#EBE0D6",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-064",
+      "hex": "#3B2611",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-065",
+      "hex": "#6F4720",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-066",
+      "hex": "#A66B30",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-067",
+      "hex": "#CF9459",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-068",
+      "hex": "#DFB890",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-069",
+      "hex": "#F1E0D0",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-070",
+      "hex": "#43260A",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-071",
+      "hex": "#7D4712",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-072",
+      "hex": "#BB6B1B",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-073",
+      "hex": "#E49444",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-074",
+      "hex": "#EDB882",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-075",
+      "hex": "#F7E0C9",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-076",
+      "hex": "#492603",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-077",
+      "hex": "#894706",
+      "codes": {
+        "MARD": "C3",
+        "COCO": "C3-C",
+        "MANMAN": "C3-M",
+        "PANPAN": "C3-P",
+        "MIXIAOWO": "C3-M"
+      }
+    },
+    {
+      "id": "color-078",
+      "hex": "#CE6B09",
+      "codes": {
+        "MARD": "C4",
+        "COCO": "C4-C",
+        "MANMAN": "C4-M",
+        "PANPAN": "C4-P",
+        "MIXIAOWO": "C4-M"
+      }
+    },
+    {
+      "id": "color-079",
+      "hex": "#F69431",
+      "codes": {
+        "MARD": "C4",
+        "COCO": "C4-C",
+        "MANMAN": "C4-M",
+        "PANPAN": "C4-P",
+        "MIXIAOWO": "C4-M"
+      }
+    },
+    {
+      "id": "color-080",
+      "hex": "#F9B876",
+      "codes": {
+        "MARD": "C4",
+        "COCO": "C4-C",
+        "MANMAN": "C4-M",
+        "PANPAN": "C4-P",
+        "MIXIAOWO": "C4-M"
+      }
+    },
+    {
+      "id": "color-081",
+      "hex": "#FDE0C4",
+      "codes": {
+        "MARD": "C4",
+        "COCO": "C4-C",
+        "MANMAN": "C4-M",
+        "PANPAN": "C4-P",
+        "MIXIAOWO": "C4-M"
+      }
+    },
+    {
+      "id": "color-082",
+      "hex": "#342D19",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-083",
+      "hex": "#60542E",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-084",
+      "hex": "#917E46",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-085",
+      "hex": "#B9A76E",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-086",
+      "hex": "#D1C49F",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-087",
+      "hex": "#EBE6D6",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-088",
+      "hex": "#3B3111",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-089",
+      "hex": "#6F5B20",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-090",
+      "hex": "#A68930",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-091",
+      "hex": "#CFB159",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-092",
+      "hex": "#DFCB90",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-093",
+      "hex": "#F1E9D0",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-094",
+      "hex": "#43350A",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-095",
+      "hex": "#7D6212",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-096",
+      "hex": "#BB931B",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-097",
+      "hex": "#E4BC44",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-098",
+      "hex": "#EDD282",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-099",
+      "hex": "#F7ECC9",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-100",
+      "hex": "#493803",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-101",
+      "hex": "#896806",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-102",
+      "hex": "#CE9C09",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-103",
+      "hex": "#F6C531",
+      "codes": {
+        "MARD": "D4",
+        "COCO": "D4-C",
+        "MANMAN": "D4-M",
+        "PANPAN": "D4-P",
+        "MIXIAOWO": "D4-M"
+      }
+    },
+    {
+      "id": "color-104",
+      "hex": "#F9D876",
+      "codes": {
+        "MARD": "D5",
+        "COCO": "D5-C",
+        "MANMAN": "D5-M",
+        "PANPAN": "D5-P",
+        "MIXIAOWO": "D5-M"
+      }
+    },
+    {
+      "id": "color-105",
+      "hex": "#FDEEC4",
+      "codes": {
+        "MARD": "D5",
+        "COCO": "D5-C",
+        "MANMAN": "D5-M",
+        "PANPAN": "D5-P",
+        "MIXIAOWO": "D5-M"
+      }
+    },
+    {
+      "id": "color-106",
+      "hex": "#343419",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-107",
+      "hex": "#60602E",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-108",
+      "hex": "#919146",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-109",
+      "hex": "#B9B96E",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-110",
+      "hex": "#D1D19F",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-111",
+      "hex": "#EBEBD6",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-112",
+      "hex": "#3B3B11",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-113",
+      "hex": "#6F6F20",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-114",
+      "hex": "#A6A630",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-115",
+      "hex": "#CFCF59",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-116",
+      "hex": "#DFDF90",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-117",
+      "hex": "#F1F1D0",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-118",
+      "hex": "#43430A",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-119",
+      "hex": "#7D7D12",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-120",
+      "hex": "#BBBB1B",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-121",
+      "hex": "#E4E444",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-122",
+      "hex": "#EDED82",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-123",
+      "hex": "#F7F7C9",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-124",
+      "hex": "#494903",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-125",
+      "hex": "#898906",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-126",
+      "hex": "#CECE09",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-127",
+      "hex": "#F6F631",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-128",
+      "hex": "#F9F976",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-129",
+      "hex": "#FDFDC4",
+      "codes": {
+        "MARD": "E5",
+        "COCO": "E5-C",
+        "MANMAN": "E5-M",
+        "PANPAN": "E5-P",
+        "MIXIAOWO": "E5-M"
+      }
+    },
+    {
+      "id": "color-130",
+      "hex": "#2D3419",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-131",
+      "hex": "#54602E",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-132",
+      "hex": "#7E9146",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-133",
+      "hex": "#A7B96E",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-134",
+      "hex": "#C4D19F",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-135",
+      "hex": "#E6EBD6",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-136",
+      "hex": "#313B11",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-137",
+      "hex": "#5B6F20",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-138",
+      "hex": "#89A630",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-139",
+      "hex": "#B1CF59",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-140",
+      "hex": "#CBDF90",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-141",
+      "hex": "#E9F1D0",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-142",
+      "hex": "#35430A",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-143",
+      "hex": "#627D12",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-144",
+      "hex": "#93BB1B",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-145",
+      "hex": "#BCE444",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-146",
+      "hex": "#D2ED82",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-147",
+      "hex": "#ECF7C9",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-148",
+      "hex": "#384903",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-149",
+      "hex": "#688906",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-150",
+      "hex": "#9CCE09",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-151",
+      "hex": "#C5F631",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-152",
+      "hex": "#D8F976",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-153",
+      "hex": "#EEFDC4",
+      "codes": {
+        "MARD": "F6",
+        "COCO": "F6-C",
+        "MANMAN": "F6-M",
+        "PANPAN": "F6-P",
+        "MIXIAOWO": "F6-M"
+      }
+    },
+    {
+      "id": "color-154",
+      "hex": "#263419",
+      "codes": {
+        "MARD": "G6",
+        "COCO": "G6-C",
+        "MANMAN": "G6-M",
+        "PANPAN": "G6-P",
+        "MIXIAOWO": "G6-M"
+      }
+    },
+    {
+      "id": "color-155",
+      "hex": "#47602E",
+      "codes": {
+        "MARD": "G6",
+        "COCO": "G6-C",
+        "MANMAN": "G6-M",
+        "PANPAN": "G6-P",
+        "MIXIAOWO": "G6-M"
+      }
+    },
+    {
+      "id": "color-156",
+      "hex": "#6B9146",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-157",
+      "hex": "#94B96E",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-158",
+      "hex": "#B8D19F",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-159",
+      "hex": "#E0EBD6",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-160",
+      "hex": "#263B11",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-161",
+      "hex": "#476F20",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-162",
+      "hex": "#6BA630",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-163",
+      "hex": "#94CF59",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-164",
+      "hex": "#B8DF90",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-165",
+      "hex": "#E0F1D0",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-166",
+      "hex": "#26430A",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-167",
+      "hex": "#477D12",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-168",
+      "hex": "#6BBB1B",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-169",
+      "hex": "#94E444",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-170",
+      "hex": "#B8ED82",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-171",
+      "hex": "#E0F7C9",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-172",
+      "hex": "#264903",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-173",
+      "hex": "#478906",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-174",
+      "hex": "#6BCE09",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-175",
+      "hex": "#94F631",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-176",
+      "hex": "#B8F976",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-177",
+      "hex": "#E0FDC4",
+      "codes": {
+        "MARD": "G7",
+        "COCO": "G7-C",
+        "MANMAN": "G7-M",
+        "PANPAN": "G7-P",
+        "MIXIAOWO": "G7-M"
+      }
+    },
+    {
+      "id": "color-178",
+      "hex": "#203419",
+      "codes": {
+        "MARD": "H7",
+        "COCO": "H7-C",
+        "MANMAN": "H7-M",
+        "PANPAN": "H7-P",
+        "MIXIAOWO": "H7-M"
+      }
+    },
+    {
+      "id": "color-179",
+      "hex": "#3B602E",
+      "codes": {
+        "MARD": "H7",
+        "COCO": "H7-C",
+        "MANMAN": "H7-M",
+        "PANPAN": "H7-P",
+        "MIXIAOWO": "H7-M"
+      }
+    },
+    {
+      "id": "color-180",
+      "hex": "#589146",
+      "codes": {
+        "MARD": "H7",
+        "COCO": "H7-C",
+        "MANMAN": "H7-M",
+        "PANPAN": "H7-P",
+        "MIXIAOWO": "H7-M"
+      }
+    },
+    {
+      "id": "color-181",
+      "hex": "#81B96E",
+      "codes": {
+        "MARD": "H7",
+        "COCO": "H7-C",
+        "MANMAN": "H7-M",
+        "PANPAN": "H7-P",
+        "MIXIAOWO": "H7-M"
+      }
+    },
+    {
+      "id": "color-182",
+      "hex": "#ABD19F",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-183",
+      "hex": "#DBEBD6",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-184",
+      "hex": "#1C3B11",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-185",
+      "hex": "#346F20",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-186",
+      "hex": "#4EA630",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-187",
+      "hex": "#76CF59",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-188",
+      "hex": "#A4DF90",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-189",
+      "hex": "#D8F1D0",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-190",
+      "hex": "#18430A",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-191",
+      "hex": "#2D7D12",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-192",
+      "hex": "#43BB1B",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-193",
+      "hex": "#6CE444",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-194",
+      "hex": "#9DED82",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-195",
+      "hex": "#D5F7C9",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-196",
+      "hex": "#154903",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-197",
+      "hex": "#278906",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-198",
+      "hex": "#3ACE09",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-199",
+      "hex": "#63F631",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-200",
+      "hex": "#97F976",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-201",
+      "hex": "#D2FDC4",
+      "codes": {
+        "MARD": "H8",
+        "COCO": "H8-C",
+        "MANMAN": "H8-M",
+        "PANPAN": "H8-P",
+        "MIXIAOWO": "H8-M"
+      }
+    },
+    {
+      "id": "color-202",
+      "hex": "#193419",
+      "codes": {
+        "MARD": "I8",
+        "COCO": "I8-C",
+        "MANMAN": "I8-M",
+        "PANPAN": "I8-P",
+        "MIXIAOWO": "I8-M"
+      }
+    },
+    {
+      "id": "color-203",
+      "hex": "#2E602E",
+      "codes": {
+        "MARD": "I8",
+        "COCO": "I8-C",
+        "MANMAN": "I8-M",
+        "PANPAN": "I8-P",
+        "MIXIAOWO": "I8-M"
+      }
+    },
+    {
+      "id": "color-204",
+      "hex": "#469146",
+      "codes": {
+        "MARD": "I8",
+        "COCO": "I8-C",
+        "MANMAN": "I8-M",
+        "PANPAN": "I8-P",
+        "MIXIAOWO": "I8-M"
+      }
+    },
+    {
+      "id": "color-205",
+      "hex": "#6EB96E",
+      "codes": {
+        "MARD": "I8",
+        "COCO": "I8-C",
+        "MANMAN": "I8-M",
+        "PANPAN": "I8-P",
+        "MIXIAOWO": "I8-M"
+      }
+    },
+    {
+      "id": "color-206",
+      "hex": "#9FD19F",
+      "codes": {
+        "MARD": "I8",
+        "COCO": "I8-C",
+        "MANMAN": "I8-M",
+        "PANPAN": "I8-P",
+        "MIXIAOWO": "I8-M"
+      }
+    },
+    {
+      "id": "color-207",
+      "hex": "#D6EBD6",
+      "codes": {
+        "MARD": "I8",
+        "COCO": "I8-C",
+        "MANMAN": "I8-M",
+        "PANPAN": "I8-P",
+        "MIXIAOWO": "I8-M"
+      }
+    },
+    {
+      "id": "color-208",
+      "hex": "#113B11",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-209",
+      "hex": "#206F20",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-210",
+      "hex": "#30A630",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-211",
+      "hex": "#59CF59",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-212",
+      "hex": "#90DF90",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-213",
+      "hex": "#D0F1D0",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-214",
+      "hex": "#0A430A",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-215",
+      "hex": "#127D12",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-216",
+      "hex": "#1BBB1B",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-217",
+      "hex": "#44E444",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-218",
+      "hex": "#82ED82",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-219",
+      "hex": "#C9F7C9",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-220",
+      "hex": "#034903",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-221",
+      "hex": "#068906",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-222",
+      "hex": "#09CE09",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-223",
+      "hex": "#31F631",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-224",
+      "hex": "#76F976",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-225",
+      "hex": "#C4FDC4",
+      "codes": {
+        "MARD": "I9",
+        "COCO": "I9-C",
+        "MANMAN": "I9-M",
+        "PANPAN": "I9-P",
+        "MIXIAOWO": "I9-M"
+      }
+    },
+    {
+      "id": "color-226",
+      "hex": "#193420",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-227",
+      "hex": "#2E603B",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-228",
+      "hex": "#469158",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-229",
+      "hex": "#6EB981",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-230",
+      "hex": "#9FD1AB",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-231",
+      "hex": "#D6EBDB",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-232",
+      "hex": "#113B1C",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-233",
+      "hex": "#206F34",
+      "codes": {
+        "MARD": "J9",
+        "COCO": "J9-C",
+        "MANMAN": "J9-M",
+        "PANPAN": "J9-P",
+        "MIXIAOWO": "J9-M"
+      }
+    },
+    {
+      "id": "color-234",
+      "hex": "#30A64E",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-235",
+      "hex": "#59CF76",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-236",
+      "hex": "#90DFA4",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-237",
+      "hex": "#D0F1D8",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-238",
+      "hex": "#0A4318",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-239",
+      "hex": "#127D2D",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-240",
+      "hex": "#1BBB43",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-241",
+      "hex": "#44E46C",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-242",
+      "hex": "#82ED9D",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-243",
+      "hex": "#C9F7D5",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-244",
+      "hex": "#034915",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-245",
+      "hex": "#068927",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-246",
+      "hex": "#09CE3A",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-247",
+      "hex": "#31F663",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-248",
+      "hex": "#76F997",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-249",
+      "hex": "#C4FDD2",
+      "codes": {
+        "MARD": "J10",
+        "COCO": "J10-C",
+        "MANMAN": "J10-M",
+        "PANPAN": "J10-P",
+        "MIXIAOWO": "J10-M"
+      }
+    },
+    {
+      "id": "color-250",
+      "hex": "#193426",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-251",
+      "hex": "#2E6047",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-252",
+      "hex": "#46916B",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-253",
+      "hex": "#6EB994",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-254",
+      "hex": "#9FD1B8",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-255",
+      "hex": "#D6EBE0",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-256",
+      "hex": "#113B26",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-257",
+      "hex": "#206F47",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-258",
+      "hex": "#30A66B",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-259",
+      "hex": "#59CF94",
+      "codes": {
+        "MARD": "K10",
+        "COCO": "K10-C",
+        "MANMAN": "K10-M",
+        "PANPAN": "K10-P",
+        "MIXIAOWO": "K10-M"
+      }
+    },
+    {
+      "id": "color-260",
+      "hex": "#90DFB8",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-261",
+      "hex": "#D0F1E0",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-262",
+      "hex": "#0A4326",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-263",
+      "hex": "#127D47",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-264",
+      "hex": "#1BBB6B",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-265",
+      "hex": "#44E494",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-266",
+      "hex": "#82EDB8",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-267",
+      "hex": "#C9F7E0",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-268",
+      "hex": "#034926",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-269",
+      "hex": "#068947",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-270",
+      "hex": "#09CE6B",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-271",
+      "hex": "#31F694",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-272",
+      "hex": "#76F9B8",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-273",
+      "hex": "#C4FDE0",
+      "codes": {
+        "MARD": "K11",
+        "COCO": "K11-C",
+        "MANMAN": "K11-M",
+        "PANPAN": "K11-P",
+        "MIXIAOWO": "K11-M"
+      }
+    },
+    {
+      "id": "color-274",
+      "hex": "#19342D",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-275",
+      "hex": "#2E6054",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-276",
+      "hex": "#46917E",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-277",
+      "hex": "#6EB9A7",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-278",
+      "hex": "#9FD1C4",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-279",
+      "hex": "#D6EBE6",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-280",
+      "hex": "#113B31",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-281",
+      "hex": "#206F5B",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-282",
+      "hex": "#30A689",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-283",
+      "hex": "#59CFB1",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-284",
+      "hex": "#90DFCB",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-285",
+      "hex": "#D0F1E9",
+      "codes": {
+        "MARD": "L11",
+        "COCO": "L11-C",
+        "MANMAN": "L11-M",
+        "PANPAN": "L11-P",
+        "MIXIAOWO": "L11-M"
+      }
+    },
+    {
+      "id": "color-286",
+      "hex": "#0A4335",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-287",
+      "hex": "#127D62",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-288",
+      "hex": "#1BBB93",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-289",
+      "hex": "#44E4BC",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-290",
+      "hex": "#82EDD2",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-291",
+      "hex": "#C9F7EC",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-292",
+      "hex": "#034938",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-293",
+      "hex": "#068968",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-294",
+      "hex": "#09CE9C",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-295",
+      "hex": "#31F6C5",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-296",
+      "hex": "#76F9D8",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-297",
+      "hex": "#C4FDEE",
+      "codes": {
+        "MARD": "L12",
+        "COCO": "L12-C",
+        "MANMAN": "L12-M",
+        "PANPAN": "L12-P",
+        "MIXIAOWO": "L12-M"
+      }
+    },
+    {
+      "id": "color-298",
+      "hex": "#193434",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-299",
+      "hex": "#2E6060",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-300",
+      "hex": "#469191",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-301",
+      "hex": "#6EB9B9",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-302",
+      "hex": "#9FD1D1",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-303",
+      "hex": "#D6EBEB",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-304",
+      "hex": "#113B3B",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-305",
+      "hex": "#206F6F",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-306",
+      "hex": "#30A6A6",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-307",
+      "hex": "#59CFCF",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-308",
+      "hex": "#90DFDF",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-309",
+      "hex": "#D0F1F1",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-310",
+      "hex": "#0A4343",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-311",
+      "hex": "#127D7D",
+      "codes": {
+        "MARD": "M12",
+        "COCO": "M12-C",
+        "MANMAN": "M12-M",
+        "PANPAN": "M12-P",
+        "MIXIAOWO": "M12-M"
+      }
+    },
+    {
+      "id": "color-312",
+      "hex": "#1BBBBB",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-313",
+      "hex": "#44E4E4",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-314",
+      "hex": "#82EDED",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-315",
+      "hex": "#C9F7F7",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-316",
+      "hex": "#034949",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-317",
+      "hex": "#068989",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-318",
+      "hex": "#09CECE",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-319",
+      "hex": "#31F6F6",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-320",
+      "hex": "#76F9F9",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-321",
+      "hex": "#C4FDFD",
+      "codes": {
+        "MARD": "M13",
+        "COCO": "M13-C",
+        "MANMAN": "M13-M",
+        "PANPAN": "M13-P",
+        "MIXIAOWO": "M13-M"
+      }
+    },
+    {
+      "id": "color-322",
+      "hex": "#192D34",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-323",
+      "hex": "#2E5460",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-324",
+      "hex": "#467E91",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-325",
+      "hex": "#6EA7B9",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-326",
+      "hex": "#9FC4D1",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-327",
+      "hex": "#D6E6EB",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-328",
+      "hex": "#11313B",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-329",
+      "hex": "#205B6F",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-330",
+      "hex": "#3089A6",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-331",
+      "hex": "#59B1CF",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-332",
+      "hex": "#90CBDF",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-333",
+      "hex": "#D0E9F1",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-334",
+      "hex": "#0A3543",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-335",
+      "hex": "#12627D",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-336",
+      "hex": "#1B93BB",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-337",
+      "hex": "#44BCE4",
+      "codes": {
+        "MARD": "N13",
+        "COCO": "N13-C",
+        "MANMAN": "N13-M",
+        "PANPAN": "N13-P",
+        "MIXIAOWO": "N13-M"
+      }
+    },
+    {
+      "id": "color-338",
+      "hex": "#82D2ED",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-339",
+      "hex": "#C9ECF7",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-340",
+      "hex": "#033849",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-341",
+      "hex": "#066889",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-342",
+      "hex": "#099CCE",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-343",
+      "hex": "#31C5F6",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-344",
+      "hex": "#76D8F9",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-345",
+      "hex": "#C4EEFD",
+      "codes": {
+        "MARD": "N14",
+        "COCO": "N14-C",
+        "MANMAN": "N14-M",
+        "PANPAN": "N14-P",
+        "MIXIAOWO": "N14-M"
+      }
+    },
+    {
+      "id": "color-346",
+      "hex": "#192634",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-347",
+      "hex": "#2E4760",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-348",
+      "hex": "#466B91",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-349",
+      "hex": "#6E94B9",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-350",
+      "hex": "#9FB8D1",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-351",
+      "hex": "#D6E0EB",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-352",
+      "hex": "#11263B",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-353",
+      "hex": "#20476F",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-354",
+      "hex": "#306BA6",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-355",
+      "hex": "#5994CF",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-356",
+      "hex": "#90B8DF",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-357",
+      "hex": "#D0E0F1",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-358",
+      "hex": "#0A2643",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-359",
+      "hex": "#12477D",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-360",
+      "hex": "#1B6BBB",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-361",
+      "hex": "#4494E4",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-362",
+      "hex": "#82B8ED",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-363",
+      "hex": "#C9E0F7",
+      "codes": {
+        "MARD": "O14",
+        "COCO": "O14-C",
+        "MANMAN": "O14-M",
+        "PANPAN": "O14-P",
+        "MIXIAOWO": "O14-M"
+      }
+    },
+    {
+      "id": "color-364",
+      "hex": "#032649",
+      "codes": {
+        "MARD": "O15",
+        "COCO": "O15-C",
+        "MANMAN": "O15-M",
+        "PANPAN": "O15-P",
+        "MIXIAOWO": "O15-M"
+      }
+    },
+    {
+      "id": "color-365",
+      "hex": "#064789",
+      "codes": {
+        "MARD": "O15",
+        "COCO": "O15-C",
+        "MANMAN": "O15-M",
+        "PANPAN": "O15-P",
+        "MIXIAOWO": "O15-M"
+      }
+    },
+    {
+      "id": "color-366",
+      "hex": "#096BCE",
+      "codes": {
+        "MARD": "O15",
+        "COCO": "O15-C",
+        "MANMAN": "O15-M",
+        "PANPAN": "O15-P",
+        "MIXIAOWO": "O15-M"
+      }
+    },
+    {
+      "id": "color-367",
+      "hex": "#3194F6",
+      "codes": {
+        "MARD": "O15",
+        "COCO": "O15-C",
+        "MANMAN": "O15-M",
+        "PANPAN": "O15-P",
+        "MIXIAOWO": "O15-M"
+      }
+    },
+    {
+      "id": "color-368",
+      "hex": "#76B8F9",
+      "codes": {
+        "MARD": "O15",
+        "COCO": "O15-C",
+        "MANMAN": "O15-M",
+        "PANPAN": "O15-P",
+        "MIXIAOWO": "O15-M"
+      }
+    },
+    {
+      "id": "color-369",
+      "hex": "#C4E0FD",
+      "codes": {
+        "MARD": "O15",
+        "COCO": "O15-C",
+        "MANMAN": "O15-M",
+        "PANPAN": "O15-P",
+        "MIXIAOWO": "O15-M"
+      }
+    },
+    {
+      "id": "color-370",
+      "hex": "#192034",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-371",
+      "hex": "#2E3B60",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-372",
+      "hex": "#465891",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-373",
+      "hex": "#6E81B9",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-374",
+      "hex": "#9FABD1",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-375",
+      "hex": "#D6DBEB",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-376",
+      "hex": "#111C3B",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-377",
+      "hex": "#20346F",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-378",
+      "hex": "#304EA6",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-379",
+      "hex": "#5976CF",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-380",
+      "hex": "#90A4DF",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-381",
+      "hex": "#D0D8F1",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-382",
+      "hex": "#0A1843",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-383",
+      "hex": "#122D7D",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-384",
+      "hex": "#1B43BB",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-385",
+      "hex": "#446CE4",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-386",
+      "hex": "#829DED",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-387",
+      "hex": "#C9D5F7",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-388",
+      "hex": "#031549",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-389",
+      "hex": "#062789",
+      "codes": {
+        "MARD": "P15",
+        "COCO": "P15-C",
+        "MANMAN": "P15-M",
+        "PANPAN": "P15-P",
+        "MIXIAOWO": "P15-M"
+      }
+    },
+    {
+      "id": "color-390",
+      "hex": "#093ACE",
+      "codes": {
+        "MARD": "P16",
+        "COCO": "P16-C",
+        "MANMAN": "P16-M",
+        "PANPAN": "P16-P",
+        "MIXIAOWO": "P16-M"
+      }
+    },
+    {
+      "id": "color-391",
+      "hex": "#3163F6",
+      "codes": {
+        "MARD": "P16",
+        "COCO": "P16-C",
+        "MANMAN": "P16-M",
+        "PANPAN": "P16-P",
+        "MIXIAOWO": "P16-M"
+      }
+    },
+    {
+      "id": "color-392",
+      "hex": "#7697F9",
+      "codes": {
+        "MARD": "P16",
+        "COCO": "P16-C",
+        "MANMAN": "P16-M",
+        "PANPAN": "P16-P",
+        "MIXIAOWO": "P16-M"
+      }
+    },
+    {
+      "id": "color-393",
+      "hex": "#C4D2FD",
+      "codes": {
+        "MARD": "P16",
+        "COCO": "P16-C",
+        "MANMAN": "P16-M",
+        "PANPAN": "P16-P",
+        "MIXIAOWO": "P16-M"
+      }
+    },
+    {
+      "id": "color-394",
+      "hex": "#191934",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-395",
+      "hex": "#2E2E60",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-396",
+      "hex": "#464691",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-397",
+      "hex": "#6E6EB9",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-398",
+      "hex": "#9F9FD1",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-399",
+      "hex": "#D6D6EB",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-400",
+      "hex": "#11113B",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-401",
+      "hex": "#20206F",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-402",
+      "hex": "#3030A6",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-403",
+      "hex": "#5959CF",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-404",
+      "hex": "#9090DF",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-405",
+      "hex": "#D0D0F1",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-406",
+      "hex": "#0A0A43",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-407",
+      "hex": "#12127D",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-408",
+      "hex": "#1B1BBB",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-409",
+      "hex": "#4444E4",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-410",
+      "hex": "#8282ED",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-411",
+      "hex": "#C9C9F7",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-412",
+      "hex": "#030349",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-413",
+      "hex": "#060689",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-414",
+      "hex": "#0909CE",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-415",
+      "hex": "#3131F6",
+      "codes": {
+        "MARD": "Q16",
+        "COCO": "Q16-C",
+        "MANMAN": "Q16-M",
+        "PANPAN": "Q16-P",
+        "MIXIAOWO": "Q16-M"
+      }
+    },
+    {
+      "id": "color-416",
+      "hex": "#7676F9",
+      "codes": {
+        "MARD": "Q17",
+        "COCO": "Q17-C",
+        "MANMAN": "Q17-M",
+        "PANPAN": "Q17-P",
+        "MIXIAOWO": "Q17-M"
+      }
+    },
+    {
+      "id": "color-417",
+      "hex": "#C4C4FD",
+      "codes": {
+        "MARD": "Q17",
+        "COCO": "Q17-C",
+        "MANMAN": "Q17-M",
+        "PANPAN": "Q17-P",
+        "MIXIAOWO": "Q17-M"
+      }
+    },
+    {
+      "id": "color-418",
+      "hex": "#201934",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-419",
+      "hex": "#3B2E60",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-420",
+      "hex": "#584691",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-421",
+      "hex": "#816EB9",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-422",
+      "hex": "#AB9FD1",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-423",
+      "hex": "#DBD6EB",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-424",
+      "hex": "#1C113B",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-425",
+      "hex": "#34206F",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-426",
+      "hex": "#4E30A6",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-427",
+      "hex": "#7659CF",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-428",
+      "hex": "#A490DF",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-429",
+      "hex": "#D8D0F1",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-430",
+      "hex": "#180A43",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-431",
+      "hex": "#2D127D",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-432",
+      "hex": "#431BBB",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-433",
+      "hex": "#6C44E4",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-434",
+      "hex": "#9D82ED",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-435",
+      "hex": "#D5C9F7",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-436",
+      "hex": "#150349",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-437",
+      "hex": "#270689",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-438",
+      "hex": "#3A09CE",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-439",
+      "hex": "#6331F6",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-440",
+      "hex": "#9776F9",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-441",
+      "hex": "#D2C4FD",
+      "codes": {
+        "MARD": "R17",
+        "COCO": "R17-C",
+        "MANMAN": "R17-M",
+        "PANPAN": "R17-P",
+        "MIXIAOWO": "R17-M"
+      }
+    },
+    {
+      "id": "color-442",
+      "hex": "#261934",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-443",
+      "hex": "#472E60",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-444",
+      "hex": "#6B4691",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-445",
+      "hex": "#946EB9",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-446",
+      "hex": "#B89FD1",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-447",
+      "hex": "#E0D6EB",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-448",
+      "hex": "#26113B",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-449",
+      "hex": "#47206F",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-450",
+      "hex": "#6B30A6",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-451",
+      "hex": "#9459CF",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-452",
+      "hex": "#B890DF",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-453",
+      "hex": "#E0D0F1",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-454",
+      "hex": "#260A43",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-455",
+      "hex": "#47127D",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-456",
+      "hex": "#6B1BBB",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-457",
+      "hex": "#9444E4",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-458",
+      "hex": "#B882ED",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-459",
+      "hex": "#E0C9F7",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-460",
+      "hex": "#260349",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-461",
+      "hex": "#470689",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-462",
+      "hex": "#6B09CE",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-463",
+      "hex": "#9431F6",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-464",
+      "hex": "#B876F9",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-465",
+      "hex": "#E0C4FD",
+      "codes": {
+        "MARD": "S18",
+        "COCO": "S18-C",
+        "MANMAN": "S18-M",
+        "PANPAN": "S18-P",
+        "MIXIAOWO": "S18-M"
+      }
+    },
+    {
+      "id": "color-466",
+      "hex": "#2D1934",
+      "codes": {
+        "MARD": "T18",
+        "COCO": "T18-C",
+        "MANMAN": "T18-M",
+        "PANPAN": "T18-P",
+        "MIXIAOWO": "T18-M"
+      }
+    },
+    {
+      "id": "color-467",
+      "hex": "#542E60",
+      "codes": {
+        "MARD": "T18",
+        "COCO": "T18-C",
+        "MANMAN": "T18-M",
+        "PANPAN": "T18-P",
+        "MIXIAOWO": "T18-M"
+      }
+    },
+    {
+      "id": "color-468",
+      "hex": "#7E4691",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-469",
+      "hex": "#A76EB9",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-470",
+      "hex": "#C49FD1",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-471",
+      "hex": "#E6D6EB",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-472",
+      "hex": "#31113B",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-473",
+      "hex": "#5B206F",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-474",
+      "hex": "#8930A6",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-475",
+      "hex": "#B159CF",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-476",
+      "hex": "#CB90DF",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-477",
+      "hex": "#E9D0F1",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-478",
+      "hex": "#350A43",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-479",
+      "hex": "#62127D",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-480",
+      "hex": "#931BBB",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-481",
+      "hex": "#BC44E4",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-482",
+      "hex": "#D282ED",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-483",
+      "hex": "#ECC9F7",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-484",
+      "hex": "#380349",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-485",
+      "hex": "#680689",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-486",
+      "hex": "#9C09CE",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-487",
+      "hex": "#C531F6",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-488",
+      "hex": "#D876F9",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-489",
+      "hex": "#EEC4FD",
+      "codes": {
+        "MARD": "T19",
+        "COCO": "T19-C",
+        "MANMAN": "T19-M",
+        "PANPAN": "T19-P",
+        "MIXIAOWO": "T19-M"
+      }
+    },
+    {
+      "id": "color-490",
+      "hex": "#341934",
+      "codes": {
+        "MARD": "U19",
+        "COCO": "U19-C",
+        "MANMAN": "U19-M",
+        "PANPAN": "U19-P",
+        "MIXIAOWO": "U19-M"
+      }
+    },
+    {
+      "id": "color-491",
+      "hex": "#602E60",
+      "codes": {
+        "MARD": "U19",
+        "COCO": "U19-C",
+        "MANMAN": "U19-M",
+        "PANPAN": "U19-P",
+        "MIXIAOWO": "U19-M"
+      }
+    },
+    {
+      "id": "color-492",
+      "hex": "#914691",
+      "codes": {
+        "MARD": "U19",
+        "COCO": "U19-C",
+        "MANMAN": "U19-M",
+        "PANPAN": "U19-P",
+        "MIXIAOWO": "U19-M"
+      }
+    },
+    {
+      "id": "color-493",
+      "hex": "#B96EB9",
+      "codes": {
+        "MARD": "U19",
+        "COCO": "U19-C",
+        "MANMAN": "U19-M",
+        "PANPAN": "U19-P",
+        "MIXIAOWO": "U19-M"
+      }
+    },
+    {
+      "id": "color-494",
+      "hex": "#D19FD1",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-495",
+      "hex": "#EBD6EB",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-496",
+      "hex": "#3B113B",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-497",
+      "hex": "#6F206F",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-498",
+      "hex": "#A630A6",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-499",
+      "hex": "#CF59CF",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-500",
+      "hex": "#DF90DF",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-501",
+      "hex": "#F1D0F1",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-502",
+      "hex": "#430A43",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-503",
+      "hex": "#7D127D",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-504",
+      "hex": "#BB1BBB",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-505",
+      "hex": "#E444E4",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-506",
+      "hex": "#ED82ED",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-507",
+      "hex": "#F7C9F7",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-508",
+      "hex": "#490349",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-509",
+      "hex": "#890689",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-510",
+      "hex": "#CE09CE",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-511",
+      "hex": "#F631F6",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-512",
+      "hex": "#F976F9",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-513",
+      "hex": "#FDC4FD",
+      "codes": {
+        "MARD": "U20",
+        "COCO": "U20-C",
+        "MANMAN": "U20-M",
+        "PANPAN": "U20-P",
+        "MIXIAOWO": "U20-M"
+      }
+    },
+    {
+      "id": "color-514",
+      "hex": "#34192D",
+      "codes": {
+        "MARD": "V20",
+        "COCO": "V20-C",
+        "MANMAN": "V20-M",
+        "PANPAN": "V20-P",
+        "MIXIAOWO": "V20-M"
+      }
+    },
+    {
+      "id": "color-515",
+      "hex": "#602E54",
+      "codes": {
+        "MARD": "V20",
+        "COCO": "V20-C",
+        "MANMAN": "V20-M",
+        "PANPAN": "V20-P",
+        "MIXIAOWO": "V20-M"
+      }
+    },
+    {
+      "id": "color-516",
+      "hex": "#91467E",
+      "codes": {
+        "MARD": "V20",
+        "COCO": "V20-C",
+        "MANMAN": "V20-M",
+        "PANPAN": "V20-P",
+        "MIXIAOWO": "V20-M"
+      }
+    },
+    {
+      "id": "color-517",
+      "hex": "#B96EA7",
+      "codes": {
+        "MARD": "V20",
+        "COCO": "V20-C",
+        "MANMAN": "V20-M",
+        "PANPAN": "V20-P",
+        "MIXIAOWO": "V20-M"
+      }
+    },
+    {
+      "id": "color-518",
+      "hex": "#D19FC4",
+      "codes": {
+        "MARD": "V20",
+        "COCO": "V20-C",
+        "MANMAN": "V20-M",
+        "PANPAN": "V20-P",
+        "MIXIAOWO": "V20-M"
+      }
+    },
+    {
+      "id": "color-519",
+      "hex": "#EBD6E6",
+      "codes": {
+        "MARD": "V20",
+        "COCO": "V20-C",
+        "MANMAN": "V20-M",
+        "PANPAN": "V20-P",
+        "MIXIAOWO": "V20-M"
+      }
+    },
+    {
+      "id": "color-520",
+      "hex": "#3B1131",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-521",
+      "hex": "#6F205B",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-522",
+      "hex": "#A63089",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-523",
+      "hex": "#CF59B1",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-524",
+      "hex": "#DF90CB",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-525",
+      "hex": "#F1D0E9",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-526",
+      "hex": "#430A35",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-527",
+      "hex": "#7D1262",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-528",
+      "hex": "#BB1B93",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-529",
+      "hex": "#E444BC",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-530",
+      "hex": "#ED82D2",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-531",
+      "hex": "#F7C9EC",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-532",
+      "hex": "#490338",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-533",
+      "hex": "#890668",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-534",
+      "hex": "#CE099C",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-535",
+      "hex": "#F631C5",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-536",
+      "hex": "#F976D8",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-537",
+      "hex": "#FDC4EE",
+      "codes": {
+        "MARD": "V21",
+        "COCO": "V21-C",
+        "MANMAN": "V21-M",
+        "PANPAN": "V21-P",
+        "MIXIAOWO": "V21-M"
+      }
+    },
+    {
+      "id": "color-538",
+      "hex": "#341926",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-539",
+      "hex": "#602E47",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-540",
+      "hex": "#91466B",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-541",
+      "hex": "#B96E94",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-542",
+      "hex": "#D19FB8",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-543",
+      "hex": "#EBD6E0",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-544",
+      "hex": "#3B1126",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-545",
+      "hex": "#6F2047",
+      "codes": {
+        "MARD": "W21",
+        "COCO": "W21-C",
+        "MANMAN": "W21-M",
+        "PANPAN": "W21-P",
+        "MIXIAOWO": "W21-M"
+      }
+    },
+    {
+      "id": "color-546",
+      "hex": "#A6306B",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-547",
+      "hex": "#CF5994",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-548",
+      "hex": "#DF90B8",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-549",
+      "hex": "#F1D0E0",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-550",
+      "hex": "#430A26",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-551",
+      "hex": "#7D1247",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-552",
+      "hex": "#BB1B6B",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-553",
+      "hex": "#E44494",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-554",
+      "hex": "#ED82B8",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-555",
+      "hex": "#F7C9E0",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-556",
+      "hex": "#490326",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-557",
+      "hex": "#890647",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-558",
+      "hex": "#CE096B",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-559",
+      "hex": "#F63194",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-560",
+      "hex": "#F976B8",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-561",
+      "hex": "#FDC4E0",
+      "codes": {
+        "MARD": "W22",
+        "COCO": "W22-C",
+        "MANMAN": "W22-M",
+        "PANPAN": "W22-P",
+        "MIXIAOWO": "W22-M"
+      }
+    },
+    {
+      "id": "color-562",
+      "hex": "#341920",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-563",
+      "hex": "#602E3B",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-564",
+      "hex": "#914658",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-565",
+      "hex": "#B96E81",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-566",
+      "hex": "#D19FAB",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-567",
+      "hex": "#EBD6DB",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-568",
+      "hex": "#3B111C",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-569",
+      "hex": "#6F2034",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-570",
+      "hex": "#A6304E",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-571",
+      "hex": "#CF5976",
+      "codes": {
+        "MARD": "X22",
+        "COCO": "X22-C",
+        "MANMAN": "X22-M",
+        "PANPAN": "X22-P",
+        "MIXIAOWO": "X22-M"
+      }
+    },
+    {
+      "id": "color-572",
+      "hex": "#DF90A4",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-573",
+      "hex": "#F1D0D8",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-574",
+      "hex": "#430A18",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-575",
+      "hex": "#7D122D",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-576",
+      "hex": "#BB1B43",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-577",
+      "hex": "#E4446C",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-578",
+      "hex": "#ED829D",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-579",
+      "hex": "#F7C9D5",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-580",
+      "hex": "#490315",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-581",
+      "hex": "#890627",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-582",
+      "hex": "#CE093A",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-583",
+      "hex": "#F63163",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-584",
+      "hex": "#F97697",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    },
+    {
+      "id": "color-585",
+      "hex": "#FDC4D2",
+      "codes": {
+        "MARD": "X23",
+        "COCO": "X23-C",
+        "MANMAN": "X23-M",
+        "PANPAN": "X23-P",
+        "MIXIAOWO": "X23-M"
+      }
+    }
+  ]
+}

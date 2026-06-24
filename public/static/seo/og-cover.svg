@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5B6CFF"/>
+      <stop offset="100%" stop-color="#7C4DFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g fill="#ffffff" opacity="0.12">
+    <circle cx="180" cy="120" r="48"/>
+    <circle cx="1020" cy="520" r="72"/>
+    <circle cx="920" cy="140" r="36"/>
+    <circle cx="300" cy="500" r="56"/>
+  </g>
+  <text x="80" y="280" fill="#ffffff" font-family="system-ui, sans-serif" font-size="72" font-weight="700">Pindou �F</text>
+  <text x="80" y="360" fill="#E8EAFF" font-family="system-ui, sans-serif" font-size="36">�Gl�F�� � ,0 � 	��(</text>
+  <g transform="translate(80, 420)">
+    <rect width="180" height="56" rx="28" fill="#ffffff" opacity="0.2"/>
+    <text x="90" y="36" fill="#ffffff" font-family="system-ui, sans-serif" font-size="22" text-anchor="middle">M9(��w</text>
+  </g>
+</svg>

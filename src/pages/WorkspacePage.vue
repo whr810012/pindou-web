@@ -1,0 +1,1060 @@
+<script setup lang="ts">
+import { useRouter } from 'vue-router'
+import PButton from '@/components/ui/PButton.vue'
+import { showToast, showModal, showActionSheet, getSystemInfoSync } from '@/utils/platform-ui'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { usePageSeo } from '@/utils/seo'
+import AiPreprocessSheet from '@/components/AiPreprocessSheet.vue'
+import BeadCanvas from '@/components/BeadCanvas.vue'
+import ColorPanel from '@/components/ColorPanel.vue'
+import CompareSheet from '@/components/CompareSheet.vue'
+import ExportSheet from '@/components/ExportSheet.vue'
+import ImageCropperModal from '@/components/ImageCropperModal.vue'
+import ProjectSaveSheet from '@/components/ProjectSaveSheet.vue'
+import SettingsDrawer from '@/components/SettingsDrawer.vue'
+import WorkspaceParamStrip from '@/components/WorkspaceParamStrip.vue'
+import WorkspaceWorkflowGuide from '@/components/WorkspaceWorkflowGuide.vue'
+import { useFocusStore } from '@/stores/focus'
+import { usePaletteStore } from '@/stores/palette'
+import { useProjectStore } from '@/stores/project'
+import { type ExportSettings } from '@/types/app'
+import { debounce } from '@/utils/debounce'
+import {
+  applySuggestedParamsForImage,
+  loadImageToProject,
+  pickImage,
+  processCurrentProject,
+} from '@/utils/pipeline'
+import {
+  buildColorStats,
+  downloadBlobH5,
+  downloadDataUrlH5,
+  downloadTextH5,
+  exportPatternPdf,
+  exportStatsCsv,
+  renderPatternCanvas,
+  renderStatsCanvas,
+} from '@/utils/export'
+import { ProjectStorage, createProjectId } from '@/utils/projectStorage'
+import { createSourcePreview, gridMeta, renderGridThumbnail } from '@/utils/thumbnail'
+import {
+  defaultPreviewContainerWidth,
+  observeElementWidth,
+} from '@/utils/fitCellSize'
+
+usePageSeo('workspace')
+
+const router = useRouter()
+const project = useProjectStore()
+const paletteStore = usePaletteStore()
+const focus = useFocusStore()
+const exportCanvasId = 'pindou-export-canvas'
+const previewWrapId = 'workspace-preview-wrap'
+const previewMeasureId = 'workspace-preview-measure'
+const previewWidth = ref(defaultPreviewContainerWidth())
+const beadCanvasRef = ref<InstanceType<typeof BeadCanvas> | null>(null)
+let stopPreviewObserve: (() => void) | null = null
+
+
+const h5PreviewPan = {
+  active: false,
+  moved: false,
+  startX: 0,
+  startY: 0,
+  scrollLeft: 0,
+  scrollTop: 0,
+}
+
+function getH5PreviewScrollEl(event?: Event): HTMLElement | null {
+  const fromEvent = event?.currentTarget as HTMLElement | undefined
+  if (fromEvent) return fromEvent
+  return (
+    document.getElementById(previewWrapId) ??
+    (document.querySelector(`#${previewWrapId}`) as HTMLElement | null)
+  )
+}
+
+function syncPreviewViewportWidth() {
+  const el = getH5PreviewScrollEl()
+  if (el?.clientWidth && el.clientWidth > 0) {
+    previewWidth.value = el.clientWidth
+  }
+}
+
+function onH5PreviewTouchStart(event: TouchEvent) {
+  const el = getH5PreviewScrollEl(event)
+  const touch = event.touches[0]
+  if (!el || !touch) return
+  h5PreviewPan.active = true
+  h5PreviewPan.moved = false
+  h5PreviewPan.startX = touch.clientX
+  h5PreviewPan.startY = touch.clientY
+  h5PreviewPan.scrollLeft = el.scrollLeft
+  h5PreviewPan.scrollTop = el.scrollTop
+}
+
+function onH5PreviewTouchMove(event: TouchEvent) {
+  if (!h5PreviewPan.active) return
+  const el = getH5PreviewScrollEl(event)
+  const touch = event.touches[0]
+  if (!el || !touch) return
+  const dx = touch.clientX - h5PreviewPan.startX
+  const dy = touch.clientY - h5PreviewPan.startY
+  if (!h5PreviewPan.moved && Math.hypot(dx, dy) < 4) return
+  h5PreviewPan.moved = true
+  el.scrollLeft = h5PreviewPan.scrollLeft - dx
+  el.scrollTop = h5PreviewPan.scrollTop - dy
+}
+
+function onH5PreviewTouchEnd(event: TouchEvent) {
+  if (!h5PreviewPan.moved) {
+    const touch = event.changedTouches[0]
+    if (touch) beadCanvasRef.value?.resolveTapAt(touch.clientX, touch.clientY)
+  }
+  h5PreviewPan.active = false
+  h5PreviewPan.moved = false
+}
+
+function onH5PreviewMouseDown(event: MouseEvent) {
+  if (event.button !== 0) return
+  const el = getH5PreviewScrollEl(event)
+  if (!el) return
+  h5PreviewPan.active = true
+  h5PreviewPan.moved = false
+  h5PreviewPan.startX = event.clientX
+  h5PreviewPan.startY = event.clientY
+  h5PreviewPan.scrollLeft = el.scrollLeft
+  h5PreviewPan.scrollTop = el.scrollTop
+  document.addEventListener('mousemove', onH5PreviewMouseMove)
+  document.addEventListener('mouseup', onH5PreviewMouseUp, { once: true })
+}
+
+function onH5PreviewMouseMove(event: MouseEvent) {
+  if (!h5PreviewPan.active) return
+  const el = getH5PreviewScrollEl()
+  if (!el) return
+  const dx = event.clientX - h5PreviewPan.startX
+  const dy = event.clientY - h5PreviewPan.startY
+  if (!h5PreviewPan.moved && Math.hypot(dx, dy) < 4) return
+  h5PreviewPan.moved = true
+  el.scrollLeft = h5PreviewPan.scrollLeft - dx
+  el.scrollTop = h5PreviewPan.scrollTop - dy
+}
+
+function onH5PreviewMouseUp(event: MouseEvent) {
+  document.removeEventListener('mousemove', onH5PreviewMouseMove)
+  if (h5PreviewPan.active && !h5PreviewPan.moved) {
+    beadCanvasRef.value?.resolveTapAt(event.clientX, event.clientY)
+  }
+  h5PreviewPan.active = false
+  h5PreviewPan.moved = false
+}
+
+function onH5PreviewWheel(event: WheelEvent) {
+  const el = getH5PreviewScrollEl()
+  if (!el) return
+  if (Math.abs(event.deltaX) > 0) {
+    el.scrollLeft += event.deltaX
+    event.preventDefault()
+    return
+  }
+  if (event.shiftKey && Math.abs(event.deltaY) > 0) {
+    el.scrollLeft += event.deltaY
+    event.preventDefault()
+  }
+}
+
+const processing = ref(false)
+const exportVisible = ref(false)
+const settingsVisible = ref(false)
+const cropperVisible = ref(false)
+const saveVisible = ref(false)
+const compareVisible = ref(false)
+const aiVisible = ref(false)
+const tipsExpanded = ref(false)
+const pendingImagePath = ref('')
+
+const hasSource = computed(() => !!project.sourcePixels || !!project.sourcePreview)
+const hasGrid = computed(() => project.hasGrid)
+
+const stats = computed(() => {
+  if (!project.grid) return []
+  return buildColorStats(project.grid, paletteStore.brand, (id) => paletteStore.getDisplayCode(id))
+})
+
+const compareSource = computed(() => project.sourcePreview || project.sourcePath)
+const gridInfo = computed(() => (project.grid ? gridMeta(project.grid) : null))
+const isUpdateSave = computed(() => !!project.savedProjectId)
+
+/** 预览格点：120×120 等大图固定 6px，保证可横纵拖动查看 */
+const PREVIEW_MIN_CELL = 6
+const LARGE_GRID_THRESHOLD = 60
+const previewCellSize = computed(() => {
+  const g = project.grid
+  if (!g?.length || previewWidth.value <= 0) return PREVIEW_MIN_CELL
+  const cols = g[0]?.length ?? 1
+  const rows = g.length
+  if (cols >= LARGE_GRID_THRESHOLD || rows >= LARGE_GRID_THRESHOLD) {
+    return PREVIEW_MIN_CELL
+  }
+  const fitCell = previewWidth.value / cols
+  if (cols * PREVIEW_MIN_CELL > previewWidth.value + 0.5) return PREVIEW_MIN_CELL
+  return Math.max(PREVIEW_MIN_CELL, fitCell)
+})
+
+const previewCanvasSize = computed(() => {
+  const g = project.grid
+  if (!g?.length) return { width: 0, height: 0 }
+  const cols = g[0]?.length ?? 1
+  const rows = g.length
+  const cell = previewCellSize.value
+  return {
+    width: cols * cell,
+    height: rows * cell,
+  }
+})
+
+const previewViewportStyle = computed(() => {
+  const rows = project.grid?.length ?? 0
+  const canvasHeight = rows * previewCellSize.value
+  const maxHeight = Math.round(getSystemInfoSync().windowHeight * 0.68)
+  const height = canvasHeight > 0 ? Math.min(canvasHeight, maxHeight) : 220
+  return { height: `${Math.max(180, height)}px` }
+})
+
+const previewContentStyle = computed(() => {
+  const size = previewCanvasSize.value
+  if (size.width <= 0 || size.height <= 0) return {}
+  return {
+    width: `${size.width}px`,
+    height: `${size.height}px`,
+  }
+})
+
+function startPreviewWidthObserve() {
+  stopPreviewObserve?.()
+  const el = document.getElementById(previewMeasureId)
+  stopPreviewObserve = observeElementWidth(el, (w) => {
+    previewWidth.value = w
+    nextTick(() => syncPreviewViewportWidth())
+  })
+  nextTick(() => syncPreviewViewportWidth())
+}
+
+const statusText = computed(() => {
+  if (!hasGrid.value) return ''
+  if (project.dirty) return '未保存'
+  if (project.savedProjectId) return '已保存'
+  return '未保存'
+})
+
+const debouncedReprocess = debounce(() => {
+  reprocess()
+}, 300)
+
+onMounted(async () => {
+  await paletteStore.loadPalettes()
+  paletteStore.setPreset(project.params.palettePresetId)
+  await nextTick()
+  startPreviewWidthObserve()
+})
+
+onUnmounted(() => {
+  stopPreviewObserve?.()
+})
+
+watch(hasGrid, async (ready) => {
+  if (!ready) return
+  await nextTick()
+  startPreviewWidthObserve()
+})
+
+watch(processing, async (busy) => {
+  if (!busy && hasGrid.value) {
+    await nextTick()
+    startPreviewWidthObserve()
+  }
+})
+
+async function startPickImage() {
+  try {
+    const path = await pickImage()
+    pendingImagePath.value = path
+    cropperVisible.value = true
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+function onPickImage() {
+  startPickImage()
+}
+
+function onReplaceImage() {
+  if (hasGrid.value && project.dirty) {
+    showModal({
+      title: '更换图片',
+      content: '当前项目有未保存修改，换图后将重新生成图纸。',
+      success: (res) => {
+        if (res.confirm) startPickImage()
+      },
+    })
+    return
+  }
+  startPickImage()
+}
+
+async function onAiPick() {
+  try {
+    const path = await pickImage()
+    pendingImagePath.value = path
+    aiVisible.value = true
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+async function onAiDone(path: string) {
+  pendingImagePath.value = path
+  cropperVisible.value = true
+}
+
+async function onCropConfirm(path: string) {
+  cropperVisible.value = false
+  try {
+    processing.value = true
+    const loaded = await loadImageToProject(path)
+    applySuggestedParamsForImage(loaded.width, loaded.height, loaded.pixels)
+    paletteStore.setPreset(project.params.palettePresetId)
+    const preview = await createSourcePreview(path)
+    project.setSourcePreview(preview)
+    await processCurrentProject()
+    showToast({ title: '生成成功', icon: 'success' })
+  } catch (error) {
+    showToast({ title: '处理失败', icon: 'none' })
+    console.error(error)
+  } finally {
+    processing.value = false
+  }
+}
+
+async function reprocess() {
+  if (!project.sourcePixels) return
+  processing.value = true
+  try {
+    paletteStore.setPreset(project.params.palettePresetId)
+    await processCurrentProject()
+  } finally {
+    processing.value = false
+  }
+}
+
+function onParamUpdate(params: Partial<typeof project.params>) {
+  project.setParams(params)
+  if (params.palettePresetId) paletteStore.setPreset(params.palettePresetId)
+  debouncedReprocess()
+}
+
+function onQuickParamUpdate(params: Partial<typeof project.params>) {
+  project.setParams(params)
+  if (params.palettePresetId) paletteStore.setPreset(params.palettePresetId)
+  reprocess()
+}
+
+function onBrandChange(brand: typeof paletteStore.brand) {
+  paletteStore.setBrand(brand)
+}
+
+function onApplyPreset(preset: import('@/types/app').ParamPreset) {
+  project.setParams({ ...preset.params })
+  paletteStore.setPreset(preset.params.palettePresetId)
+  paletteStore.setBrand(preset.brand)
+  reprocess()
+}
+
+async function toggleExcluded(id: string) {
+  project.toggleExcluded(id)
+  await reprocess()
+}
+
+async function restoreAll() {
+  project.restoreAllExcluded()
+  await reprocess()
+}
+
+function goEditor() {
+  if (!project.hasGrid) return
+  router.push('/editor')
+}
+
+function goFocus() {
+  if (!project.hasGrid) return
+  router.push('/focus')
+}
+
+function goPreview3d() {
+  if (!project.hasGrid) return
+  router.push('/preview3d')
+}
+
+function openSave() {
+  if (!project.grid) return
+  saveVisible.value = true
+}
+
+async function confirmSave(name: string) {
+  if (!project.grid) return
+  const wasUpdate = !!project.savedProjectId
+  const id = project.savedProjectId ?? createProjectId()
+  const thumbnail = await renderGridThumbnail(project.grid)
+  const saved = {
+    id,
+    name,
+    updatedAt: Date.now(),
+    thumbnail: thumbnail || undefined,
+    sourcePreview: project.sourcePreview || undefined,
+    params: { ...project.params },
+    grid: project.grid,
+    excludedPaletteIds: [...project.excludedPaletteIds],
+    completedCells: focus.exportCompleted(),
+  }
+  ProjectStorage.save(saved)
+  project.projectName = name
+  project.savedProjectId = id
+  project.dirty = false
+  saveVisible.value = false
+  showToast({ title: wasUpdate ? '已更新' : '已保存', icon: 'success' })
+}
+
+async function handleExport(settings: ExportSettings) {
+  if (!project.grid) return
+  exportVisible.value = false
+  const codeLookup = (id: string) => paletteStore.getDisplayCode(id)
+  const csv = exportStatsCsv(stats.value)
+
+  
+  if (settings.format === 'pdf') {
+    const pdf = await exportPatternPdf(project.grid, settings, codeLookup, project.projectName, stats.value)
+    if (pdf) downloadBlobH5('pindou-pattern.pdf', pdf)
+    showToast({ title: 'PDF 已导出', icon: 'success' })
+    return
+  }
+
+  const pattern = await renderPatternCanvas(project.grid, settings, codeLookup)
+  if (settings.format === 'png' || settings.format === 'all') {
+    downloadDataUrlH5('pindou-pattern.png', pattern)
+  }
+  if (settings.format === 'all') {
+    const statImage = await renderStatsCanvas(stats.value)
+    if (statImage) downloadDataUrlH5('pindou-stats.png', statImage)
+    downloadTextH5('pindou-stats.csv', csv, 'text/csv')
+  }
+  showToast({ title: '导出完成', icon: 'success' })
+}
+</script>
+
+<template>
+  <div class="page page--dock page--workspace">
+    <!-- 项目信息 -->
+    <section
+      v-if="hasGrid || project.projectName !== '未命名项目'"
+      class="workspace-hero card"
+    >
+      <div class="workspace-hero__media">
+        <img v-if="compareSource" class="workspace-hero__thumb" :src="compareSource" alt="" />
+        <div v-else class="workspace-hero__thumb workspace-hero__thumb--empty" aria-hidden="true">◇</div>
+      </div>
+      <div class="workspace-hero__body">
+        <div class="workspace-hero__title-row">
+          <h1 class="workspace-hero__name">{{ project.projectName }}</h1>
+          <span
+            v-if="statusText"
+            class="badge"
+            :class="project.dirty ? 'badge--warn' : 'badge--ok'"
+          >{{ statusText }}</span>
+        </div>
+        <div v-if="gridInfo" class="workspace-hero__chips">
+          <span class="stat-chip">{{ gridInfo.cols }}×{{ gridInfo.rows }}</span>
+          <span class="stat-chip">{{ gridInfo.colorCount }} 色</span>
+          <span class="stat-chip">{{ gridInfo.beads }} 豆</span>
+        </div>
+        <span v-else class="workspace-hero__meta">等待生成图纸</span>
+      </div>
+    </section>
+
+    <!-- 使用引导 -->
+    <WorkspaceWorkflowGuide
+      :has-grid="hasGrid"
+      @pick-image="onPickImage"
+      @go-editor="goEditor"
+      @open-settings="settingsVisible = true"
+    />
+
+    <!-- 工具栏 -->
+    <section class="workspace-toolbar card">
+      <div scroll-x class="workspace-toolbar__scroll">
+        <button
+          type="button"
+          class="action-chip"
+          :class="{ 'action-chip--primary': !hasGrid }"
+          @click="hasGrid ? onReplaceImage() : onPickImage()"
+        >
+          <span class="action-chip__icon" aria-hidden="true">{{ hasGrid ? '↻' : '↑' }}</span>
+          <span>{{ hasGrid ? '换图' : '上传图片' }}</span>
+        </button>
+        <button type="button" class="action-chip" @click="onAiPick">
+          <span class="action-chip__icon" aria-hidden="true">✦</span>
+          <span>AI 预处理</span>
+        </button>
+        <button type="button" class="action-chip" :disabled="!hasGrid" @click="compareVisible = true">
+          <span class="action-chip__icon" aria-hidden="true">⇄</span>
+          <span>对比</span>
+        </button>
+        <button type="button" class="action-chip" @click="settingsVisible = true">
+          <span class="action-chip__icon" aria-hidden="true">⚙</span>
+          <span>参数</span>
+        </button>
+        <button type="button" class="action-chip" :disabled="!hasGrid" @click="openSave">
+          <span class="action-chip__icon" aria-hidden="true">↓</span>
+          <span>保存</span>
+        </button>
+        <button type="button" class="action-chip" :disabled="!hasGrid" @click="exportVisible = true">
+          <span class="action-chip__icon" aria-hidden="true">⤓</span>
+          <span>导出</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 快调参数 -->
+    <WorkspaceParamStrip
+      v-if="hasSource"
+      :params="project.params"
+      :disabled="processing || !project.sourcePixels"
+      @update="onQuickParamUpdate"
+      @open-settings="settingsVisible = true"
+    />
+
+    <!-- 图纸预览 -->
+    <section class="card preview-card" :class="{ 'preview-card--ready': hasGrid }">
+      <div v-if="hasGrid" class="preview-head">
+        <div>
+          <span class="preview-title">图纸预览</span>
+          <p class="preview-hint">拖动平移 · 点击查看色号</p>
+        </div>
+        <button type="button" class="preview-edit" @click="goEditor">精修图纸 ›</button>
+      </div>
+
+      <div v-if="processing" class="loading-overlay">
+        <div class="loading-spinner" />
+        <span class="loading-text">正在生成图纸…</span>
+        <span class="loading-sub">本地处理中，大图可能需要几秒</span>
+      </div>
+
+      <div v-else-if="!hasGrid" class="empty-zone" @click="onPickImage">
+        <div class="empty-zone__visual" aria-hidden="true">
+          <span class="empty-icon">+</span>
+        </div>
+        <span class="empty-title">上传图片开始制作</span>
+        <span class="empty-desc">支持 JPG / PNG，全部在浏览器本地处理，不上传服务器</span>
+        <div class="empty-actions" @click.stop>
+          <PButton type="primary" text="选择图片" @click="onPickImage" />
+          <PButton plain text="AI 预处理" @click="onAiPick" />
+        </div>
+      </div>
+
+      <div v-else class="preview-body">
+        <div :id="previewMeasureId" class="preview-measure" />
+        <div class="preview-frame">
+          <div
+            :id="previewWrapId"
+            class="preview-canvas-wrap preview-canvas-wrap--h5"
+            :style="previewViewportStyle"
+            @touchstart="onH5PreviewTouchStart"
+            @touchmove.prevent="onH5PreviewTouchMove"
+            @touchend="onH5PreviewTouchEnd"
+            @touchcancel="onH5PreviewTouchEnd"
+            @mousedown="onH5PreviewMouseDown"
+            @wheel="onH5PreviewWheel"
+          >
+            <div class="preview-canvas-inner" :style="previewContentStyle">
+              <BeadCanvas
+                ref="beadCanvasRef"
+                :grid="project.grid!"
+                external-scroll
+                :cell-size="previewCellSize"
+                :show-grid="true"
+                :interactive="true"
+                :code-lookup="(id) => paletteStore.getDisplayCode(id)"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 调优提示（可折叠） -->
+    <section v-if="hasGrid" class="card tips-card">
+      <button type="button" class="tips-head" @click="tipsExpanded = !tipsExpanded">
+        <span class="tips-title">效果调优提示</span>
+        <span class="tips-toggle">{{ tipsExpanded ? '收起' : '展开' }}</span>
+      </button>
+      <div v-if="tipsExpanded" class="tips-body">
+        <span class="tip-line">对比原图找差异，适当提高格数与全色系</span>
+        <span class="tip-line">照片用「真实/平均色」，卡通用「主导色」</span>
+        <span class="tip-line">合并阈值 0～12，过高会丢失细节</span>
+      </div>
+    </section>
+
+    <ColorPanel
+      v-if="stats.length"
+      :stats="stats"
+      :excluded-ids="project.excludedPaletteIds"
+      @toggle="toggleExcluded"
+      @restore-all="restoreAll"
+    />
+
+    <div class="bottom-dock workspace-dock">
+      <PButton type="primary" size="small" text="精修图纸" :disabled="!hasGrid" @click="goEditor" />
+      <PButton size="small" text="3D 预览" :disabled="!hasGrid" @click="goPreview3d" />
+      <PButton size="small" text="专心拼豆" :disabled="!hasGrid" @click="goFocus" />
+    </div>
+
+    <SettingsDrawer
+      :show="settingsVisible"
+      :params="project.params"
+      :brand="paletteStore.brand"
+      @close="settingsVisible = false"
+      @update="onParamUpdate"
+      @brand-change="onBrandChange"
+      @apply-preset="onApplyPreset"
+    />
+
+    <ImageCropperModal
+      :show="cropperVisible"
+      :image-path="pendingImagePath"
+      @close="cropperVisible = false"
+      @confirm="onCropConfirm"
+    />
+
+    <ProjectSaveSheet
+      :show="saveVisible"
+      :name="project.projectName"
+      :is-update="isUpdateSave"
+      @close="saveVisible = false"
+      @confirm="confirmSave"
+    />
+
+    <CompareSheet
+      :show="compareVisible"
+      :source-src="compareSource"
+      :grid="project.grid"
+      :code-lookup="(id) => paletteStore.getDisplayCode(id)"
+      @close="compareVisible = false"
+    />
+
+    <AiPreprocessSheet
+      :show="aiVisible"
+      :image-path="pendingImagePath"
+      @close="aiVisible = false"
+      @done="onAiDone"
+    />
+
+    <ExportSheet :show="exportVisible" @close="exportVisible = false" @confirm="handleExport" />
+
+    
+    
+    <canvas :id="exportCanvasId" type="2d" class="hidden-canvas" />
+    
+  </div>
+</template>
+
+<style scoped lang="scss">
+.page--workspace {
+  padding-top: $pindou-space-md;
+}
+
+.workspace-hero {
+  display: flex;
+  gap: $pindou-space-md;
+  align-items: center;
+  background: linear-gradient(135deg, #fff 0%, rgba($pindou-primary, 0.04) 100%);
+  border-color: rgba($pindou-primary, 0.12);
+}
+
+.workspace-hero__media {
+  flex-shrink: 0;
+}
+
+.workspace-hero__thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: $pindou-radius-sm;
+  object-fit: cover;
+  border: 1px solid $pindou-border-light;
+  box-shadow: $pindou-shadow-sm;
+
+  &--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $pindou-primary-light;
+    color: $pindou-primary;
+    font-size: 20px;
+  }
+}
+
+.workspace-hero__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.workspace-hero__title-row {
+  display: flex;
+  align-items: center;
+  gap: $pindou-space-sm;
+}
+
+.workspace-hero__name {
+  margin: 0;
+  font-weight: 700;
+  font-size: $pindou-font-lg;
+  color: $pindou-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.workspace-hero__meta {
+  display: block;
+  margin-top: 6px;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-muted;
+}
+
+.workspace-hero__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.stat-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-primary, 0.08);
+  color: $pindou-primary;
+  font-size: $pindou-font-xs;
+  font-weight: 600;
+}
+
+.workspace-toolbar {
+  padding: 10px $pindou-space-md;
+}
+
+.workspace-toolbar__scroll {
+  display: flex;
+  gap: 8px;
+  padding-bottom: 2px;
+}
+
+.action-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  border: 1px solid $pindou-border-light;
+  border-radius: $pindou-radius-pill;
+  background: $pindou-bg-subtle;
+  color: $pindou-text-secondary;
+  font-size: $pindou-font-sm;
+  font-weight: 500;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    border-color: rgba($pindou-primary, 0.35);
+    background: #fff;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background: $pindou-primary;
+    border-color: $pindou-primary;
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background: $pindou-primary-dark;
+      border-color: $pindou-primary-dark;
+    }
+  }
+}
+
+.action-chip__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  font-size: 11px;
+  line-height: 1;
+
+  .action-chip--primary & {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}
+
+.preview-card {
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+}
+
+.preview-card--ready {
+  padding-bottom: $pindou-space-md;
+}
+
+.preview-body {
+  margin-top: 4px;
+}
+
+.preview-measure {
+  width: 100%;
+  height: 1px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preview-frame {
+  border-radius: $pindou-radius-sm;
+  padding: 10px;
+  background-color: #f4f5f8;
+  background-image:
+    linear-gradient(45deg, #e8eaef 25%, transparent 25%),
+    linear-gradient(-45deg, #e8eaef 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e8eaef 75%),
+    linear-gradient(-45deg, transparent 75%, #e8eaef 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+  border: 1px solid $pindou-border-light;
+}
+
+.preview-canvas-wrap {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.preview-canvas-wrap--h5 {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: none;
+  overscroll-behavior: contain;
+  cursor: grab;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.preview-canvas-wrap--h5:active {
+  cursor: grabbing;
+}
+
+.preview-canvas-inner {
+  display: block;
+  flex-shrink: 0;
+}
+
+.preview-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.preview-edit {
+  flex-shrink: 0;
+  border: none;
+  background: $pindou-primary;
+  color: #fff;
+  font-size: $pindou-font-sm;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: $pindou-radius-pill;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: $pindou-primary-dark;
+  }
+}
+
+.preview-hint {
+  margin: 4px 0 0;
+  font-size: $pindou-font-xs;
+  color: $pindou-text-hint;
+  line-height: 1.4;
+}
+
+.preview-title {
+  font-size: $pindou-font-md;
+  font-weight: 600;
+}
+
+.loading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px $pindou-space-lg;
+  gap: 10px;
+  text-align: center;
+}
+
+.loading-text {
+  color: $pindou-text;
+  font-size: $pindou-font-md;
+  font-weight: 600;
+}
+
+.loading-sub {
+  color: $pindou-text-muted;
+  font-size: $pindou-font-sm;
+}
+
+.empty-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px 20px 32px;
+  border: 2px dashed rgba($pindou-primary, 0.25);
+  border-radius: $pindou-radius-md;
+  background: linear-gradient(180deg, rgba($pindou-primary, 0.04), transparent);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.45);
+    background: rgba($pindou-primary, 0.06);
+  }
+}
+
+.empty-zone__visual {
+  margin-bottom: $pindou-space-md;
+}
+
+.empty-icon {
+  width: 52px;
+  height: 52px;
+  line-height: 48px;
+  text-align: center;
+  font-size: 30px;
+  color: $pindou-primary;
+  border: 2px solid rgba($pindou-primary, 0.5);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.empty-title {
+  font-size: $pindou-font-lg;
+  font-weight: 700;
+  color: $pindou-text;
+}
+
+.empty-desc {
+  margin-top: 8px;
+  max-width: 320px;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-muted;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.empty-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.tips-card {
+  padding: 10px $pindou-space-md;
+}
+
+.tips-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.tips-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: $pindou-text-secondary;
+}
+
+.tips-toggle {
+  font-size: $pindou-font-sm;
+  color: $pindou-primary;
+}
+
+.tips-body {
+  margin-top: $pindou-space-sm;
+  padding-top: $pindou-space-sm;
+  border-top: 1px solid $pindou-border-light;
+}
+
+.tip-line {
+  display: block;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-muted;
+  line-height: 1.7;
+  padding-left: 12px;
+  position: relative;
+
+  &::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: $pindou-primary;
+    font-weight: 700;
+  }
+}
+
+.workspace-dock {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  width: min(#{$pindou-content-wide}, calc(100% - 24px));
+  padding: 10px 12px;
+  gap: 8px;
+  border: 1px solid rgba($pindou-primary, 0.1);
+
+  :deep(.p-btn) {
+    flex: 1;
+    min-height: 42px;
+    font-size: $pindou-font-sm;
+  }
+
+  :deep(.p-btn--primary) {
+    box-shadow: 0 4px 12px rgba($pindou-primary, 0.25);
+  }
+}
+</style>

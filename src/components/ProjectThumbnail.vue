@@ -39,15 +39,17 @@ watch(() => props.grid, draw, { deep: true })
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .thumb-wrap {
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
-  background: #f5f6fa;
+  background: $pindou-bg-muted;
   flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 .thumb-canvas {
   display: block;
+  image-rendering: pixelated;
 }
 </style>

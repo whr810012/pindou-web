@@ -39,6 +39,11 @@ function applyH5Filter(path: string, style: AiPreprocessStyle): Promise<string> 
           r = Math.min(255, r * 1.08 + 8)
           g = Math.min(255, g * 1.08 + 8)
           b = Math.min(255, b * 1.08 + 8)
+        } else if (style === 'matting') {
+          const gray = 0.299 * r + 0.587 * g + 0.114 * b
+          if (gray > 235) {
+            r = g = b = 255
+          }
         }
 
         data[i] = r

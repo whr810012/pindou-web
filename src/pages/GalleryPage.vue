@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import PTag from '@/components/ui/PTag.vue'
 import { showToast, request } from '@/utils/platform-ui'
-import { onMounted, ref } from 'vue'
 import { usePaletteStore } from '@/stores/palette'
 import { useProjectStore } from '@/stores/project'
 import { usePageSeo } from '@/utils/seo'
+import {
+  applySuggestedParamsForImage,
+  loadImageToProject,
+  processCurrentProject,
+} from '@/utils/pipeline'
+import { createSourcePreview } from '@/utils/thumbnail'
 
 usePageSeo('gallery')
 
@@ -22,14 +28,36 @@ interface GalleryItem {
   palettePresetId: string
 }
 
+interface TemplateItem {
+  id: string
+  title: string
+  thumbnail: string
+  image: string
+}
+
+const activeTab = ref<'presets' | 'templates'>('presets')
 const items = ref<GalleryItem[]>([])
+const templates = ref<TemplateItem[]>([])
+const loading = ref(true)
+const loadingTemplate = ref(false)
 const project = useProjectStore()
 const paletteStore = usePaletteStore()
 
+const presetCount = computed(() => items.value.length)
+const templateCount = computed(() => templates.value.length)
+
 onMounted(async () => {
   await paletteStore.loadPalettes()
-  const data = await fetchGallery()
-  items.value = data.items
+  try {
+    const [galleryData, templateData] = await Promise.all([fetchGallery(), fetchTemplates()])
+    items.value = galleryData.items
+    templates.value = templateData.items
+  } catch (error) {
+    console.error(error)
+    showToast({ title: '加载失败', icon: 'none' })
+  } finally {
+    loading.value = false
+  }
 })
 
 function fetchGallery(): Promise<{ items: GalleryItem[] }> {
@@ -40,6 +68,27 @@ function fetchGallery(): Promise<{ items: GalleryItem[] }> {
       fail: reject,
     })
   })
+}
+
+function fetchTemplates(): Promise<{ items: TemplateItem[] }> {
+  return new Promise((resolve, reject) => {
+    request({
+      url: '/static/templates/templates.json',
+      success: (res) => resolve(res.data as { items: TemplateItem[] }),
+      fail: reject,
+    })
+  })
+}
+
+function modeLabel(mode: GalleryItem['mode']) {
+  return mode === 'average' ? '平均色' : '主导色'
+}
+
+function paletteLabel(presetId: string) {
+  if (presetId.includes('96')) return '96 色'
+  if (presetId.includes('168')) return '168 色'
+  if (presetId.includes('full')) return '全色系'
+  return presetId.replace('pindou-', '')
 }
 
 function applyPreset(item: GalleryItem) {
@@ -55,76 +104,308 @@ function applyPreset(item: GalleryItem) {
     router.push('/workspace')
   }, 400)
 }
+
+async function useTemplate(item: TemplateItem) {
+  if (loadingTemplate.value) return
+  loadingTemplate.value = true
+  try {
+    const loaded = await loadImageToProject(item.image)
+    applySuggestedParamsForImage(loaded.width, loaded.height, loaded.pixels)
+    paletteStore.setPreset(project.params.palettePresetId)
+    project.projectName = item.title
+    const preview = await createSourcePreview(item.image)
+    project.setSourcePreview(preview)
+    await processCurrentProject()
+    showToast({ title: '模板已加载', icon: 'success' })
+    router.push('/workspace')
+  } catch (error) {
+    console.error(error)
+    showToast({ title: '加载失败', icon: 'none' })
+  } finally {
+    loadingTemplate.value = false
+  }
+}
 </script>
 
 <template>
-  <div class="page">
-    <div class="intro card">
-      <span class="intro-title">拼豆图案例与参数推荐</span>
-      <span class="intro-desc">浏览像素拼豆作品案例与推荐生成参数，支持 MARD、COCO 等色卡预设，一键应用到工作台开始创作。</span>
+  <div class="page gallery-page page-enter">
+    <header class="craft-page-head">
+      <h1 class="craft-page-head__title">拼豆图案例与素材</h1>
+      <p class="craft-page-head__sub">
+        浏览参数推荐案例，或选用模板素材一键进入工作台生成图纸。
+      </p>
+    </header>
+
+    <div class="craft-tabs gallery-tabs">
+      <button
+        type="button"
+        class="craft-tab"
+        :class="{ active: activeTab === 'presets' }"
+        @click="activeTab = 'presets'"
+      >
+        参数案例
+        <span v-if="presetCount" class="gallery-tabs__count">{{ presetCount }}</span>
+      </button>
+      <button
+        type="button"
+        class="craft-tab"
+        :class="{ active: activeTab === 'templates' }"
+        @click="activeTab = 'templates'"
+      >
+        模板素材
+        <span v-if="templateCount" class="gallery-tabs__count">{{ templateCount }}</span>
+      </button>
     </div>
 
-    <div v-for="item in items" :key="item.id" class="card item" @click="applyPreset(item)">
-      <img class="thumb" :src="item.thumbnail" :alt="`${item.title}拼豆图案例`"  />
-      <div class="info">
-        <span class="title">{{ item.title }}</span>
-        <span class="desc">{{ item.description }}</span>
-        <div class="tags">
-          <PTag v-for="tag in item.tags" :key="tag" :text="tag" size="mini" plain />
-        </div>
-      </div>
+    <div v-if="loading" class="gallery-loading card craft-intro-card">
+      <div class="gallery-loading__spinner" aria-hidden="true" />
+      <span>加载案例中…</span>
     </div>
+
+    <template v-else-if="activeTab === 'presets'">
+      <ul v-if="items.length" class="gallery-list" role="list">
+        <li v-for="item in items" :key="item.id">
+          <article
+            class="card card--interactive gallery-card"
+            tabindex="0"
+            role="button"
+            :aria-label="`应用案例 ${item.title}`"
+            @click="applyPreset(item)"
+            @keydown.enter="applyPreset(item)"
+          >
+            <div class="gallery-card__thumb craft-preview-frame">
+              <img :src="item.thumbnail" :alt="`${item.title}拼豆图案例`" loading="lazy" />
+            </div>
+            <div class="gallery-card__body">
+              <h2 class="gallery-card__title">{{ item.title }}</h2>
+              <p class="gallery-card__desc">{{ item.description }}</p>
+              <div class="gallery-card__params">
+                <span class="gallery-chip">{{ item.gridWidth }} 格</span>
+                <span class="gallery-chip">{{ modeLabel(item.mode) }}</span>
+                <span class="gallery-chip">{{ paletteLabel(item.palettePresetId) }}</span>
+              </div>
+              <div v-if="item.tags.length" class="gallery-card__tags">
+                <PTag v-for="tag in item.tags" :key="tag" :text="tag" plain />
+              </div>
+            </div>
+            <span class="gallery-card__arrow" aria-hidden="true">›</span>
+          </article>
+        </li>
+      </ul>
+      <div v-else class="gallery-empty card craft-intro-card">
+        <p>暂无案例数据</p>
+      </div>
+    </template>
+
+    <template v-else>
+      <ul v-if="templates.length" class="gallery-list gallery-list--templates" role="list">
+        <li v-for="item in templates" :key="item.id">
+          <article
+            class="card card--interactive gallery-card gallery-card--template"
+            :class="{ 'gallery-card--busy': loadingTemplate }"
+            tabindex="0"
+            role="button"
+            :aria-label="`加载模板 ${item.title}`"
+            @click="useTemplate(item)"
+            @keydown.enter="useTemplate(item)"
+          >
+            <div class="gallery-card__thumb craft-preview-frame">
+              <img :src="item.thumbnail" :alt="item.title" loading="lazy" />
+            </div>
+            <div class="gallery-card__body">
+              <h2 class="gallery-card__title">{{ item.title }}</h2>
+              <p class="gallery-card__desc">点击加载模板并自动生成图纸</p>
+              <span class="gallery-card__cta">一键生成 ›</span>
+            </div>
+          </article>
+        </li>
+      </ul>
+      <div v-else class="gallery-empty card craft-intro-card">
+        <p>暂无模板素材</p>
+      </div>
+    </template>
   </div>
 </template>
 
 <style scoped lang="scss">
-.intro-title {
-  display: block;
-  font-size: $pindou-font-xl;
-  font-weight: 600;
+.gallery-tabs__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-primary, 0.12);
+  color: $pindou-primary;
+  font-size: 10px;
+  font-weight: 700;
+
+  .craft-tab.active & {
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+  }
 }
 
-.intro-desc {
-  display: block;
-  margin-top: 6px;
-  font-size: 13px;
-  color: $pindou-text-secondary;
-}
-
-.item {
+.gallery-loading {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px 20px;
+  color: $pindou-text-muted;
+  font-size: $pindou-font-sm;
+}
+
+.gallery-loading__spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid $pindou-border-light;
+  border-top-color: $pindou-primary;
+  border-radius: 50%;
+  animation: gallery-spin 0.7s linear infinite;
+}
+
+@keyframes gallery-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.gallery-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
   gap: $pindou-space-md;
 }
 
-.thumb {
-  width: 80px;
-  height: 80px;
-  border-radius: $pindou-radius-sm;
-  background: $pindou-bg-muted;
+.gallery-list--templates {
+  @media (min-width: 560px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $pindou-space-md;
+  }
+}
+
+.gallery-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: $pindou-space-md;
+  align-items: center;
+  padding: 14px $pindou-space-lg;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($pindou-primary, 0.2), $pindou-shadow-md;
+  }
+
+  &--template {
+    grid-template-columns: auto 1fr;
+  }
+
+  &--busy {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+.gallery-card__thumb {
+  padding: 8px;
+  line-height: 0;
   flex-shrink: 0;
+
+  img {
+    width: 76px;
+    height: 76px;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+    background: $pindou-bg-muted;
+  }
 }
 
-.info {
-  flex: 1;
+.gallery-card__body {
+  min-width: 0;
 }
 
-.title {
-  display: block;
-  font-weight: 600;
-  font-size: 15px;
+.gallery-card__title {
+  margin: 0;
+  font-weight: 700;
+  font-size: $pindou-font-md;
+  color: $pindou-text;
+  line-height: 1.3;
 }
 
-.desc {
-  display: block;
-  margin-top: $pindou-space-xs;
+.gallery-card__desc {
+  margin: 6px 0 0;
   font-size: $pindou-font-sm;
   color: $pindou-text-muted;
+  line-height: 1.5;
 }
 
-.tags {
+.gallery-card__params {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: $pindou-space-sm;
+  margin-top: 10px;
+}
+
+.gallery-chip {
+  display: inline-flex;
+  padding: 3px 9px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-primary, 0.08);
+  border: 1px solid rgba($pindou-primary, 0.12);
+  font-size: $pindou-font-xs;
+  font-weight: 600;
+  color: $pindou-text-secondary;
+}
+
+.gallery-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.gallery-card__cta {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: $pindou-font-xs;
+  font-weight: 700;
+  color: $pindou-primary;
+}
+
+.gallery-card__arrow {
+  font-size: 22px;
+  font-weight: 300;
+  color: $pindou-text-hint;
+  line-height: 1;
+  transition: color $pindou-duration-fast, transform $pindou-duration-fast;
+
+  .gallery-card:hover & {
+    color: $pindou-primary;
+    transform: translateX(2px);
+  }
+}
+
+.gallery-empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: $pindou-text-muted;
+  font-size: $pindou-font-sm;
+}
+
+@media (max-width: 520px) {
+  .gallery-card {
+    grid-template-columns: auto 1fr;
+
+    &__arrow {
+      display: none;
+    }
+  }
 }
 </style>

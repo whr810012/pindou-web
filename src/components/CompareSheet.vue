@@ -174,9 +174,9 @@ watch(
 
 <template>
   <PDrawer :model-value="show" @update:model-value="(v) => !v && emit('close')">
-    <div class="sheet">
-      <span class="title">原图对比</span>
-      <div class="tabs">
+    <div class="craft-drawer compare-sheet">
+      <span class="craft-drawer__title">原图对比</span>
+      <div class="craft-tags compare-sheet__tabs">
         <PTag
           text="对比"
           :plain="mode !== 'compare'"
@@ -235,40 +235,44 @@ watch(
         </div>
       </div>
 
-      <div v-if="mode === 'compare' && grid" class="slider-row">
-        <span class="label">原图</span>
+      <div v-if="mode === 'compare' && grid" class="craft-range-row compare-sheet__slider">
+        <span class="craft-label compare-sheet__side">原图</span>
         <input
           type="range"
-          class="split-slider"
+          class="craft-range"
           :value="split"
           min="0"
           max="100"
           step="1"
           @input="onSplitInput"
         />
-        <span class="label">图纸</span>
+        <span class="craft-label compare-sheet__side">图纸</span>
       </div>
-      <span v-if="mode === 'compare' && grid" class="drag-hint">在图上左右滑动，或拖动下方滑条</span>
+      <span v-if="mode === 'compare' && grid" class="craft-hint compare-sheet__drag-hint">在图上左右滑动，或拖动下方滑条</span>
     </div>
   </PDrawer>
 </template>
 
 <style scoped lang="scss">
-.sheet {
-  padding: 16px;
-  max-height: 85vh;
+.compare-sheet__tabs {
+  margin-bottom: 14px;
 }
 
-.title {
+.compare-sheet__slider {
+  margin-top: 14px;
+}
+
+.compare-sheet__side {
+  margin-bottom: 0;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: $pindou-font-xs;
+}
+
+.compare-sheet__drag-hint {
   display: block;
-  font-weight: 600;
-  margin-bottom: 10px;
-}
-
-.tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  text-align: center;
+  margin-top: 8px;
 }
 
 .compare-wrap {
@@ -278,10 +282,11 @@ watch(
 
 .compare-box {
   position: relative;
-  background: #fff;
-  border-radius: 8px;
+  background: $pindou-bg-card;
+  border-radius: $pindou-radius-sm;
   overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 0 0 1px $pindou-border-light;
+  border: 1px solid $pindou-border;
 }
 
 .compare-box.is-compare {
@@ -337,38 +342,10 @@ watch(
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
-.slider-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.split-slider {
-  flex: 1;
-  accent-color: $pindou-primary;
-  margin: 0;
-}
-
-.label {
-  font-size: 12px;
-  color: #666;
-  flex-shrink: 0;
-  width: 28px;
-}
-
-.drag-hint {
-  display: block;
-  margin-top: 8px;
-  font-size: 11px;
-  color: #aaa;
-  text-align: center;
-}
-
 .empty {
   padding: 40px;
   text-align: center;
-  color: #888;
-  font-size: 13px;
+  color: $pindou-text-muted;
+  font-size: $pindou-font-sm;
 }
 </style>

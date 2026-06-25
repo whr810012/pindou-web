@@ -19,12 +19,13 @@ const model = defineModel<boolean>({ default: false })
   }
 
   &__track {
-    width: 44px;
-    height: 24px;
-    border-radius: 12px;
-    background: #ccc;
+    width: 46px;
+    height: 26px;
+    border-radius: $pindou-radius-pill;
+    background: $pindou-bg-muted;
+    border: 1px solid $pindou-border;
     position: relative;
-    transition: background 0.2s;
+    transition: background $pindou-duration-fast, border-color $pindou-duration-fast;
 
     &::after {
       content: '';
@@ -35,12 +36,14 @@ const model = defineModel<boolean>({ default: false })
       height: 20px;
       border-radius: 50%;
       background: #fff;
-      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      transition: transform $pindou-duration-normal $pindou-ease-out;
     }
   }
 
   input:checked + .p-switch__track {
     background: $pindou-primary;
+    border-color: darken($pindou-primary, 6%);
 
     &::after {
       transform: translateX(20px);

@@ -45,16 +45,19 @@ const sizeClass = computed(() => {
   gap: 6px;
   border: 1px solid $pindou-border;
   border-radius: $pindou-radius-sm;
-  background: $pindou-bg-card;
+  background: $pindou-bg-elevated;
   color: $pindou-text;
+  font-family: $pindou-font-body;
   font-size: $pindou-font-md;
-  font-weight: 500;
-  padding: 8px 14px;
+  font-weight: 600;
+  padding: 9px 16px;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+  transition: background $pindou-duration-fast, border-color $pindou-duration-fast,
+    transform $pindou-duration-fast, box-shadow $pindou-duration-fast;
 
   &:hover:not(:disabled) {
-    filter: brightness(0.98);
+    border-color: darken($pindou-border, 6%);
+    background: $pindou-bg-card;
   }
 
   &:active:not(:disabled) {
@@ -62,7 +65,7 @@ const sizeClass = computed(() => {
   }
 
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.48;
     cursor: not-allowed;
   }
 
@@ -71,12 +74,13 @@ const sizeClass = computed(() => {
   }
 
   &--primary {
-    background: $pindou-primary;
-    border-color: $pindou-primary;
+    background: linear-gradient(180deg, lighten($pindou-primary, 4%), $pindou-primary);
+    border-color: darken($pindou-primary, 4%);
     color: #fff;
+    box-shadow: $pindou-shadow-glow;
 
     &:hover:not(:disabled) {
-      background: $pindou-primary-dark;
+      background: linear-gradient(180deg, $pindou-primary, $pindou-primary-dark);
       border-color: $pindou-primary-dark;
     }
   }
@@ -85,42 +89,57 @@ const sizeClass = computed(() => {
     border-color: transparent;
     background: transparent;
     color: $pindou-primary;
+    box-shadow: none;
+
+    &:hover:not(:disabled) {
+      background: rgba($pindou-primary, 0.06);
+    }
   }
 
   &--success {
     background: $pindou-success;
     border-color: $pindou-success;
     color: #fff;
+    box-shadow: none;
   }
 
   &--error {
-    background: #e74c3c;
-    border-color: #e74c3c;
+    background: #c0392b;
+    border-color: #c0392b;
     color: #fff;
+    box-shadow: none;
   }
 
   &--plain {
     background: transparent;
+    box-shadow: none;
 
     &.p-btn--primary {
       color: $pindou-primary;
-      background: transparent;
+      border-color: rgba($pindou-primary, 0.35);
+      background: rgba($pindou-primary, 0.06);
+
+      &:hover:not(:disabled) {
+        background: rgba($pindou-primary, 0.12);
+      }
     }
 
     &.p-btn--error {
-      color: #e74c3c;
-      background: transparent;
+      color: #c0392b;
+      border-color: rgba(#c0392b, 0.3);
     }
   }
 
   &--sm {
     font-size: $pindou-font-sm;
-    padding: 4px 10px;
+    padding: 6px 12px;
+    border-radius: 8px;
   }
 
   &--lg {
     font-size: $pindou-font-lg;
-    padding: 12px 18px;
+    padding: 13px 22px;
+    border-radius: $pindou-radius-md;
   }
 }
 

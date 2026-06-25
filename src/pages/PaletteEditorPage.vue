@@ -2,11 +2,7 @@
 import PButton from '@/components/ui/PButton.vue'
 import PDrawer from '@/components/ui/PDrawer.vue'
 import PTag from '@/components/ui/PTag.vue'
-import PCell from '@/components/ui/PCell.vue'
-import PSwitch from '@/components/ui/PSwitch.vue'
-import PNumberBox from '@/components/ui/PNumberBox.vue'
-import PLineProgress from '@/components/ui/PLineProgress.vue'
-import { showToast, showModal, showActionSheet, setClipboardData, getSystemInfoSync, scanCode, chooseMessageFile, getFileSystemManager, request } from '@/utils/platform-ui'
+import { showToast, showModal } from '@/utils/platform-ui'
 import type { PaletteEntry } from '@pindou/bead-core'
 import { computed, onMounted, ref } from 'vue'
 import PalettePickerModal from '@/components/PalettePickerModal.vue'
@@ -216,87 +212,107 @@ function pickImportFile() {
 </script>
 
 <template>
-  <div class="page">
-    <div class="card">
-      <span class="section-title">色板列表</span>
-      <div scroll-x class="palette-tabs">
-        <div
+  <div class="page page-enter">
+    <header class="craft-page-head">
+      <h1 class="craft-page-head__title">自定义色板</h1>
+      <p class="craft-page-head__sub">管理色号集合，导入导出或从当前图纸提取颜色。</p>
+    </header>
+
+    <div class="card palette-panel">
+      <span class="craft-label">色板列表</span>
+      <div scroll-x class="palette-tabs craft-scroll-tabs">
+        <button
           v-for="palette in paletteStore.customPalettes"
           :key="palette.id"
-          class="tab"
+          type="button"
+          class="palette-tab"
           :class="{ active: palette.id === activeId }"
           @click="switchPalette(palette.id)"
         >
-          {{ palette.name }} ({{ palette.entries.length }})
-        </div>
+          {{ palette.name }}
+          <span class="palette-tab__count">{{ palette.entries.length }}</span>
+        </button>
       </div>
-      <div class="row">
-        <PButton size="small" text="新建" @click="createPalette" />
+      <div class="palette-toolbar">
+        <PButton size="small" plain text="新建" @click="createPalette" />
         <PButton size="small" plain text="删除" @click="deletePalette" />
         <PButton size="small" plain text="分享" @click="shareVisible = true" />
         <PButton size="small" type="primary" text="应用到项目" @click="applyPalette" />
       </div>
     </div>
 
-    <div class="card">
-      <span class="section-title">色板名称</span>
-      <input v-model="paletteName" class="input" placeholder="色板名称" />
-      <PButton size="small" plain text="保存名称" @click="renamePalette" />
+    <div class="card palette-panel">
+      <span class="craft-label">色板名称</span>
+      <div class="name-row">
+        <input v-model="paletteName" class="craft-input" placeholder="色板名称" />
+        <PButton size="small" plain text="保存" @click="renamePalette" />
+      </div>
     </div>
 
-    <div class="card">
-      <span class="section-title">添加色号</span>
+    <div class="card palette-panel">
+      <span class="craft-label">添加色号</span>
       <div class="add-row">
-        <input v-model="newHex" class="input hex-input" placeholder="#RRGGBB" />
-        <div class="swatch" :style="{ backgroundColor: newHex }" />
-        <input v-model="newCode" class="input" placeholder="色号" />
+        <input v-model="newHex" class="craft-input add-hex" placeholder="#RRGGBB" />
+        <span class="add-swatch" :style="{ backgroundColor: newHex }" aria-hidden="true" />
+        <input v-model="newCode" class="craft-input add-code" placeholder="色号" />
         <PButton size="small" type="primary" text="添加" @click="addEntry" />
       </div>
-      <div class="brand-row">
-        <span class="hint">当前品牌：</span>
-        <PTag
-          v-for="item in BRAND_OPTIONS"
-          :key="item.value"
-          :text="item.label"
-          :plain="paletteStore.brand !== item.value"
-          size="mini"
-          @click="paletteStore.setBrand(item.value)"
-        />
+      <div class="craft-section craft-section--flush">
+        <span class="craft-label">品牌色号</span>
+        <div class="craft-tags">
+          <PTag
+            v-for="item in BRAND_OPTIONS"
+            :key="item.value"
+            :text="item.label"
+            :plain="paletteStore.brand !== item.value"
+            @click="paletteStore.setBrand(item.value)"
+          />
+        </div>
       </div>
     </div>
 
-    <div class="card">
-      <div class="toolbar">
-        <span class="section-title">色号列表 ({{ entries.length }})</span>
-        <div class="toolbar-actions">
-          <PButton size="mini" plain text="全色系" @click="pickerVisible = true" />
-          <PButton size="mini" plain text="从项目" @click="extractFromProject" />
-          <PButton size="mini" plain text="导入" @click="importVisible = true" />
-          <PButton size="mini" plain text="选文件" @click="pickImportFile" />
-          <PButton size="mini" plain text="JSON" @click="copyExport('json')" />
-          <PButton size="mini" plain text="CSV" @click="copyExport('csv')" />
+    <div class="card palette-panel">
+      <div class="list-head">
+        <span class="craft-label list-head__label">色号列表 · {{ entries.length }} 色</span>
+        <div class="list-head__actions">
+          <button type="button" class="tool-chip" @click="pickerVisible = true">全色系</button>
+          <button type="button" class="tool-chip" @click="extractFromProject">从项目</button>
+          <button type="button" class="tool-chip" @click="importVisible = true">导入</button>
+          <button type="button" class="tool-chip" @click="pickImportFile">选文件</button>
+          <button type="button" class="tool-chip" @click="copyExport('json')">JSON</button>
+          <button type="button" class="tool-chip" @click="copyExport('csv')">CSV</button>
         </div>
       </div>
 
-      <div scroll-y class="entry-list">
-        <div v-for="entry in entries" :key="entry.id" class="entry">
-          <div class="swatch" :style="{ backgroundColor: entry.hex }" />
-          <div class="entry-info">
-            <span class="code">{{ entry.codes[paletteStore.brand] }}</span>
-            <span class="hex">{{ entry.hex }}</span>
+      <div v-if="entries.length" scroll-y class="entry-grid">
+        <div v-for="entry in entries" :key="entry.id" class="entry-card">
+          <div class="entry-card__swatch" :style="{ backgroundColor: entry.hex }" />
+          <div class="entry-card__info">
+            <span class="entry-card__code">{{ entry.codes[paletteStore.brand] }}</span>
+            <span class="entry-card__hex">{{ entry.hex }}</span>
           </div>
-          <PButton size="mini" type="error" plain text="删" @click="removeEntry(entry.id)" />
+          <button
+            type="button"
+            class="entry-card__del"
+            aria-label="删除色号"
+            @click="removeEntry(entry.id)"
+          >
+            ×
+          </button>
         </div>
-        <div v-if="!entries.length" class="empty">暂无色号，请添加或导入</div>
+      </div>
+      <div v-else class="palette-empty">
+        <span class="palette-empty__icon" aria-hidden="true" />
+        <p>暂无色号，请添加、导入或从项目提取</p>
       </div>
     </div>
 
-    <PDrawer :modelValue="importVisible"  round="16" @update:modelValue="importVisible = false">
-      <div class="import-panel">
-        <span class="section-title">导入色号</span>
-        <span class="hint">支持 JSON 数组或 CSV（code,hex），例如 R1,#FF0000</span>
-        <textarea v-model="importText" class="import-area" placeholder="粘贴 JSON / CSV 内容" />
-        <div class="row">
+    <PDrawer :model-value="importVisible" @update:model-value="importVisible = false">
+      <div class="craft-drawer">
+        <span class="craft-drawer__title">导入色号</span>
+        <p class="craft-hint">支持 JSON 数组或 CSV（code,hex），例如 R1,#FF0000</p>
+        <textarea v-model="importText" class="craft-textarea" rows="6" placeholder="粘贴 JSON / CSV 内容" />
+        <div class="import-actions">
           <PButton text="追加导入" @click="doImport('append')" />
           <PButton type="primary" text="覆盖导入" @click="doImport('replace')" />
         </div>
@@ -325,131 +341,252 @@ function pickImportFile() {
   padding-bottom: $pindou-space-xl;
 }
 
-.section-title {
-  display: block;
-  font-weight: 600;
-  margin-bottom: $pindou-space-sm;
+.palette-panel {
+  margin-bottom: $pindou-space-md;
 }
 
 .palette-tabs {
-  white-space: nowrap;
-  margin-bottom: $pindou-space-sm;
-}
-
-.tab {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-right: $pindou-space-sm;
-  border-radius: $pindou-radius-pill;
-  background: $pindou-bg-muted;
-  font-size: $pindou-font-sm;
-}
-
-.tab.active {
-  background: $pindou-primary;
-  color: #fff;
-}
-
-.row {
   display: flex;
-  gap: $pindou-space-sm;
-  flex-wrap: wrap;
-  margin-top: $pindou-space-sm;
+  gap: 8px;
+  margin: 10px 0 14px;
+  padding-bottom: 4px;
+  overflow-x: auto;
 }
 
-.input {
-  border: 1px solid $pindou-border;
-  border-radius: $pindou-radius-sm;
-  padding: $pindou-space-sm 10px;
-  font-size: $pindou-font-md;
-  margin-bottom: $pindou-space-sm;
+.palette-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border: 1px solid $pindou-border-light;
+  border-radius: $pindou-radius-pill;
+  background: $pindou-bg-subtle;
+  font-size: $pindou-font-sm;
+  font-weight: 600;
+  color: $pindou-text-secondary;
+  cursor: pointer;
+  transition:
+    background $pindou-duration-fast,
+    border-color $pindou-duration-fast,
+    color $pindou-duration-fast;
+
+  &.active {
+    background: $pindou-primary;
+    border-color: $pindou-primary;
+    color: #fff;
+
+    .palette-tab__count {
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+  }
+}
+
+.palette-tab__count {
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-primary, 0.1);
+  color: $pindou-primary;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.palette-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.name-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+
+  .craft-input {
+    flex: 1;
+    min-width: 0;
+  }
 }
 
 .add-row {
   display: flex;
   align-items: center;
-  gap: $pindou-space-sm;
+  gap: 8px;
   flex-wrap: wrap;
+  margin-top: 8px;
 }
 
-.hex-input {
-  width: 110px;
-  margin-bottom: 0;
+.add-hex {
+  width: 120px;
+  flex: 0 0 auto;
 }
 
-.swatch {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+.add-code {
+  width: 100px;
+  flex: 1;
+  min-width: 80px;
+}
+
+.add-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px $pindou-border-light, $pindou-shadow-sm;
   flex-shrink: 0;
 }
 
-.brand-row {
+.list-head {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+
+  @media (min-width: 560px) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.list-head__label {
+  margin-bottom: 0;
+}
+
+.list-head__actions {
+  display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: $pindou-space-sm;
 }
 
-.hint {
-  font-size: $pindou-font-sm;
-  color: $pindou-text-muted;
+.tool-chip {
+  border: 1px solid $pindou-border-light;
+  border-radius: $pindou-radius-pill;
+  background: $pindou-bg-subtle;
+  padding: 5px 10px;
+  font-size: $pindou-font-xs;
+  font-weight: 600;
+  color: $pindou-text-secondary;
+  cursor: pointer;
+  transition:
+    border-color $pindou-duration-fast,
+    color $pindou-duration-fast,
+    background $pindou-duration-fast;
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.35);
+    color: $pindou-primary;
+    background: #fff;
+  }
 }
 
-.toolbar {
+.entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 8px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.entry-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: $pindou-space-sm;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid $pindou-border-light;
+  border-radius: $pindou-radius-sm;
+  background: $pindou-bg-subtle;
+  transition:
+    border-color $pindou-duration-fast,
+    box-shadow $pindou-duration-fast;
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.3);
+    box-shadow: $pindou-shadow-sm;
+  }
 }
 
-.toolbar-actions {
+.entry-card__swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+.entry-card__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.entry-card__code {
+  display: block;
+  font-weight: 700;
+  font-size: $pindou-font-sm;
+  color: $pindou-text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.entry-card__hex {
+  display: block;
+  font-size: 10px;
+  color: $pindou-text-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.entry-card__del {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: $pindou-text-hint;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background $pindou-duration-fast, color $pindou-duration-fast;
+
+  &:hover {
+    background: rgba($pindou-warning, 0.12);
+    color: $pindou-warning;
+  }
+}
+
+.palette-empty {
   display: flex;
-  gap: $pindou-space-xs;
-  flex-wrap: wrap;
-}
-
-.entry-list {
-  max-height: 360px;
-}
-
-.entry {
-  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 10px;
-  padding: $pindou-space-sm 0;
-  border-bottom: 1px solid $pindou-border-light;
-}
-
-.entry-info {
-  flex: 1;
-}
-
-.code {
-  display: block;
-  font-weight: 600;
-}
-
-.hex {
-  display: block;
-  font-size: $pindou-font-sm;
+  padding: 32px 16px;
+  text-align: center;
   color: $pindou-text-muted;
+  font-size: $pindou-font-sm;
 }
 
-.import-panel {
-  padding: $pindou-space-lg;
-}
-
-.import-area {
-  width: 100%;
-  min-height: 160px;
-  border: 1px solid $pindou-border;
+.palette-empty__icon {
+  width: 48px;
+  height: 48px;
   border-radius: $pindou-radius-sm;
-  padding: 10px;
-  font-size: 13px;
-  box-sizing: border-box;
-  margin: $pindou-space-sm 0 $pindou-space-md;
+  background: linear-gradient(135deg, $pindou-primary-light, $pindou-accent-soft);
+  border: 2px dashed rgba($pindou-primary, 0.25);
+}
+
+.import-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.craft-textarea {
+  margin-bottom: 12px;
 }
 </style>

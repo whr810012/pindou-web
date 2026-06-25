@@ -3,6 +3,7 @@ import { markExternalBackground } from '../background/floodFill.js'
 import { mergeSimilarRegions } from '../merge/mergeRegions.js'
 import { mapImageToGrid } from '../pixelation/mapGrid.js'
 import { remapExcludedColors } from '../remap/excluded.js'
+import { limitGridColors } from '../remap/limitColors.js'
 
 export function runPipeline(
   pixels: Uint8ClampedArray,
@@ -12,6 +13,9 @@ export function runPipeline(
 ): PipelineResult {
   let grid = mapImageToGrid(pixels, imgWidth, imgHeight, options)
   grid = mergeSimilarRegions(grid, options.mergeThreshold)
+  if (options.maxColors > 0) {
+    grid = limitGridColors(grid, options.palette, options.maxColors)
+  }
   grid = markExternalBackground(grid, options.backgroundPaletteIds)
   grid = remapExcludedColors(grid, options.palette, options.excludedPaletteIds)
 

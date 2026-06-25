@@ -17,9 +17,9 @@ function inc() {
 
 <template>
   <div class="p-number">
-    <button type="button" aria-label="decrease" @click="dec">-</button>
+    <button type="button" aria-label="减少" @click="dec">−</button>
     <input v-model.number="model" type="number" :min="min" :max="max" />
-    <button type="button" aria-label="increase" @click="inc">+</button>
+    <button type="button" aria-label="增加" @click="inc">+</button>
   </div>
 </template>
 
@@ -27,23 +27,44 @@ function inc() {
 .p-number {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  border: 1px solid $pindou-border;
+  border-radius: $pindou-radius-sm;
+  overflow: hidden;
+  background: $pindou-bg-subtle;
 
   button {
-    width: 28px;
-    height: 28px;
-    border: 1px solid $pindou-border;
-    border-radius: 4px;
-    background: $pindou-bg-muted;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: $pindou-primary;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
+    transition: background $pindou-duration-fast;
+
+    &:hover {
+      background: rgba($pindou-primary, 0.08);
+    }
   }
 
   input {
-    width: 48px;
+    width: 44px;
     text-align: center;
-    border: 1px solid $pindou-border;
-    border-radius: 4px;
-    padding: 4px;
+    border: none;
+    border-left: 1px solid $pindou-border-light;
+    border-right: 1px solid $pindou-border-light;
+    background: #fff;
+    padding: 6px 4px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 }
 </style>

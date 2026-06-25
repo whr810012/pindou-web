@@ -1,4 +1,9 @@
 import type { BrandSystem, PaletteEntry, PixelationMode } from '@pindou/bead-core'
+import type { ImageAdjust, PhotoOptimize } from '@pindou/bead-core'
+import { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE } from '@pindou/bead-core'
+
+export type { ImageAdjust, PhotoOptimize }
+export { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE }
 
 export interface PalettePreset {
   id: string
@@ -26,8 +31,11 @@ export interface ProjectParams {
   gridWidth: number
   mode: PixelationMode
   mergeThreshold: number
+  maxColors: number
   palettePresetId: string
   brand: BrandSystem
+  imageAdjust: ImageAdjust
+  photoOptimize: PhotoOptimize
 }
 
 export interface SavedProject {
@@ -54,14 +62,21 @@ export type EditorTool = 'brush' | 'fill' | 'eraser' | 'picker' | 'replace' | 'r
 
 export type ExportFormat = 'png' | 'pdf' | 'all'
 
+export type PdfLayout = 'single' | 'boards'
+
 export interface ExportSettings {
   format: ExportFormat
   showGrid: boolean
   showCoordinates: boolean
   showRuler: boolean
   showColorCode: boolean
+  showBoardLines: boolean
+  pdfLayout: PdfLayout
   cellSize: number
 }
+
+export const BOARD_SIZE = 29
+export const BEADS_PER_BAG = 1000
 
 export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
   format: 'all',
@@ -69,6 +84,8 @@ export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
   showCoordinates: false,
   showRuler: true,
   showColorCode: true,
+  showBoardLines: false,
+  pdfLayout: 'single',
   cellSize: 16,
 }
 
@@ -76,8 +93,11 @@ export const DEFAULT_PARAMS: ProjectParams = {
   gridWidth: 72,
   mode: 'average',
   mergeThreshold: 8,
+  maxColors: 0,
   palettePresetId: 'pindou-full',
   brand: 'MARD',
+  imageAdjust: { ...DEFAULT_IMAGE_ADJUST },
+  photoOptimize: { ...DEFAULT_PHOTO_OPTIMIZE },
 }
 
 export const BRAND_OPTIONS: Array<{ label: string; value: BrandSystem }> = [

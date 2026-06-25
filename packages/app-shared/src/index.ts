@@ -33,10 +33,13 @@ export * from './utils/cropMath.js'
 export * from './utils/suggestParams.js'
 export * from './utils/focusZones.js'
 export * from './utils/paletteShare.js'
+export { encodeProjectShare, decodeProjectShare } from './utils/projectShare.js'
+export type { ProjectSharePayload } from './utils/projectShare.js'
 export {
   processCurrentProject,
   pickImage,
   loadImageToProject,
+  hydrateProjectSourceFromPath,
   applySuggestedParamsForImage,
   replaceColorInGrid,
 } from './utils/pipeline.js'

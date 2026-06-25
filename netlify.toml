@@ -11,6 +11,9 @@
   # 图生图轮询较慢；免费版上限 10s，Pro 可调至 26s
   timeout = 26
 
+[functions."xhs-parse"]
+  timeout = 26
+
 [build.environment]
   NODE_VERSION = "20"
   PLAYWRIGHT_BROWSERS_PATH = "0"
@@ -18,6 +21,11 @@
 [[redirects]]
   from = "/api/ai-preprocess"
   to = "/.netlify/functions/ai-preprocess"
+  status = 200
+
+[[redirects]]
+  from = "/api/xhs-parse"
+  to = "/.netlify/functions/xhs-parse"
   status = 200
 
 [[redirects]]

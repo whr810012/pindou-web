@@ -114,17 +114,17 @@ async function run() {
 
 <template>
   <PDrawer :model-value="show" @update:model-value="(v) => !v && emit('close')">
-    <div class="sheet">
-      <span class="title">AI 预处理</span>
-      <span class="hint">{{ hintText }}</span>
+    <div class="craft-drawer">
+      <span class="craft-drawer__title">AI 预处理</span>
+      <p class="craft-hint">{{ hintText }}</p>
 
       <div v-if="!AI_MOCK_ENABLED && AI_PREPROCESS_ENABLED" class="key-section">
-        <label class="key-label" for="jimeng-api-key">火山引擎凭证</label>
+        <label class="craft-label" for="jimeng-api-key">火山引擎凭证</label>
         <div class="key-row">
           <textarea
             id="jimeng-api-key"
             v-model="apiKeyDraft"
-            class="key-input key-input--area"
+            class="craft-textarea key-input"
             :class="{ 'key-input--masked': !showKey }"
             placeholder="推荐：Ark API Key 或 ApiKey.txt / AccessKey.txt 全文"
             autocomplete="off"
@@ -170,11 +170,15 @@ async function run() {
         >
           <span class="style-label">{{ item.label }}</span>
           <span class="style-desc">{{ item.desc }}</span>
+          <span v-if="item.value === 'matting'" class="style-note">
+            适合人物/主体图；复杂背景效果因原图而异
+          </span>
         </div>
       </div>
 
       <PButton
         type="primary"
+        block
         :text="runButtonText"
         :loading="loading"
         :disabled="!canRun"
@@ -185,58 +189,14 @@ async function run() {
 </template>
 
 <style scoped lang="scss">
-.sheet {
-  padding: 16px;
-}
-
-.title {
-  display: block;
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.hint {
-  display: block;
-  margin: 6px 0 14px;
-  font-size: 12px;
-  color: #888;
-  line-height: 1.5;
-}
-
 .key-section {
-  margin-bottom: 14px;
-  padding: 12px;
-  border-radius: 10px;
-  background: #f7f8fa;
-}
-
-.key-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 16px;
 }
 
 .key-row {
   display: flex;
-  flex-direction: column;
   gap: 8px;
-}
-
-.key-input {
-  width: 100%;
-  min-width: 0;
-  padding: 8px 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 13px;
-  font-family: inherit;
-  box-sizing: border-box;
-}
-
-.key-input--area {
-  resize: vertical;
-  min-height: 72px;
+  align-items: flex-start;
 }
 
 .key-input--masked {
@@ -245,12 +205,19 @@ async function run() {
 
 .key-toggle {
   flex-shrink: 0;
-  padding: 0 10px;
-  border: none;
-  background: transparent;
-  color: #2979ff;
-  font-size: 12px;
+  border: 1px solid $pindou-border;
+  border-radius: $pindou-radius-sm;
+  background: $pindou-bg-subtle;
+  padding: 8px 10px;
+  font-size: $pindou-font-xs;
+  font-weight: 600;
+  color: $pindou-text-secondary;
   cursor: pointer;
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.3);
+    color: $pindou-primary;
+  }
 }
 
 .key-actions {
@@ -261,58 +228,77 @@ async function run() {
 
 .key-links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  margin-top: 8px;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
 }
 
 .key-link {
-  display: inline-block;
-  font-size: 12px;
-  color: #2979ff;
+  font-size: $pindou-font-xs;
+  color: $pindou-primary;
   text-decoration: none;
-}
 
-.key-link--secondary {
-  color: #666;
+  &--secondary {
+    color: $pindou-text-muted;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .privacy-note {
-  margin: 8px 0 0;
-  font-size: 11px;
-  color: #999;
-  line-height: 1.5;
+  margin: 10px 0 0;
+  font-size: $pindou-font-xs;
+  color: $pindou-text-hint;
+  line-height: 1.45;
 }
 
 .styles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
 .style-card {
-  border: 1px solid #e8e8e8;
-  border-radius: 10px;
-  padding: 10px;
+  padding: 12px 14px;
+  border: 1px solid $pindou-border-light;
+  border-radius: $pindou-radius-sm;
+  background: $pindou-bg-subtle;
   cursor: pointer;
-}
+  transition: border-color $pindou-duration-fast, background $pindou-duration-fast,
+    box-shadow $pindou-duration-fast;
 
-.style-card.active {
-  border-color: #2979ff;
-  background: #f0f7ff;
+  &:hover {
+    border-color: rgba($pindou-primary, 0.25);
+  }
+
+  &.active {
+    border-color: rgba($pindou-primary, 0.45);
+    background: rgba($pindou-primary-light, 0.6);
+    box-shadow: $pindou-shadow-sm;
+  }
 }
 
 .style-label {
   display: block;
-  font-weight: 600;
-  font-size: 13px;
+  font-weight: 700;
+  font-size: $pindou-font-sm;
+  color: $pindou-text;
 }
 
 .style-desc {
   display: block;
-  margin-top: 4px;
-  font-size: 11px;
-  color: #888;
+  margin-top: 2px;
+  font-size: $pindou-font-xs;
+  color: $pindou-text-muted;
+}
+
+.style-note {
+  display: block;
+  margin-top: 6px;
+  font-size: $pindou-font-xs;
+  color: $pindou-accent;
 }
 </style>

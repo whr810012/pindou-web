@@ -1,7 +1,7 @@
 import { compressImageForAi } from '@/utils/compressImageForAi'
 import { getJimengApiKey, hasJimengApiKey } from '@/utils/aiKeyStorage'
 
-export type AiPreprocessStyle = 'cartoon' | 'sketch' | 'flat' | 'enhance'
+export type AiPreprocessStyle = 'cartoon' | 'sketch' | 'flat' | 'enhance' | 'matting'
 
 export interface AiPreprocessOptions {
   style: AiPreprocessStyle
@@ -9,9 +9,11 @@ export interface AiPreprocessOptions {
 
 export const AI_MOCK_ENABLED = import.meta.env.VITE_AI_MOCK === 'true'
 
+const DEV_AI_URL = 'http://127.0.0.1:8787/api/ai-preprocess'
+
 const ENDPOINT =
-  import.meta.env.VITE_AI_PREPROCESS_URL ??
-  (import.meta.env.PROD ? '/.netlify/functions/ai-preprocess' : '')
+  import.meta.env.VITE_AI_PREPROCESS_URL ||
+  (import.meta.env.PROD ? '/.netlify/functions/ai-preprocess' : DEV_AI_URL)
 
 export const AI_PREPROCESS_ENABLED = Boolean(ENDPOINT) && !AI_MOCK_ENABLED
 
@@ -20,6 +22,7 @@ export const AI_STYLE_OPTIONS: Array<{ label: string; value: AiPreprocessStyle; 
   { label: '线稿强化', value: 'sketch', desc: '轮廓清晰，方便填色' },
   { label: '色块简化', value: 'flat', desc: '海报扁平，颜色更少' },
   { label: '清晰增强', value: 'enhance', desc: '贴近原图，锐化边缘' },
+  { label: '去背景', value: 'matting', desc: '抠图清底，适合人物/主体图' },
 ]
 
 export function isAiPreprocessAvailable(credentialsDraft = ''): boolean {

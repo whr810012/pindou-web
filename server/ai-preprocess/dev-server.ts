@@ -1,5 +1,8 @@
 import http from 'node:http'
+import { loadEnvLocal } from '../loadEnvLocal.js'
 import { handleAiPreprocess } from './handler'
+
+loadEnvLocal()
 
 const PORT = Number(process.env.AI_PREPROCESS_PORT ?? 8787)
 

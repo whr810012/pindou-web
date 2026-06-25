@@ -19,13 +19,16 @@ npm run dev
 |------|------|
 | `npm run dev` | 开发服务器 |
 | `npm run dev:ai` | 本地 AI 预处理 API（端口 8787） |
+| `npm run dev:xhs` | 本地小红书解析 API（端口 8788） |
 | `npm run build` | 生产构建（含共享包编译、SEO / 预渲染） |
 | `npm run build:packages` | 仅编译 `packages/bead-core` 与 `packages/app-shared` |
 | `npm run preview` | 预览 `dist` |
 | `npm run type-check` | `vue-tsc` 类型检查 |
-| `npm run test` | 运行 `bead-core` 单元测试 |
+| `npm run test` | 运行 `bead-core` 与根目录单元测试 |
 | `npm run test:ai` | 运行 AI 预处理服务单元测试 |
+| `npm run test:xhs` | 运行小红书解析单元测试 |
 | `npm run generate:palette` | 生成色板数据 |
+| `npm run generate:landing-compare` | 生成落地页原图/拼豆对比图 |
 
 ## 环境变量
 
@@ -40,6 +43,9 @@ VITE_SITE_URL=https://dandanpindou.netlify.app
 
 # 开发：联调本地 AI 服务（npm run dev:ai）
 # VITE_AI_PREPROCESS_URL=http://127.0.0.1:8787/api/ai-preprocess
+
+# 开发：联调本地小红书解析（npm run dev:xhs）
+# VITE_XHS_PARSE_URL=http://127.0.0.1:8788/api/xhs-parse
 ```
 
 生产环境（Netlify）前端默认同域 `/.netlify/functions/ai-preprocess`，一般无需配置 `VITE_AI_PREPROCESS_URL`。
@@ -58,8 +64,24 @@ VITE_SITE_URL=https://dandanpindou.netlify.app
 | `sketch` | 线稿强化，轮廓清晰 | 需要明显填色边界 |
 | `cartoon` | 卡通扁平，大色块 | 插画、可爱图案 |
 | `flat` | 色块简化，颜色更少 | 海报风、极简图案 |
+| `matting` | AI 去背景，透明底 | 人物/主体抠图后拼豆 |
 
 详见 [server/ai-preprocess/README.md](server/ai-preprocess/README.md)。
+
+## 第三期功能（Wave 1～3）
+
+| 模块 | 能力 |
+|------|------|
+| **上传体验** | 拖拽 / 粘贴 / WebP；素材库与示例图一键试 |
+| **生成参数** | 亮度·对比度·饱和度；最大颜色数；照片降噪/锐化 |
+| **导出** | 29×29 拼板线；PDF 分板多页导出；采购清单包数估算 |
+| **AI** | 去背景（matting）风格 |
+| **编辑** | 自动裁边；编辑器水平/垂直翻转 |
+| **项目流转** | 分享码导入导出 |
+| **小红书** | 粘贴分享文案解析图集（Netlify Function） |
+| **工具** | 像素文字生成 `/text`；落地页原图对比滑块 |
+
+小红书解析详见 [server/xhs-parse/README.md](server/xhs-parse/README.md)。
 
 ## Netlify 部署
 
@@ -118,6 +140,7 @@ AI 图生图可能需 10～25 秒。`netlify.toml` 中 `ai-preprocess` 已设 `t
 | `/preview3d` | 3D 预览 | noindex |
 | `/projects` | 我的项目 | noindex |
 | `/palette` | 自定义色板 | noindex |
+| `/text` | 像素文字生成 | noindex |
 
 画廊案例另有静态落地页：`/gallery/demo-cat/` 等。
 
@@ -129,7 +152,8 @@ pindou-web/
 │   ├── functions/          # Netlify Functions（AI 预处理）
 │   └── netlify.toml
 ├── server/
-│   └── ai-preprocess/      # AI 服务端逻辑、提示词、本地 dev-server
+│   ├── ai-preprocess/      # AI 服务端逻辑、提示词、本地 dev-server
+│   └── xhs-parse/          # 小红书分享解析、本地 dev-server
 ├── packages/
 │   ├── app-shared/         # 共享 store、工具、平台抽象
 │   └── bead-core/          # 像素化、填充等核心算法

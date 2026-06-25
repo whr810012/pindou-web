@@ -1,0 +1,392 @@
+// 拼豆工坊 — 共享 UI 模式（由 global.scss 引入）
+@use './tokens.scss' as *;
+
+.craft-page-head {
+  margin-bottom: $pindou-space-md;
+
+  &__title {
+    margin: 0;
+    font-family: $pindou-font-display;
+    font-size: $pindou-font-xl;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: $pindou-text;
+  }
+
+  &__sub {
+    margin: 6px 0 0;
+    font-size: $pindou-font-sm;
+    color: $pindou-text-muted;
+    line-height: 1.55;
+  }
+}
+
+.craft-drawer {
+  padding: 4px 2px 8px;
+  max-height: 82vh;
+  overflow-y: auto;
+}
+
+.craft-drawer__title {
+  display: block;
+  font-family: $pindou-font-display;
+  font-size: $pindou-font-lg;
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.craft-section {
+  padding: 10px 0 14px;
+  border-bottom: 1px solid $pindou-border-light;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.craft-section--flush {
+  padding-top: 4px;
+}
+
+.craft-label {
+  display: block;
+  font-size: $pindou-font-xs;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $pindou-text-muted;
+  margin-bottom: 10px;
+}
+
+.craft-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.craft-range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.craft-range {
+  flex: 1;
+  height: 6px;
+  accent-color: $pindou-primary;
+  cursor: pointer;
+}
+
+.craft-range-val {
+  min-width: 32px;
+  text-align: right;
+  font-family: $pindou-font-display;
+  font-size: $pindou-font-sm;
+  font-weight: 700;
+  color: $pindou-primary;
+  font-variant-numeric: tabular-nums;
+}
+
+.craft-hint {
+  margin: 6px 0 0;
+  font-size: $pindou-font-xs;
+  color: $pindou-text-hint;
+  line-height: 1.45;
+}
+
+.craft-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: $pindou-space-md;
+  padding: 4px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-bg-muted, 0.65);
+  border: 1px solid $pindou-border-light;
+}
+
+.craft-tab {
+  flex: 1;
+  padding: 9px 12px;
+  border: none;
+  border-radius: $pindou-radius-pill;
+  background: transparent;
+  font-size: $pindou-font-sm;
+  font-weight: 600;
+  color: $pindou-text-muted;
+  cursor: pointer;
+  transition: background $pindou-duration-fast, color $pindou-duration-fast,
+    box-shadow $pindou-duration-fast;
+
+  &.active {
+    background: $pindou-bg-card;
+    color: $pindou-primary;
+    box-shadow: $pindou-shadow-sm;
+  }
+
+  &:hover:not(.active) {
+    color: $pindou-text;
+  }
+}
+
+.craft-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.craft-field__label {
+  font-size: $pindou-font-sm;
+  font-weight: 600;
+  color: $pindou-text-secondary;
+}
+
+.craft-input {
+  width: 100%;
+  border: 1px solid $pindou-border;
+  border-radius: $pindou-radius-sm;
+  padding: 10px 12px;
+  font-size: $pindou-font-md;
+  background: $pindou-bg-subtle;
+  color: $pindou-text;
+  box-sizing: border-box;
+  transition: border-color $pindou-duration-fast, box-shadow $pindou-duration-fast;
+
+  &:focus {
+    outline: none;
+    border-color: rgba($pindou-primary, 0.45);
+    box-shadow: 0 0 0 3px rgba($pindou-primary, 0.1);
+    background: #fff;
+  }
+}
+
+.craft-preset-chip {
+  display: inline-block;
+  position: relative;
+  padding: 10px 30px 10px 14px;
+  margin-right: 8px;
+  border-radius: $pindou-radius-sm;
+  background: $pindou-primary-light;
+  border: 1px solid rgba($pindou-primary, 0.18);
+  cursor: pointer;
+  transition: border-color $pindou-duration-fast, transform $pindou-duration-fast;
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.35);
+    transform: translateY(-1px);
+  }
+
+  &__name {
+    display: block;
+    font-weight: 700;
+    font-size: $pindou-font-sm;
+    color: $pindou-text;
+  }
+
+  &__meta {
+    display: block;
+    font-size: $pindou-font-xs;
+    color: $pindou-text-muted;
+    margin-top: 2px;
+  }
+
+  &__del {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 20px;
+    height: 20px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    color: $pindou-text-hint;
+    font-size: 14px;
+    transition: background $pindou-duration-fast, color $pindou-duration-fast;
+
+    &:hover {
+      background: rgba($pindou-text, 0.08);
+      color: $pindou-text;
+    }
+  }
+}
+
+.craft-intro-card {
+  background: linear-gradient(135deg, $pindou-bg-card 0%, rgba($pindou-primary-light, 0.5) 100%);
+  border-color: rgba($pindou-primary, 0.14);
+}
+
+.craft-list-card {
+  display: flex;
+  gap: $pindou-space-md;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color $pindou-duration-fast, box-shadow $pindou-duration-fast,
+    transform $pindou-duration-normal $pindou-ease-out;
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.3);
+    box-shadow: $pindou-shadow-md;
+    transform: translateY(-1px);
+  }
+
+  &__thumb {
+    width: 76px;
+    height: 76px;
+    border-radius: $pindou-radius-sm;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: $pindou-bg-muted;
+    border: 1px solid $pindou-border-light;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+  }
+
+  &__title {
+    display: block;
+    font-weight: 700;
+    font-size: $pindou-font-md;
+    color: $pindou-text;
+  }
+
+  &__desc {
+    display: block;
+    margin-top: 4px;
+    font-size: $pindou-font-sm;
+    color: $pindou-text-muted;
+    line-height: 1.45;
+  }
+}
+
+.craft-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform $pindou-duration-fast, box-shadow $pindou-duration-fast;
+
+  &.active,
+  &--active {
+    border-color: $pindou-text;
+    box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba($pindou-primary, 0.35);
+    transform: scale(1.08);
+  }
+}
+
+.craft-preview-frame {
+  padding: 14px;
+  border-radius: $pindou-radius-sm;
+  background-color: #ece8e1;
+  background-image:
+    linear-gradient(45deg, #e0dbd3 25%, transparent 25%),
+    linear-gradient(-45deg, #e0dbd3 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e0dbd3 75%),
+    linear-gradient(-45deg, transparent 75%, #e0dbd3 75%);
+  background-size: 14px 14px;
+  background-position: 0 0, 0 7px, 7px -7px, -7px 0;
+  border: 1px solid $pindou-border;
+}
+
+.craft-editor-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin: (-$pindou-space-lg) (-$pindou-space-md) $pindou-space-md;
+  background: rgba($pindou-bg-card, 0.92);
+  border-bottom: 1px solid $pindou-border;
+  backdrop-filter: blur(12px);
+}
+
+.craft-editor-back {
+  border: 1px solid $pindou-border;
+  border-radius: $pindou-radius-pill;
+  background: $pindou-bg-subtle;
+  color: $pindou-text-secondary;
+  font-size: $pindou-font-sm;
+  font-weight: 600;
+  padding: 6px 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background $pindou-duration-fast, border-color $pindou-duration-fast;
+
+  &:hover {
+    background: #fff;
+    border-color: rgba($pindou-primary, 0.25);
+    color: $pindou-primary;
+  }
+}
+
+.craft-textarea {
+  width: 100%;
+  min-height: 88px;
+  border: 1px solid $pindou-border;
+  border-radius: $pindou-radius-sm;
+  padding: 10px 12px;
+  font-size: $pindou-font-sm;
+  line-height: 1.5;
+  background: $pindou-bg-subtle;
+  color: $pindou-text;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color $pindou-duration-fast, box-shadow $pindou-duration-fast;
+
+  &:focus {
+    outline: none;
+    border-color: rgba($pindou-primary, 0.45);
+    box-shadow: 0 0 0 3px rgba($pindou-primary, 0.1);
+    background: #fff;
+  }
+}
+
+.craft-callout {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: $pindou-radius-sm;
+  background: $pindou-warning-bg;
+  border: 1px solid rgba($pindou-accent, 0.2);
+  color: darken($pindou-accent, 8%);
+  font-size: $pindou-font-xs;
+  line-height: 1.5;
+
+  code {
+    font-size: 0.95em;
+    padding: 1px 4px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.craft-thumb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.craft-thumb-btn {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 2px solid $pindou-border-light;
+  border-radius: $pindou-radius-sm;
+  overflow: hidden;
+  cursor: pointer;
+  background: $pindou-bg-muted;
+  transition: border-color $pindou-duration-fast, transform $pindou-duration-fast;
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.4);
+    transform: scale(1.02);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}

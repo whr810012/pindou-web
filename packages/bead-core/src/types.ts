@@ -26,6 +26,7 @@ export interface PipelineOptions {
   gridWidth: number
   mode: PixelationMode
   mergeThreshold: number
+  maxColors: number
   backgroundPaletteIds: string[]
   excludedPaletteIds: string[]
   palette: PaletteEntry[]

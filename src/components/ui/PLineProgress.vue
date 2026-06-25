@@ -11,14 +11,15 @@ defineProps<{ percentage?: number; height?: number }>()
 <style scoped lang="scss">
 .p-progress {
   width: 100%;
-  background: $pindou-border-light;
-  border-radius: 999px;
+  background: rgba($pindou-border, 0.5);
+  border-radius: $pindou-radius-pill;
   overflow: hidden;
 
   &__bar {
     height: 100%;
-    background: $pindou-primary;
-    transition: width 0.2s;
+    background: linear-gradient(90deg, $pindou-primary 0%, lighten($pindou-primary, 12%) 100%);
+    border-radius: $pindou-radius-pill;
+    transition: width $pindou-duration-normal $pindou-ease-out;
   }
 }
 </style>

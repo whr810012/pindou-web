@@ -51,6 +51,18 @@ export const useProjectStore = defineStore('project', {
     setSourcePreview(preview: string) {
       this.sourcePreview = preview
     },
+    /** 从已保存的预览图恢复像素数据，用于重新生成（不改变保存状态） */
+    hydrateSourcePixels(
+      width: number,
+      height: number,
+      pixels: Uint8ClampedArray,
+      path?: string,
+    ) {
+      if (path) this.sourcePath = path
+      this.sourceWidth = width
+      this.sourceHeight = height
+      this.sourcePixels = pixels
+    },
     setGrid(grid: MappedGrid) {
       this.grid = cloneGrid(grid)
       this.dirty = true
@@ -90,7 +102,7 @@ export const useProjectStore = defineStore('project', {
       savedProjectId?: string | null
     }) {
       this.grid = cloneGrid(data.grid)
-      this.params = { ...data.params }
+      this.params = { ...DEFAULT_PARAMS, ...data.params }
       this.excludedPaletteIds = [...data.excludedPaletteIds]
       this.projectName = data.projectName ?? '未命名项目'
       this.sourcePath = data.sourcePath ?? ''

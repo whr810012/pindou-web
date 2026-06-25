@@ -1,7 +1,10 @@
 
+@use './craft.scss';
+
 :root,
 body {
   --pindou-primary: #{$pindou-primary};
+  --pindou-primary-dark: #{$pindou-primary-dark};
   --pindou-primary-light: #{$pindou-primary-light};
   --pindou-accent: #{$pindou-accent};
   --pindou-bg-page: #{$pindou-bg-page};
@@ -14,11 +17,16 @@ body {
 
   margin: 0;
   background-color: $pindou-bg-page;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba($pindou-primary, 0.08), transparent),
+    linear-gradient(rgba($pindou-text, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba($pindou-text, 0.025) 1px, transparent 1px);
+  background-size: auto, 24px 24px, 24px 24px;
+  background-attachment: fixed;
   color: $pindou-text;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', 'PingFang SC',
-    'Microsoft YaHei', sans-serif;
+  font-family: $pindou-font-body;
   font-size: $pindou-font-md;
-  line-height: 1.5;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -45,20 +53,30 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
+::selection {
+  background: rgba($pindou-primary, 0.18);
+  color: $pindou-text;
+}
+
 .pindou-toast {
   position: fixed;
   left: 50%;
-  bottom: 80px;
+  bottom: calc(88px + var(--pindou-safe-bottom));
   transform: translateX(-50%) translateY(12px);
-  background: rgba(0, 0, 0, 0.78);
+  background: $pindou-text;
   color: #fff;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: $pindou-radius-pill;
+  font-size: $pindou-font-sm;
+  font-weight: 500;
   z-index: 2000;
   opacity: 0;
-  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: $pindou-shadow-dock;
+  transition: opacity $pindou-duration-normal $pindou-ease-out,
+    transform $pindou-duration-normal $pindou-ease-out;
   pointer-events: none;
+  max-width: min(90vw, 360px);
+  text-align: center;
 
   &--show {
     opacity: 1;
@@ -70,6 +88,18 @@ input:focus-visible {
   min-height: calc(100vh - 56px);
   padding: $pindou-space-lg $pindou-space-md;
   box-sizing: border-box;
+  animation: page-enter 0.35s $pindou-ease-out both;
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .page--app {
@@ -81,13 +111,12 @@ input:focus-visible {
   padding: $pindou-space-xl $pindou-space-lg 40px;
 }
 
-/* 预渲染 SEO 内容：保留在 HTML 源码中，对用户隐藏 */
 #prerender {
   display: none;
 }
 
 .page--dock {
-  padding-bottom: calc(72px + var(--pindou-safe-bottom));
+  padding-bottom: calc(80px + var(--pindou-safe-bottom));
 }
 
 .page--editor {
@@ -98,15 +127,35 @@ input:focus-visible {
 .card {
   background: $pindou-bg-card;
   border-radius: $pindou-radius-md;
-  padding: $pindou-space-md;
+  padding: $pindou-space-lg;
   margin-bottom: $pindou-space-md;
   box-shadow: $pindou-shadow-sm;
   border: 1px solid $pindou-border;
+  transition: box-shadow $pindou-duration-fast, border-color $pindou-duration-fast,
+    transform $pindou-duration-fast;
+
+  &:hover {
+    border-color: darken($pindou-border, 4%);
+  }
 }
 
 .card--flat {
   box-shadow: none;
   border-color: $pindou-border-light;
+  background: rgba($pindou-bg-card, 0.72);
+}
+
+.card--interactive {
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $pindou-shadow-md;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 }
 
 .card-hint {
@@ -116,21 +165,25 @@ input:focus-visible {
   margin-bottom: $pindou-space-sm;
   font-size: $pindou-font-sm;
   color: $pindou-warning;
+  border: 1px solid rgba($pindou-warning, 0.15);
 }
 
 /* —— 排版 —— */
 .text-display {
   display: block;
+  font-family: $pindou-font-display;
   font-size: $pindou-font-display;
-  font-weight: 700;
+  font-weight: 800;
   color: $pindou-text;
-  line-height: 1.25;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .text-title {
   display: block;
+  font-family: $pindou-font-display;
   font-size: $pindou-font-lg;
-  font-weight: 600;
+  font-weight: 700;
   color: $pindou-text;
 }
 
@@ -159,20 +212,25 @@ input:focus-visible {
 
 /* —— 空状态 —— */
 .empty-state {
-  padding: 48px $pindou-space-lg;
+  padding: 56px $pindou-space-lg;
   text-align: center;
   color: $pindou-text-muted;
   font-size: $pindou-font-md;
+  border: 2px dashed $pindou-border;
+  border-radius: $pindou-radius-md;
+  background: rgba($pindou-bg-card, 0.6);
 }
 
 /* —— 徽章 —— */
 .badge {
   display: inline-block;
   font-size: 10px;
-  padding: 2px 8px;
+  font-weight: 600;
+  padding: 3px 9px;
   border-radius: $pindou-radius-pill;
   line-height: 1.4;
   flex-shrink: 0;
+  letter-spacing: 0.02em;
 }
 
 .badge--ok {
@@ -193,7 +251,14 @@ input:focus-visible {
   border-radius: $pindou-radius-pill;
   background: $pindou-bg-muted;
   font-size: $pindou-font-sm;
+  font-weight: 500;
   color: $pindou-text-secondary;
+  border: 1px solid transparent;
+  transition: background $pindou-duration-fast, border-color $pindou-duration-fast;
+
+  &:hover {
+    background: darken($pindou-bg-muted, 2%);
+  }
 }
 
 .chip--active {
@@ -214,29 +279,28 @@ input:focus-visible {
   bottom: calc(#{$pindou-space-md} + var(--pindou-safe-bottom));
   display: flex;
   gap: $pindou-space-sm;
-  padding: $pindou-space-sm;
-  background: rgba(255, 255, 255, 0.92);
+  padding: 8px 10px;
+  background: rgba($pindou-bg-card, 0.94);
+  border: 1px solid $pindou-border;
   border-radius: $pindou-radius-lg;
   box-shadow: $pindou-shadow-dock;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(16px) saturate(1.2);
   z-index: 100;
 }
 
-/* —— 分隔 —— */
 .divider-h {
   height: 1px;
   background: $pindou-border-light;
   margin: $pindou-space-sm 0;
 }
 
-/* —— 加载 —— */
 .loading-spinner {
   width: 32px;
   height: 32px;
   border: 3px solid $pindou-border;
   border-top-color: $pindou-primary;
   border-radius: 50%;
-  animation: pindou-spin 0.8s linear infinite;
+  animation: pindou-spin 0.75s linear infinite;
 }
 
 @keyframes pindou-spin {
@@ -245,7 +309,6 @@ input:focus-visible {
   }
 }
 
-/* —— 隐藏画布（导出等） —— */
 .hidden-canvas {
   position: fixed;
   left: -9999px;
@@ -255,7 +318,6 @@ input:focus-visible {
   pointer-events: none;
 }
 
-/* uni scroll-view 属性兼容为横向/纵向滚动 */
 [scroll-x],
 .scroll-x {
   overflow-x: auto;

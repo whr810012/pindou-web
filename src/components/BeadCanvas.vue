@@ -76,6 +76,7 @@ const measuredBoxWidth = ref(0)
 let stopFillObserve: (() => void) | null = null
 let prevCompletedCells: Set<string> = new Set()
 let structureSignature = ''
+let gridMutationRaf = 0
 
 function buildRenderOptions(): RenderGridOptions {
   const layoutWidth = fillLayoutSize.value?.width ?? 0
@@ -246,9 +247,10 @@ function cellFromPoint(clientX: number, clientY: number) {
   const rect = canvas.getBoundingClientRect()
   let localX = clientX - rect.left
   let localY = clientY - rect.top
-  if (props.enableViewport) {
-    localX = (localX - props.viewOffsetX) / props.viewScale
-    localY = (localY - props.viewOffsetY) / props.viewScale
+  // getBoundingClientRect 已包含父级 translate/scale，只需按缩放还原逻辑坐标
+  if (props.enableViewport && props.viewScale !== 1) {
+    localX /= props.viewScale
+    localY /= props.viewScale
   }
   const size = renderCellSize.value
   const cols = props.grid[0].length
@@ -317,14 +319,16 @@ function finishRectSelect() {
 
 function onPointerDown(event: PointerEvent) {
   if (!props.grid || !props.interactive) return
+  const target = event.currentTarget as HTMLCanvasElement
   if (props.enableViewport && props.panEnabled) {
     lastPanTouch.value = { x: event.clientX, y: event.clientY }
     pointerDown.value = true
+    target.setPointerCapture(event.pointerId)
     return
   }
   pointerDown.value = true
   lastPaintKey.value = ''
-  ;(event.currentTarget as HTMLCanvasElement).setPointerCapture(event.pointerId)
+  target.setPointerCapture(event.pointerId)
   resolveCellPoint(event.clientX, event.clientY)
 }
 
@@ -351,7 +355,7 @@ function onPointerMove(event: PointerEvent) {
 }
 
 function onPointerUp(event: PointerEvent) {
-  const wasPainting = pointerDown.value && props.dragPaint
+  const wasPainting = pointerDown.value && props.dragPaint && !lastPanTouch.value
   if (pointerDown.value) {
     try {
       ;(event.currentTarget as HTMLCanvasElement).releasePointerCapture(event.pointerId)
@@ -366,6 +370,12 @@ function onPointerUp(event: PointerEvent) {
   if (wasPainting) emit('strokeEnd')
 }
 
+function onPointerLeave(event: PointerEvent) {
+  // 按住拖动时 pointerleave 仍会触发，不应提前结束平移/涂抹
+  if (pointerDown.value) return
+  onPointerUp(event)
+}
+
 function onWheel(event: WheelEvent) {
   if (!props.enableViewport) return
   event.preventDefault()
@@ -376,7 +386,6 @@ function onWheel(event: WheelEvent) {
 
 watch(
   () => [
-    props.grid,
     props.cellSize,
     props.fillWidth,
     props.containerWidth,
@@ -389,6 +398,20 @@ watch(
     props.renderKey,
   ],
   () => scheduleRedraw(),
+)
+
+/** 画笔/橡皮原地改格时 grid 引用不变，需 deep watch + rAF 合并重绘 */
+watch(
+  () => props.grid,
+  () => {
+    if (!props.grid) return
+    if (gridMutationRaf) return
+    gridMutationRaf = requestAnimationFrame(() => {
+      gridMutationRaf = 0
+      redraw()
+    })
+  },
+  { deep: true },
 )
 
 watch(
@@ -425,6 +448,7 @@ onMounted(async () => {
 
 onUnmounted(() => {
   stopFillObserve?.()
+  if (gridMutationRaf) cancelAnimationFrame(gridMutationRaf)
 })
 </script>
 
@@ -441,13 +465,16 @@ onUnmounted(() => {
       <canvas
         ref="canvasRef"
         class="bead-canvas"
-        :class="{ 'bead-canvas--no-pointer': externalScroll && !interactive }"
+        :class="{
+          'bead-canvas--no-pointer': externalScroll && !interactive,
+          'bead-canvas--pan': panEnabled,
+        }"
         :style="canvasStyle"
         @pointerdown="onPointerDown"
         @pointermove="onPointerMove"
         @pointerup="onPointerUp"
         @pointercancel="onPointerUp"
-        @pointerleave="onPointerUp"
+        @pointerleave="onPointerLeave"
         @wheel="onWheel"
       />
       <div v-if="selectionStyle" class="bead-selection" :style="selectionStyle" />
@@ -485,6 +512,14 @@ onUnmounted(() => {
 
   &--no-pointer {
     pointer-events: none;
+  }
+
+  &--pan {
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
   }
 }
 

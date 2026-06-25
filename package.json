@@ -6,13 +6,16 @@
   "scripts": {
     "build:packages": "npm run build --prefix packages/bead-core && npm run build --prefix packages/app-shared",
     "dev": "vite",
-    "dev:ai": "tsx --env-file=.env.local server/ai-preprocess/dev-server.ts",
+    "dev:ai": "tsx server/ai-preprocess/dev-server.ts",
+    "dev:xhs": "tsx server/xhs-parse/dev-server.ts",
     "build": "npm run build:packages && node scripts/generate-og-png.mjs && node scripts/generate-gallery-pages.mjs && node scripts/generate-seo.mjs --pre && vite build && node scripts/generate-seo.mjs --post && node scripts/prerender.mjs",
     "preview": "vite preview",
     "generate:palette": "node scripts/generate-palette.mjs",
+    "generate:landing-compare": "node scripts/generate-landing-compare.mjs",
     "type-check": "vue-tsc --noEmit",
     "test": "npm run test --prefix packages/bead-core && vitest run",
-    "test:ai": "vitest run server/ai-preprocess"
+    "test:ai": "vitest run server/ai-preprocess",
+    "test:xhs": "vitest run server/xhs-parse"
   },
   "dependencies": {
     "@pindou/app-shared": "file:./packages/app-shared",

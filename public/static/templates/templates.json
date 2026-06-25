@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "id": "tpl-cat",
+      "title": "像素小猫",
+      "thumbnail": "/static/gallery/demo-cat.svg",
+      "image": "/static/gallery/demo-cat.svg"
+    },
+    {
+      "id": "tpl-flower",
+      "title": "简约花朵",
+      "thumbnail": "/static/gallery/demo-flower.svg",
+      "image": "/static/gallery/demo-flower.svg"
+    },
+    {
+      "id": "tpl-landscape",
+      "title": "像素风景",
+      "thumbnail": "/static/gallery/demo-landscape.svg",
+      "image": "/static/gallery/demo-landscape.svg"
+    },
+    {
+      "id": "tpl-icon",
+      "title": "Q 版头像",
+      "thumbnail": "/static/gallery/demo-icon.svg",
+      "image": "/static/gallery/demo-icon.svg"
+    },
+    {
+      "id": "tpl-compare",
+      "title": "动漫角色",
+      "thumbnail": "/static/gallery/landing-compare-before.jpg",
+      "image": "/static/gallery/landing-compare-before.jpg"
+    }
+  ]
+}

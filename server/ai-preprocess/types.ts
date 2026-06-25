@@ -1,4 +1,4 @@
-export type AiPreprocessStyle = 'cartoon' | 'sketch' | 'flat' | 'enhance'
+export type AiPreprocessStyle = 'cartoon' | 'sketch' | 'flat' | 'enhance' | 'matting'
 
 export interface AiPreprocessRequest {
   image: string

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import PButton from '@/components/ui/PButton.vue'
-import { showToast, showModal, showActionSheet, getSystemInfoSync } from '@/utils/platform-ui'
+import { showToast, showModal, showActionSheet, getSystemInfoSync, setClipboardData } from '@/utils/platform-ui'
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { usePageSeo } from '@/utils/seo'
 import AiPreprocessSheet from '@/components/AiPreprocessSheet.vue'
@@ -12,15 +12,21 @@ import ExportSheet from '@/components/ExportSheet.vue'
 import ImageCropperModal from '@/components/ImageCropperModal.vue'
 import ProjectSaveSheet from '@/components/ProjectSaveSheet.vue'
 import SettingsDrawer from '@/components/SettingsDrawer.vue'
+import XhsImportSheet from '@/components/XhsImportSheet.vue'
 import WorkspaceParamStrip from '@/components/WorkspaceParamStrip.vue'
+import WorkspaceUploadZone from '@/components/WorkspaceUploadZone.vue'
 import WorkspaceWorkflowGuide from '@/components/WorkspaceWorkflowGuide.vue'
+import TemplatePickerSheet from '@/components/TemplatePickerSheet.vue'
 import { useFocusStore } from '@/stores/focus'
 import { usePaletteStore } from '@/stores/palette'
 import { useProjectStore } from '@/stores/project'
 import { type ExportSettings } from '@/types/app'
+import { trimGrid } from '@pindou/bead-core'
+import { encodeProjectShare } from '@/utils/projectShare'
 import { debounce } from '@/utils/debounce'
 import {
   applySuggestedParamsForImage,
+  hydrateProjectSourceFromPath,
   loadImageToProject,
   pickImage,
   processCurrentProject,
@@ -36,6 +42,7 @@ import {
   renderStatsCanvas,
 } from '@/utils/export'
 import { ProjectStorage, createProjectId } from '@/utils/projectStorage'
+import { loadImageFromFile, pickImageFileFromClipboard } from '@/utils/pickImage'
 import { createSourcePreview, gridMeta, renderGridThumbnail } from '@/utils/thumbnail'
 import {
   defaultPreviewContainerWidth,
@@ -169,10 +176,22 @@ const exportVisible = ref(false)
 const settingsVisible = ref(false)
 const cropperVisible = ref(false)
 const saveVisible = ref(false)
+const saveLoading = ref(false)
 const compareVisible = ref(false)
 const aiVisible = ref(false)
+const templateVisible = ref(false)
+const xhsVisible = ref(false)
 const tipsExpanded = ref(false)
 const pendingImagePath = ref('')
+const dragOver = ref(false)
+const dragDepth = ref(0)
+
+const SAMPLE_IMAGES = [
+  { label: '小猫', path: '/static/gallery/demo-cat.svg' },
+  { label: '花朵', path: '/static/gallery/demo-flower.svg' },
+  { label: '风景', path: '/static/gallery/demo-landscape.svg' },
+  { label: '头像', path: '/static/gallery/demo-icon.svg' },
+]
 
 const hasSource = computed(() => !!project.sourcePixels || !!project.sourcePreview)
 const hasGrid = computed(() => project.hasGrid)
@@ -185,6 +204,28 @@ const stats = computed(() => {
 const compareSource = computed(() => project.sourcePreview || project.sourcePath)
 const gridInfo = computed(() => (project.grid ? gridMeta(project.grid) : null))
 const isUpdateSave = computed(() => !!project.savedProjectId)
+
+function copyProjectShareCode() {
+  if (!project.grid) return
+  try {
+    const code = encodeProjectShare({
+      name: project.projectName,
+      params: { ...project.params },
+      grid: project.grid,
+      excludedPaletteIds: [...project.excludedPaletteIds],
+      completedCells: focus.exportCompleted(),
+    })
+    setClipboardData({
+      data: code,
+      success: () => showToast({ title: '已复制分享码', icon: 'success' }),
+    })
+  } catch (error) {
+    showToast({
+      title: error instanceof Error ? error.message : '生成分享码失败',
+      icon: 'none',
+    })
+  }
+}
 
 /** 预览格点：120×120 等大图固定 6px，保证可横纵拖动查看 */
 const PREVIEW_MIN_CELL = 6
@@ -252,15 +293,24 @@ const debouncedReprocess = debounce(() => {
   reprocess()
 }, 300)
 
+const debouncedQuickReprocess = debounce(() => {
+  reprocess()
+}, 180)
+
 onMounted(async () => {
   await paletteStore.loadPalettes()
   paletteStore.setPreset(project.params.palettePresetId)
+  if (project.grid && !project.sourcePixels) {
+    await ensureSourceForReprocess()
+  }
   await nextTick()
   startPreviewWidthObserve()
+  window.addEventListener('paste', onWindowPaste)
 })
 
 onUnmounted(() => {
   stopPreviewObserve?.()
+  window.removeEventListener('paste', onWindowPaste)
 })
 
 watch(hasGrid, async (ready) => {
@@ -284,6 +334,69 @@ async function startPickImage() {
   } catch (error) {
     console.error(error)
   }
+}
+
+function openImagePath(path: string) {
+  pendingImagePath.value = path
+  cropperVisible.value = true
+}
+
+function openImageFile(file: File) {
+  try {
+    const path = loadImageFromFile(file)
+    openImagePath(path)
+  } catch (error) {
+    showToast({ title: error instanceof Error ? error.message : '无法读取图片', icon: 'none' })
+  }
+}
+
+function onWindowPaste(event: ClipboardEvent) {
+  if (cropperVisible.value || aiVisible.value || exportVisible.value || settingsVisible.value || xhsVisible.value) {
+    return
+  }
+  const items = event.clipboardData?.items
+  if (!items?.length) return
+  const file = pickImageFileFromClipboard(items)
+  if (!file) return
+  event.preventDefault()
+  openImageFile(file)
+}
+
+function onDragEnter(event: DragEvent) {
+  event.preventDefault()
+  dragDepth.value += 1
+  dragOver.value = true
+}
+
+function onDragOver(event: DragEvent) {
+  event.preventDefault()
+  dragOver.value = true
+}
+
+function onDragLeave(event: DragEvent) {
+  event.preventDefault()
+  dragDepth.value = Math.max(0, dragDepth.value - 1)
+  if (dragDepth.value === 0) dragOver.value = false
+}
+
+function onDrop(event: DragEvent) {
+  event.preventDefault()
+  dragDepth.value = 0
+  dragOver.value = false
+  const file = event.dataTransfer?.files?.[0]
+  if (file && file.type.startsWith('image/')) {
+    openImageFile(file)
+  } else if (file) {
+    showToast({ title: '请选择图片文件（JPG / PNG / WebP）', icon: 'none' })
+  }
+}
+
+function onTemplatePick(path: string) {
+  openImagePath(path)
+}
+
+function trySample(path: string) {
+  openImagePath(path)
 }
 
 function onPickImage() {
@@ -319,6 +432,18 @@ async function onAiDone(path: string) {
   cropperVisible.value = true
 }
 
+async function onXhsSelect(dataUrl: string) {
+  pendingImagePath.value = dataUrl
+  cropperVisible.value = true
+}
+
+function onTrimGrid() {
+  if (!project.grid) return
+  const trimmed = trimGrid(project.grid)
+  project.setGrid(trimmed)
+  showToast({ title: '已自动裁边', icon: 'success' })
+}
+
 async function onCropConfirm(path: string) {
   cropperVisible.value = false
   try {
@@ -338,10 +463,27 @@ async function onCropConfirm(path: string) {
   }
 }
 
+async function ensureSourceForReprocess(): Promise<boolean> {
+  if (project.sourcePixels) return true
+  const path = project.sourcePreview || project.sourcePath
+  if (!path) return false
+  return hydrateProjectSourceFromPath(path)
+}
+
 async function reprocess() {
-  if (!project.sourcePixels) return
+  if (!project.sourcePixels) {
+    const ok = await ensureSourceForReprocess()
+    if (!ok) {
+      showToast({
+        title: '缺少原图数据，请点「换图」重新上传后再调格数',
+        icon: 'none',
+      })
+      return
+    }
+  }
   processing.value = true
   try {
+    await nextTick()
     paletteStore.setPreset(project.params.palettePresetId)
     await processCurrentProject()
   } finally {
@@ -358,7 +500,7 @@ function onParamUpdate(params: Partial<typeof project.params>) {
 function onQuickParamUpdate(params: Partial<typeof project.params>) {
   project.setParams(params)
   if (params.palettePresetId) paletteStore.setPreset(params.palettePresetId)
-  reprocess()
+  debouncedQuickReprocess()
 }
 
 function onBrandChange(brand: typeof paletteStore.brand) {
@@ -403,27 +545,38 @@ function openSave() {
 }
 
 async function confirmSave(name: string) {
-  if (!project.grid) return
-  const wasUpdate = !!project.savedProjectId
-  const id = project.savedProjectId ?? createProjectId()
-  const thumbnail = await renderGridThumbnail(project.grid)
-  const saved = {
-    id,
-    name,
-    updatedAt: Date.now(),
-    thumbnail: thumbnail || undefined,
-    sourcePreview: project.sourcePreview || undefined,
-    params: { ...project.params },
-    grid: project.grid,
-    excludedPaletteIds: [...project.excludedPaletteIds],
-    completedCells: focus.exportCompleted(),
+  if (!project.grid || saveLoading.value) return
+  saveLoading.value = true
+  try {
+    const wasUpdate = !!project.savedProjectId
+    const id = project.savedProjectId ?? createProjectId()
+    const thumbnail = await renderGridThumbnail(project.grid)
+    const saved = {
+      id,
+      name,
+      updatedAt: Date.now(),
+      thumbnail: thumbnail || undefined,
+      sourcePreview: project.sourcePreview || undefined,
+      params: { ...project.params },
+      grid: project.grid,
+      excludedPaletteIds: [...project.excludedPaletteIds],
+      completedCells: focus.exportCompleted(),
+    }
+    ProjectStorage.save(saved)
+    project.projectName = name
+    project.savedProjectId = id
+    project.dirty = false
+    saveVisible.value = false
+    showToast({ title: wasUpdate ? '已更新，正在打开项目列表' : '已保存，正在打开项目列表', icon: 'success' })
+    router.push('/projects')
+  } catch (error) {
+    showToast({
+      title: error instanceof Error ? error.message : '保存失败',
+      icon: 'none',
+    })
+  } finally {
+    saveLoading.value = false
   }
-  ProjectStorage.save(saved)
-  project.projectName = name
-  project.savedProjectId = id
-  project.dirty = false
-  saveVisible.value = false
-  showToast({ title: wasUpdate ? '已更新' : '已保存', icon: 'success' })
 }
 
 async function handleExport(settings: ExportSettings) {
@@ -472,6 +625,14 @@ async function handleExport(settings: ExportSettings) {
             class="badge"
             :class="project.dirty ? 'badge--warn' : 'badge--ok'"
           >{{ statusText }}</span>
+          <button
+            v-if="hasGrid"
+            type="button"
+            class="hero-save-btn"
+            @click="openSave"
+          >
+            保存
+          </button>
         </div>
         <div v-if="gridInfo" class="workspace-hero__chips">
           <span class="stat-chip">{{ gridInfo.cols }}×{{ gridInfo.rows }}</span>
@@ -492,50 +653,96 @@ async function handleExport(settings: ExportSettings) {
 
     <!-- 工具栏 -->
     <section class="workspace-toolbar card">
-      <div scroll-x class="workspace-toolbar__scroll">
-        <button
-          type="button"
-          class="action-chip"
-          :class="{ 'action-chip--primary': !hasGrid }"
-          @click="hasGrid ? onReplaceImage() : onPickImage()"
-        >
-          <span class="action-chip__icon" aria-hidden="true">{{ hasGrid ? '↻' : '↑' }}</span>
-          <span>{{ hasGrid ? '换图' : '上传图片' }}</span>
-        </button>
-        <button type="button" class="action-chip" @click="onAiPick">
-          <span class="action-chip__icon" aria-hidden="true">✦</span>
-          <span>AI 预处理</span>
-        </button>
-        <button type="button" class="action-chip" :disabled="!hasGrid" @click="compareVisible = true">
-          <span class="action-chip__icon" aria-hidden="true">⇄</span>
-          <span>对比</span>
-        </button>
-        <button type="button" class="action-chip" @click="settingsVisible = true">
-          <span class="action-chip__icon" aria-hidden="true">⚙</span>
-          <span>参数</span>
-        </button>
-        <button type="button" class="action-chip" :disabled="!hasGrid" @click="openSave">
-          <span class="action-chip__icon" aria-hidden="true">↓</span>
-          <span>保存</span>
-        </button>
-        <button type="button" class="action-chip" :disabled="!hasGrid" @click="exportVisible = true">
-          <span class="action-chip__icon" aria-hidden="true">⤓</span>
-          <span>导出</span>
-        </button>
+      <div class="workspace-toolbar__scroll">
+        <div class="toolbar-group">
+          <button
+            type="button"
+            class="action-chip"
+            :class="{ 'action-chip--primary': !hasGrid }"
+            @click="hasGrid ? onReplaceImage() : onPickImage()"
+          >
+            <span class="action-chip__icon" aria-hidden="true">{{ hasGrid ? '↻' : '↑' }}</span>
+            <span>{{ hasGrid ? '换图' : '上传' }}</span>
+          </button>
+          <button type="button" class="action-chip" @click="onAiPick">
+            <span class="action-chip__icon" aria-hidden="true">✦</span>
+            <span>AI</span>
+          </button>
+          <button type="button" class="action-chip" @click="templateVisible = true">
+            <span class="action-chip__icon" aria-hidden="true">▦</span>
+            <span>素材</span>
+          </button>
+          <button type="button" class="action-chip" @click="xhsVisible = true">
+            <span class="action-chip__icon" aria-hidden="true">红</span>
+            <span>小红书</span>
+          </button>
+        </div>
+        <span class="toolbar-divider" aria-hidden="true" />
+        <div class="toolbar-group">
+          <button type="button" class="action-chip" :disabled="!hasGrid" @click="onTrimGrid">
+            <span class="action-chip__icon" aria-hidden="true">✂</span>
+            <span>裁边</span>
+          </button>
+          <button type="button" class="action-chip" :disabled="!hasGrid" @click="compareVisible = true">
+            <span class="action-chip__icon" aria-hidden="true">⇄</span>
+            <span>对比</span>
+          </button>
+          <button type="button" class="action-chip" @click="settingsVisible = true">
+            <span class="action-chip__icon" aria-hidden="true">⚙</span>
+            <span>参数</span>
+          </button>
+        </div>
+        <span class="toolbar-divider" aria-hidden="true" />
+        <div class="toolbar-group">
+          <button type="button" class="action-chip" :disabled="!hasGrid" @click="goPreview3d">
+            <span class="action-chip__icon" aria-hidden="true">3D</span>
+            <span>预览</span>
+          </button>
+          <button
+            type="button"
+            class="action-chip action-chip--save"
+            :disabled="!hasGrid"
+            @click="openSave"
+          >
+            <span class="action-chip__icon" aria-hidden="true">↓</span>
+            <span>保存</span>
+          </button>
+          <button
+            type="button"
+            class="action-chip action-chip--export"
+            :disabled="!hasGrid"
+            @click="exportVisible = true"
+          >
+            <span class="action-chip__icon" aria-hidden="true">⤓</span>
+            <span>导出</span>
+          </button>
+        </div>
       </div>
     </section>
 
     <!-- 快调参数 -->
     <WorkspaceParamStrip
-      v-if="hasSource"
+      v-if="hasSource || hasGrid"
       :params="project.params"
-      :disabled="processing || !project.sourcePixels"
+      :busy="processing"
+      :missing-source="!project.sourcePixels && !project.sourcePreview && !project.sourcePath"
       @update="onQuickParamUpdate"
       @open-settings="settingsVisible = true"
     />
 
     <!-- 图纸预览 -->
-    <section class="card preview-card" :class="{ 'preview-card--ready': hasGrid }">
+    <section
+      class="card preview-card"
+      :class="{
+        'preview-card--ready': hasGrid,
+        'preview-card--drag': dragOver && !hasGrid,
+        'preview-card--upload': !hasGrid,
+      }"
+      @dragenter="onDragEnter"
+      @dragover="onDragOver"
+      @dragleave="onDragLeave"
+      @drop="onDrop"
+    >
       <div v-if="hasGrid" class="preview-head">
         <div>
           <span class="preview-title">图纸预览</span>
@@ -544,23 +751,23 @@ async function handleExport(settings: ExportSettings) {
         <button type="button" class="preview-edit" @click="goEditor">精修图纸 ›</button>
       </div>
 
-      <div v-if="processing" class="loading-overlay">
+      <div v-if="processing && !hasGrid" class="loading-overlay">
         <div class="loading-spinner" />
         <span class="loading-text">正在生成图纸…</span>
         <span class="loading-sub">本地处理中，大图可能需要几秒</span>
       </div>
 
-      <div v-else-if="!hasGrid" class="empty-zone" @click="onPickImage">
-        <div class="empty-zone__visual" aria-hidden="true">
-          <span class="empty-icon">+</span>
-        </div>
-        <span class="empty-title">上传图片开始制作</span>
-        <span class="empty-desc">支持 JPG / PNG，全部在浏览器本地处理，不上传服务器</span>
-        <div class="empty-actions" @click.stop>
-          <PButton type="primary" text="选择图片" @click="onPickImage" />
-          <PButton plain text="AI 预处理" @click="onAiPick" />
-        </div>
-      </div>
+      <WorkspaceUploadZone
+        v-else-if="!hasGrid"
+        :drag-over="dragOver"
+        :samples="SAMPLE_IMAGES"
+        @pick="onPickImage"
+        @template="templateVisible = true"
+        @ai="onAiPick"
+        @xhs="xhsVisible = true"
+        @pixel-text="router.push('/text')"
+        @sample="trySample"
+      />
 
       <div v-else class="preview-body">
         <div :id="previewMeasureId" class="preview-measure" />
@@ -583,11 +790,16 @@ async function handleExport(settings: ExportSettings) {
                 external-scroll
                 :cell-size="previewCellSize"
                 :show-grid="true"
-                :interactive="true"
+                :interactive="!processing"
                 :code-lookup="(id) => paletteStore.getDisplayCode(id)"
               />
             </div>
           </div>
+        </div>
+        <div v-if="processing" class="loading-overlay loading-overlay--float">
+          <div class="loading-spinner" />
+          <span class="loading-text">正在生成图纸…</span>
+          <span class="loading-sub">本地处理中，稍候即可</span>
         </div>
       </div>
     </section>
@@ -614,8 +826,15 @@ async function handleExport(settings: ExportSettings) {
     />
 
     <div class="bottom-dock workspace-dock">
-      <PButton type="primary" size="small" text="精修图纸" :disabled="!hasGrid" @click="goEditor" />
-      <PButton size="small" text="3D 预览" :disabled="!hasGrid" @click="goPreview3d" />
+      <PButton
+        type="primary"
+        size="small"
+        text="保存"
+        :disabled="!hasGrid"
+        @click="openSave"
+      />
+      <PButton size="small" text="精修图纸" :disabled="!hasGrid" @click="goEditor" />
+      <PButton size="small" text="导出" :disabled="!hasGrid" @click="exportVisible = true" />
       <PButton size="small" text="专心拼豆" :disabled="!hasGrid" @click="goFocus" />
     </div>
 
@@ -640,8 +859,10 @@ async function handleExport(settings: ExportSettings) {
       :show="saveVisible"
       :name="project.projectName"
       :is-update="isUpdateSave"
+      :loading="saveLoading"
       @close="saveVisible = false"
       @confirm="confirmSave"
+      @share="copyProjectShareCode"
     />
 
     <CompareSheet
@@ -657,6 +878,18 @@ async function handleExport(settings: ExportSettings) {
       :image-path="pendingImagePath"
       @close="aiVisible = false"
       @done="onAiDone"
+    />
+
+    <XhsImportSheet
+      :show="xhsVisible"
+      @close="xhsVisible = false"
+      @select="onXhsSelect"
+    />
+
+    <TemplatePickerSheet
+      :show="templateVisible"
+      @close="templateVisible = false"
+      @pick="onTemplatePick"
     />
 
     <ExportSheet :show="exportVisible" @close="exportVisible = false" @confirm="handleExport" />
@@ -677,8 +910,9 @@ async function handleExport(settings: ExportSettings) {
   display: flex;
   gap: $pindou-space-md;
   align-items: center;
-  background: linear-gradient(135deg, #fff 0%, rgba($pindou-primary, 0.04) 100%);
-  border-color: rgba($pindou-primary, 0.12);
+  background: $pindou-bg-card;
+  border-color: $pindou-border;
+  box-shadow: $pindou-shadow-sm;
 }
 
 .workspace-hero__media {
@@ -712,11 +946,36 @@ async function handleExport(settings: ExportSettings) {
   display: flex;
   align-items: center;
   gap: $pindou-space-sm;
+  flex-wrap: wrap;
+}
+
+.hero-save-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  border: none;
+  border-radius: $pindou-radius-pill;
+  background: $pindou-primary;
+  color: #fff;
+  font-size: $pindou-font-xs;
+  font-weight: 600;
+  padding: 6px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba($pindou-primary, 0.28);
+  transition: background 0.15s, transform 0.1s;
+
+  &:hover {
+    background: $pindou-primary-dark;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
 .workspace-hero__name {
   margin: 0;
-  font-weight: 700;
+  font-family: $pindou-font-display;
+  font-weight: 800;
   font-size: $pindou-font-lg;
   color: $pindou-text;
   overflow: hidden;
@@ -750,13 +1009,49 @@ async function handleExport(settings: ExportSettings) {
 }
 
 .workspace-toolbar {
+  position: relative;
   padding: 10px $pindou-space-md;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 0;
+    bottom: 10px;
+    width: 28px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95));
+    border-radius: 0 $pindou-radius-md $pindou-radius-md 0;
+  }
+}
+
+.toolbar-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.toolbar-divider {
+  flex-shrink: 0;
+  width: 1px;
+  height: 24px;
+  background: $pindou-border-light;
+  margin: 0 2px;
 }
 
 .workspace-toolbar__scroll {
   display: flex;
+  align-items: center;
   gap: 8px;
   padding-bottom: 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .action-chip {
@@ -798,6 +1093,20 @@ async function handleExport(settings: ExportSettings) {
       border-color: $pindou-primary-dark;
     }
   }
+
+  &--save {
+    background: rgba($pindou-primary, 0.08);
+    border-color: rgba($pindou-primary, 0.28);
+    color: $pindou-primary;
+    font-weight: 600;
+  }
+
+  &--export {
+    background: #fff;
+    border-color: rgba($pindou-primary, 0.2);
+    color: $pindou-text;
+    font-weight: 600;
+  }
 }
 
 .action-chip__icon {
@@ -817,9 +1126,21 @@ async function handleExport(settings: ExportSettings) {
 }
 
 .preview-card {
-  min-height: 220px;
+  min-height: 200px;
   position: relative;
   overflow: hidden;
+}
+
+.preview-card--upload {
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  &:hover {
+    border-color: transparent;
+    transform: none;
+  }
 }
 
 .preview-card--ready {
@@ -827,6 +1148,7 @@ async function handleExport(settings: ExportSettings) {
 }
 
 .preview-body {
+  position: relative;
   margin-top: 4px;
 }
 
@@ -921,6 +1243,16 @@ async function handleExport(settings: ExportSettings) {
   padding: 64px $pindou-space-lg;
   gap: 10px;
   text-align: center;
+
+  &--float {
+    position: absolute;
+    inset: 0;
+    padding: $pindou-space-lg;
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(4px);
+    border-radius: $pindou-radius-sm;
+    z-index: 2;
+  }
 }
 
 .loading-text {
@@ -932,60 +1264,6 @@ async function handleExport(settings: ExportSettings) {
 .loading-sub {
   color: $pindou-text-muted;
   font-size: $pindou-font-sm;
-}
-
-.empty-zone {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 36px 20px 32px;
-  border: 2px dashed rgba($pindou-primary, 0.25);
-  border-radius: $pindou-radius-md;
-  background: linear-gradient(180deg, rgba($pindou-primary, 0.04), transparent);
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-
-  &:hover {
-    border-color: rgba($pindou-primary, 0.45);
-    background: rgba($pindou-primary, 0.06);
-  }
-}
-
-.empty-zone__visual {
-  margin-bottom: $pindou-space-md;
-}
-
-.empty-icon {
-  width: 52px;
-  height: 52px;
-  line-height: 48px;
-  text-align: center;
-  font-size: 30px;
-  color: $pindou-primary;
-  border: 2px solid rgba($pindou-primary, 0.5);
-  border-radius: 50%;
-  background: #fff;
-}
-
-.empty-title {
-  font-size: $pindou-font-lg;
-  font-weight: 700;
-  color: $pindou-text;
-}
-
-.empty-desc {
-  margin-top: 8px;
-  max-width: 320px;
-  font-size: $pindou-font-sm;
-  color: $pindou-text-muted;
-  text-align: center;
-  line-height: 1.5;
-}
-
-.empty-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 22px;
 }
 
 .tips-card {
@@ -1043,18 +1321,26 @@ async function handleExport(settings: ExportSettings) {
   right: auto;
   transform: translateX(-50%);
   width: min(#{$pindou-content-wide}, calc(100% - 24px));
-  padding: 10px 12px;
-  gap: 8px;
-  border: 1px solid rgba($pindou-primary, 0.1);
+  padding: 8px 10px;
+  gap: 6px;
+  border: 1px solid rgba($pindou-primary, 0.12);
+  background: rgba(255, 255, 255, 0.96);
 
   :deep(.p-btn) {
     flex: 1;
-    min-height: 42px;
+    min-height: 44px;
     font-size: $pindou-font-sm;
+    font-weight: 600;
+    border-radius: $pindou-radius-sm;
   }
 
   :deep(.p-btn--primary) {
-    box-shadow: 0 4px 12px rgba($pindou-primary, 0.25);
+    box-shadow: 0 4px 14px rgba($pindou-primary, 0.3);
+  }
+
+  :deep(.p-btn:not(.p-btn--primary)) {
+    background: $pindou-bg-muted;
+    border-color: $pindou-border-light;
   }
 }
 </style>

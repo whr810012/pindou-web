@@ -12,6 +12,7 @@ const router = createRouter({
     { path: '/gallery', name: 'gallery', component: () => import('@/pages/GalleryPage.vue') },
     { path: '/preview3d', name: 'preview3d', component: () => import('@/pages/Preview3dPage.vue') },
     { path: '/palette', name: 'palette', component: () => import('@/pages/PaletteEditorPage.vue') },
+    { path: '/text', name: 'pixel-text', component: () => import('@/pages/PixelTextPage.vue') },
     { path: '/gallery/:slug', name: 'gallery-detail', component: () => import('@/pages/GalleryDetailPage.vue') },
   ],
   scrollBehavior: () => ({ top: 0 }),

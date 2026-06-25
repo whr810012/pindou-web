@@ -8,6 +8,7 @@ const beadCoreSrc = fileURLToPath(new URL('./packages/bead-core/src', import.met
 export default defineConfig({
   plugins: [vue()],
   resolve: {
+    extensions: ['.mjs', '.mts', '.ts', '.tsx', '.js', '.jsx', '.json'],
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@pindou/app-shared': appSharedSrc,
@@ -17,7 +18,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/styles/tokens.scss";`,
+        api: 'modern-compiler',
+        additionalData: `@use "@/styles/tokens.scss" as *;\n`,
       },
     },
   },

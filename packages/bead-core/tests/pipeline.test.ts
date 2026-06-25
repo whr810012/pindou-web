@@ -42,6 +42,7 @@ function baseOptions(overrides: Partial<PipelineOptions> = {}): PipelineOptions 
     gridWidth: 4,
     mode: 'dominant',
     mergeThreshold: 0,
+    maxColors: 0,
     backgroundPaletteIds: ['white'],
     excludedPaletteIds: [],
     palette: testPalette,

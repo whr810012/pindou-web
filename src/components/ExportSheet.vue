@@ -5,10 +5,9 @@ import PTag from '@/components/ui/PTag.vue'
 import PCell from '@/components/ui/PCell.vue'
 import PSwitch from '@/components/ui/PSwitch.vue'
 import PNumberBox from '@/components/ui/PNumberBox.vue'
-import PLineProgress from '@/components/ui/PLineProgress.vue'
-import type { ExportFormat, ExportSettings } from '@/types/app'
+import type { ExportFormat, ExportSettings, PdfLayout } from '@/types/app'
 import { DEFAULT_EXPORT_SETTINGS } from '@/types/app'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps<{
   show: boolean
@@ -27,6 +26,13 @@ const formats: Array<{ label: string; value: ExportFormat }> = [
   { label: 'PDF 图纸', value: 'pdf' },
 ]
 
+const pdfLayouts: Array<{ label: string; value: PdfLayout }> = [
+  { label: '整图单页', value: 'single' },
+  { label: '29×29 分板', value: 'boards' },
+]
+
+const showPdfLayout = computed(() => settings.value.format === 'pdf')
+
 watch(
   () => props.show,
   (visible) => {
@@ -41,12 +47,12 @@ function confirm() {
 
 <template>
   <PDrawer :model-value="show" @update:model-value="(v) => !v && emit('close')">
-    <div class="sheet">
-      <span class="title">导出设置</span>
+    <div class="craft-drawer">
+      <span class="craft-drawer__title">导出设置</span>
 
-      <div class="tag-row">
-        <span class="label">导出格式</span>
-        <div class="tags">
+      <div class="craft-section craft-section--flush">
+        <span class="craft-label">导出格式</span>
+        <div class="craft-tags">
           <PTag
             v-for="item in formats"
             :key="item.value"
@@ -58,9 +64,29 @@ function confirm() {
         </div>
       </div>
 
+      <div v-if="showPdfLayout" class="craft-section">
+        <span class="craft-label">PDF 布局</span>
+        <div class="craft-tags">
+          <PTag
+            v-for="item in pdfLayouts"
+            :key="item.value"
+            :text="item.label"
+            :plain="settings.pdfLayout !== item.value"
+            type="primary"
+            @click="settings.pdfLayout = item.value"
+          />
+        </div>
+      </div>
+
+      <div class="craft-section">
       <PCell title="显示网格线">
         <template #value>
           <PSwitch v-model="settings.showGrid" />
+        </template>
+      </PCell>
+      <PCell title="拼板分割线（每 29 格）">
+        <template #value>
+          <PSwitch v-model="settings.showBoardLines" />
         </template>
       </PCell>
       <PCell title="显示色号">
@@ -83,37 +109,12 @@ function confirm() {
           <PNumberBox v-model="settings.cellSize" :min="8" :max="32" />
         </template>
       </PCell>
-      <PButton type="primary" text="导出" @click="confirm" />
+      </div>
+      <PButton type="primary" block text="导出" @click="confirm" />
     </div>
   </PDrawer>
 </template>
 
 <style scoped lang="scss">
-.sheet {
-  padding: 16px;
-}
-
-.title {
-  display: block;
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
-
-.tag-row {
-  margin-bottom: 8px;
-}
-
-.label {
-  display: block;
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 8px;
-}
-
-.tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
+// 样式由 craft-drawer / PCell 等共享类提供
 </style>

@@ -21,6 +21,10 @@ export const STYLE_PROMPTS: Record<AiPreprocessStyle, string> = {
     BEAD_CONSTRAINT,
     '风格：适度锐化边缘、提高对比度，压制高频细节与背景杂色，保留可识别的大色块区域，轻微去噪，不要过度风格化。',
   ].join(' '),
+  matting: [
+    BEAD_CONSTRAINT,
+    '风格：智能抠图去背景，主体保留完整，背景替换为纯白或透明感纯色底，边缘干净，去除复杂背景杂物，适合拼豆像素化前预处理。',
+  ].join(' '),
 }
 
 /** SeedEdit scale：越低越贴近原图，越高越听从提示词 */
@@ -29,6 +33,7 @@ export const STYLE_EDIT_SCALE: Record<AiPreprocessStyle, number> = {
   sketch: 0.48,
   cartoon: 0.52,
   flat: 0.55,
+  matting: 0.5,
 }
 
 export function styleToPrompt(style: string): string {

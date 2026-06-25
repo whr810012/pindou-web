@@ -270,6 +270,8 @@ function statBadge(paletteId: string) {
   margin-bottom: $pindou-space-md;
   border-radius: $pindou-radius-sm;
   background: $pindou-bg-muted;
+  border: 1px solid $pindou-border-light;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .chip {
@@ -277,8 +279,20 @@ function statBadge(paletteId: string) {
   flex-direction: column;
   align-items: center;
   margin-right: 10px;
-  padding: 6px;
+  padding: 8px 10px;
   border-radius: $pindou-radius-sm;
+  border: 1px solid transparent;
+  background: $pindou-bg-subtle;
+  cursor: pointer;
+  transition: border-color $pindou-duration-fast, background $pindou-duration-fast,
+    box-shadow $pindou-duration-fast;
+
+  &--active,
+  &--outline-active {
+    border-color: rgba($pindou-primary, 0.4);
+    background: rgba($pindou-primary-light, 0.55);
+    box-shadow: $pindou-shadow-sm;
+  }
 }
 
 .swatch {

@@ -1,4 +1,4 @@
-import { runPipeline, type MappedGrid } from '@pindou/bead-core'
+import { runPipeline, prepareSourcePixels, type MappedGrid } from '@pindou/bead-core'
 import { getPlatform } from '../platform/context.js'
 import { usePaletteStore } from '../stores/palette.js'
 import { useProjectStore } from '../stores/project.js'
@@ -13,14 +13,23 @@ export async function processCurrentProject() {
     throw new Error('请先上传图片')
   }
 
-  const result = runPipeline(
+  const pixels = prepareSourcePixels(
     project.sourcePixels,
+    project.sourceWidth,
+    project.sourceHeight,
+    project.params.imageAdjust,
+    project.params.photoOptimize,
+  )
+
+  const result = runPipeline(
+    pixels,
     project.sourceWidth,
     project.sourceHeight,
     {
       gridWidth: project.params.gridWidth,
       mode: project.params.mode,
       mergeThreshold: project.params.mergeThreshold,
+      maxColors: project.params.maxColors,
       backgroundPaletteIds: paletteStore.backgroundIds,
       excludedPaletteIds: project.excludedPaletteIds,
       palette: paletteStore.activeEntries,
@@ -40,6 +49,19 @@ export async function loadImageToProject(path: string) {
   const project = useProjectStore()
   project.setSource(path, loaded.width, loaded.height, loaded.pixels)
   return loaded
+}
+
+/** 从预览图/路径恢复像素（打开已保存项目后调参用，不重置保存状态） */
+export async function hydrateProjectSourceFromPath(path: string): Promise<boolean> {
+  if (!path) return false
+  try {
+    const loaded = await getPlatform().imageLoader.loadFromPath(path)
+    const project = useProjectStore()
+    project.hydrateSourcePixels(loaded.width, loaded.height, loaded.pixels, path)
+    return true
+  } catch {
+    return false
+  }
 }
 
 /** 新图上传后根据尺寸与内容自动建议参数 */

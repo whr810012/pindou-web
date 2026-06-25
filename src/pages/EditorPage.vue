@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { fillRegion, paintRect } from '@pindou/bead-core'
+import { fillRegion, paintRect, flipGridHorizontal, flipGridVertical } from '@pindou/bead-core'
 import BeadCanvas from '@/components/BeadCanvas.vue'
 import EditorHistorySheet from '@/components/EditorHistorySheet.vue'
 import EditorViewportBar from '@/components/EditorViewportBar.vue'
@@ -61,9 +61,12 @@ const statusHint = computed(() => {
   return toolMeta.value.hint
 })
 
-onMounted(() => {
+onMounted(async () => {
   guideDismissed.value = localStorage.getItem(GUIDE_KEY) === '1'
   window.addEventListener('keydown', onKeyDown)
+  if (paletteStore.activeEntries.length === 0) {
+    await paletteStore.loadPalettes().catch(console.error)
+  }
   if (!editor.selectedPaletteId && paletteStore.activeEntries[0]) {
     const first = paletteStore.activeEntries[0]
     editor.selectColor(first.id, first.hex)
@@ -103,6 +106,10 @@ function applyCell(row: number, col: number) {
   }
 
   if (editor.tool === 'brush') {
+    if (!editor.selectedPaletteId) {
+      showToast({ title: '请先在色板选择颜色', icon: 'none' })
+      return
+    }
     project.updateCell(row, col, editor.selectedPaletteId, editor.selectedHex)
     return
   }
@@ -229,6 +236,24 @@ function togglePan() {
   panEnabled.value = !panEnabled.value
 }
 
+function onViewOffset(offset: { x: number; y: number }) {
+  viewOffset.value = offset
+}
+
+function flipHorizontal() {
+  if (!project.grid) return
+  editor.pushHistory(project.grid)
+  project.setGrid(flipGridHorizontal(project.grid))
+  showToast({ title: '已水平翻转', icon: 'success' })
+}
+
+function flipVertical() {
+  if (!project.grid) return
+  editor.pushHistory(project.grid)
+  project.setGrid(flipGridVertical(project.grid))
+  showToast({ title: '已垂直翻转', icon: 'success' })
+}
+
 function onKeyDown(event: KeyboardEvent) {
   const target = event.target as HTMLElement
   if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return
@@ -267,13 +292,13 @@ function onKeyDown(event: KeyboardEvent) {
 
 <template>
   <div class="page page--editor">
-    <header class="editor-header">
-      <button type="button" class="back" @click="goBack">← 工作台</button>
+    <header class="craft-editor-bar">
+      <button type="button" class="craft-editor-back" @click="goBack">← 工作台</button>
       <div class="editor-title">
         <span class="name">{{ project.projectName }}</span>
         <span v-if="grid" class="meta">{{ grid[0]?.length }}×{{ grid.length }} 格</span>
       </div>
-      <PButton size="mini" plain text="保存" @click="goBack" />
+      <PButton size="mini" plain text="完成" @click="goBack" />
     </header>
 
     <div v-if="!grid" class="empty-state">
@@ -305,6 +330,11 @@ function onKeyDown(event: KeyboardEvent) {
         @toggle-pan="togglePan"
       />
 
+      <div class="flip-bar">
+        <PButton size="mini" plain text="↔ 水平翻转" @click="flipHorizontal" />
+        <PButton size="mini" plain text="↕ 垂直翻转" @click="flipVertical" />
+      </div>
+
       <div class="canvas-area">
         <BeadCanvas
           :grid="grid"
@@ -321,7 +351,7 @@ function onKeyDown(event: KeyboardEvent) {
           :pan-enabled="panEnabled"
           :code-lookup="(id) => paletteStore.getDisplayCode(id)"
           @update:view-scale="viewScale = $event"
-          @update:view-offset="viewOffset = $event"
+          @update:view-offset="onViewOffset"
           @cell-tap="onCellTap"
           @rect-select="onRectSelect"
           @stroke-end="onStrokeEnd"
@@ -366,26 +396,6 @@ function onKeyDown(event: KeyboardEvent) {
 </template>
 
 <style scoped lang="scss">
-.editor-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: $pindou-space-sm;
-  padding-bottom: $pindou-space-sm;
-  border-bottom: 1px solid $pindou-border-light;
-}
-
-.back {
-  border: none;
-  background: $pindou-bg-muted;
-  border-radius: $pindou-radius-sm;
-  padding: 6px 10px;
-  font-size: $pindou-font-sm;
-  color: $pindou-text-secondary;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
 .editor-title {
   flex: 1;
   min-width: 0;
@@ -393,7 +403,8 @@ function onKeyDown(event: KeyboardEvent) {
 
 .name {
   display: block;
-  font-weight: 600;
+  font-family: $pindou-font-display;
+  font-weight: 700;
   font-size: $pindou-font-md;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -403,6 +414,12 @@ function onKeyDown(event: KeyboardEvent) {
 .meta {
   font-size: $pindou-font-xs;
   color: $pindou-text-muted;
+}
+
+.flip-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: $pindou-space-sm;
 }
 
 .editor-guide {

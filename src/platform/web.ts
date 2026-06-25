@@ -13,7 +13,12 @@ export function createWebPlatform(router: Router): PlatformPorts {
       }
     },
     setItem(key, value) {
-      localStorage.setItem(key, value)
+      try {
+        localStorage.setItem(key, value)
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'storage write failed'
+        throw new Error(message)
+      }
     },
     removeItem(key) {
       localStorage.removeItem(key)
@@ -37,7 +42,7 @@ export function createWebPlatform(router: Router): PlatformPorts {
       return new Promise((resolve, reject) => {
         const input = document.createElement('input')
         input.type = 'file'
-        input.accept = 'image/*'
+        input.accept = 'image/jpeg,image/png,image/webp,image/gif'
         input.onchange = () => {
           const file = input.files?.[0]
           if (!file) {

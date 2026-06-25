@@ -70,7 +70,8 @@ const excludedCount = computed(() => props.excludedIds.length)
 
 .color-panel__title {
   display: block;
-  font-weight: 600;
+  font-family: $pindou-font-display;
+  font-weight: 800;
   font-size: $pindou-font-md;
 }
 

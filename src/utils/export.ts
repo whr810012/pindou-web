@@ -1,6 +1,9 @@
 import type { BrandSystem, ColorStat, MappedGrid } from '@pindou/bead-core'
 import { computeColorStats } from '@pindou/bead-core'
 import type { ExportSettings } from '@/types/app'
+import { BOARD_SIZE, BEADS_PER_BAG } from '@/types/app'
+
+export { BOARD_SIZE, BEADS_PER_BAG }
 
 export function buildColorStats(
   grid: MappedGrid,
@@ -10,9 +13,14 @@ export function buildColorStats(
   return computeColorStats(grid, brand, codeLookup)
 }
 
-export function exportStatsCsv(stats: ColorStat[]): string {
-  const header = 'code,hex,count\n'
-  const rows = stats.map((s) => `${s.displayCode},${s.hex},${s.count}`).join('\n')
+export function exportStatsCsv(stats: ColorStat[], beadsPerBag = BEADS_PER_BAG): string {
+  const header = 'code,hex,count,bags\n'
+  const rows = stats
+    .map((s) => {
+      const bags = Math.ceil(s.count / beadsPerBag)
+      return `${s.displayCode},${s.hex},${s.count},${bags}`
+    })
+    .join('\n')
   return header + rows
 }
 
@@ -67,6 +75,7 @@ interface PatternLayout {
 
 const RULER_TOP = 22
 const RULER_LEFT = 30
+const PDF_HEADER = 36
 
 function getPatternLayout(grid: MappedGrid, cellSize: number, showRuler: boolean): PatternLayout {
   const rows = grid.length
@@ -117,6 +126,32 @@ function drawRuler(ctx: CanvasRenderingContext2D, layout: PatternLayout, cellSiz
   }
 }
 
+function drawBoardLines(
+  ctx: CanvasRenderingContext2D,
+  layout: PatternLayout,
+  cellSize: number,
+) {
+  const { rows, cols, offsetX, offsetY } = layout
+  ctx.strokeStyle = '#111'
+  ctx.lineWidth = 2
+
+  for (let col = BOARD_SIZE; col < cols; col += BOARD_SIZE) {
+    const x = offsetX + col * cellSize + 0.5
+    ctx.beginPath()
+    ctx.moveTo(x, offsetY)
+    ctx.lineTo(x, offsetY + rows * cellSize)
+    ctx.stroke()
+  }
+
+  for (let row = BOARD_SIZE; row < rows; row += BOARD_SIZE) {
+    const y = offsetY + row * cellSize + 0.5
+    ctx.beginPath()
+    ctx.moveTo(offsetX, y)
+    ctx.lineTo(offsetX + cols * cellSize, y)
+    ctx.stroke()
+  }
+}
+
 function drawPattern(
   ctx: CanvasRenderingContext2D,
   grid: MappedGrid,
@@ -138,6 +173,7 @@ function drawPattern(
       ctx.fillRect(x, y, cellSize, cellSize)
       if (settings.showGrid) {
         ctx.strokeStyle = 'rgba(0,0,0,0.2)'
+        ctx.lineWidth = 1
         ctx.strokeRect(x, y, cellSize, cellSize)
       }
       if (settings.showColorCode) {
@@ -156,6 +192,59 @@ function drawPattern(
       }
     }
   }
+
+  if (settings.showBoardLines) {
+    drawBoardLines(ctx, layout, cellSize)
+  }
+}
+
+function boardColumnLetter(index: number): string {
+  let n = index
+  let label = ''
+  while (n >= 0) {
+    label = String.fromCharCode(65 + (n % 26)) + label
+    n = Math.floor(n / 26) - 1
+  }
+  return label
+}
+
+export function boardLabel(boardCol: number, boardRow: number): string {
+  return `${boardColumnLetter(boardCol)}${boardRow + 1}`
+}
+
+function sliceGrid(
+  grid: MappedGrid,
+  startRow: number,
+  startCol: number,
+  size: number,
+): MappedGrid {
+  const slice: MappedGrid = []
+  for (let r = 0; r < size; r++) {
+    const srcRow = startRow + r
+    if (srcRow >= grid.length) break
+    const row = []
+    for (let c = 0; c < size; c++) {
+      const srcCol = startCol + c
+      if (srcCol >= (grid[0]?.length ?? 0)) break
+      row.push({ ...grid[srcRow][srcCol] })
+    }
+    if (row.length) slice.push(row)
+  }
+  return slice
+}
+
+async function renderGridToDataUrl(
+  grid: MappedGrid,
+  settings: ExportSettings,
+  codeLookup: (paletteId: string) => string,
+): Promise<string> {
+  const layout = getPatternLayout(grid, settings.cellSize, settings.showRuler)
+  const canvas = document.createElement('canvas')
+  canvas.width = layout.width
+  canvas.height = layout.height
+  const ctx = canvas.getContext('2d')!
+  drawPattern(ctx, grid, settings, codeLookup, layout)
+  return canvas.toDataURL('image/png')
 }
 
 export async function renderStatsCanvas(stats: ColorStat[]): Promise<string> {
@@ -182,6 +271,91 @@ export async function renderStatsCanvas(stats: ColorStat[]): Promise<string> {
   return canvas.toDataURL('image/png')
 }
 
+async function exportSinglePagePdf(
+  grid: MappedGrid,
+  settings: ExportSettings,
+  codeLookup: (paletteId: string) => string,
+  title: string,
+  stats: ColorStat[],
+): Promise<Blob> {
+  const { jsPDF } = await import('jspdf')
+  const layout = getPatternLayout(grid, settings.cellSize, settings.showRuler)
+  const patternData = await renderGridToDataUrl(grid, settings, codeLookup)
+
+  const orientation = layout.width > layout.height ? 'landscape' : 'portrait'
+  const pdf = new jsPDF({ orientation, unit: 'px', format: [layout.width, layout.height + PDF_HEADER] })
+  pdf.setFontSize(14)
+  pdf.text(title || 'Pindou 拼豆图纸', 12, 20)
+  pdf.addImage(patternData, 'PNG', 0, PDF_HEADER, layout.width, layout.height)
+
+  if (stats.length) {
+    const statsImage = await renderStatsCanvas(stats)
+    const statsHeight = Math.max(120, stats.length * 28 + 40)
+    pdf.addPage([320, statsHeight + 40], orientation)
+    pdf.setFontSize(14)
+    pdf.text('采购清单', 12, 20)
+    pdf.addImage(statsImage, 'PNG', 0, 28, 320, statsHeight)
+  }
+
+  return pdf.output('blob')
+}
+
+async function exportBoardsPdf(
+  grid: MappedGrid,
+  settings: ExportSettings,
+  codeLookup: (paletteId: string) => string,
+  title: string,
+  stats: ColorStat[],
+): Promise<Blob> {
+  const { jsPDF } = await import('jspdf')
+  const totalRows = grid.length
+  const totalCols = grid[0]?.length ?? 0
+  const boardRows = Math.ceil(totalRows / BOARD_SIZE)
+  const boardCols = Math.ceil(totalCols / BOARD_SIZE)
+  const totalPages = boardRows * boardCols
+
+  const chunkSettings: ExportSettings = { ...settings, showBoardLines: false }
+  const chunkLayout = getPatternLayout(
+    sliceGrid(grid, 0, 0, BOARD_SIZE),
+    chunkSettings.cellSize,
+    chunkSettings.showRuler,
+  )
+
+  const orientation = chunkLayout.width > chunkLayout.height ? 'landscape' : 'portrait'
+  const pageFormat: [number, number] = [chunkLayout.width, chunkLayout.height + PDF_HEADER + 16]
+  const pdf = new jsPDF({ orientation, unit: 'px', format: pageFormat })
+
+  let pageIndex = 0
+  for (let br = 0; br < boardRows; br++) {
+    for (let bc = 0; bc < boardCols; bc++) {
+      if (pageIndex > 0) pdf.addPage(pageFormat, orientation)
+
+      const chunk = sliceGrid(grid, br * BOARD_SIZE, bc * BOARD_SIZE, BOARD_SIZE)
+      const patternData = await renderGridToDataUrl(chunk, chunkSettings, codeLookup)
+      const label = boardLabel(bc, br)
+
+      pdf.setFontSize(14)
+      pdf.text(title || 'Pindou 拼豆图纸', 12, 18)
+      pdf.setFontSize(11)
+      pdf.text(`拼板 ${label}  ·  第 ${pageIndex + 1} / ${totalPages} 页`, 12, 32)
+      pdf.addImage(patternData, 'PNG', 0, PDF_HEADER + 16, chunkLayout.width, chunkLayout.height)
+
+      pageIndex++
+    }
+  }
+
+  if (stats.length) {
+    const statsImage = await renderStatsCanvas(stats)
+    const statsHeight = Math.max(120, stats.length * 28 + 40)
+    pdf.addPage([320, statsHeight + 40], orientation)
+    pdf.setFontSize(14)
+    pdf.text('采购清单', 12, 20)
+    pdf.addImage(statsImage, 'PNG', 0, 28, 320, statsHeight)
+  }
+
+  return pdf.output('blob')
+}
+
 export async function exportPatternPdf(
   grid: MappedGrid,
   settings: ExportSettings,
@@ -189,32 +363,8 @@ export async function exportPatternPdf(
   title: string,
   stats: ColorStat[],
 ): Promise<Blob | null> {
-  const { jsPDF } = await import('jspdf')
-  const layout = getPatternLayout(grid, settings.cellSize, settings.showRuler)
-
-  const canvas = document.createElement('canvas')
-  canvas.width = layout.width
-  canvas.height = layout.height
-  const ctx = canvas.getContext('2d')!
-  drawPattern(ctx, grid, settings, codeLookup, layout)
-  const patternData = canvas.toDataURL('image/png')
-
-  const orientation = layout.width > layout.height ? 'landscape' : 'portrait'
-  const pdf = new jsPDF({ orientation, unit: 'px', format: [layout.width, layout.height + 60] })
-  pdf.setFontSize(14)
-  pdf.text(title || 'Pindou 拼豆图纸', 12, 20)
-  pdf.addImage(patternData, 'PNG', 0, 36, layout.width, layout.height)
-
-  if (stats.length) {
-    const statsImage = await renderStatsCanvas(stats)
-    if (statsImage) {
-      const statsHeight = Math.max(120, stats.length * 28 + 40)
-      pdf.addPage([320, statsHeight + 40], orientation)
-      pdf.setFontSize(14)
-      pdf.text('采购清单', 12, 20)
-      pdf.addImage(statsImage, 'PNG', 0, 28, 320, statsHeight)
-    }
+  if (settings.pdfLayout === 'boards') {
+    return exportBoardsPdf(grid, settings, codeLookup, title, stats)
   }
-
-  return pdf.output('blob')
+  return exportSinglePagePdf(grid, settings, codeLookup, title, stats)
 }

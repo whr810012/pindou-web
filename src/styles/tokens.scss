@@ -1,36 +1,37 @@
-// Pindou 设计令牌 — 通过 vite additionalData 全局注入
+// Pindou 设计令牌 — 工坊实用风（拼豆创作台）
 
-// 品牌色
-$pindou-primary: #5b6cff;
-$pindou-primary-dark: #4557e8;
-$pindou-primary-light: #eef0ff;
-$pindou-accent: #ff9a7a;
-$pindou-success: #2e7d32;
-$pindou-success-bg: #e8f5e9;
-$pindou-warning: #e65100;
-$pindou-warning-bg: #fff3e0;
-$pindou-error: #d32f2f;
+// 品牌色：靛蓝主色 + 陶土强调
+$pindou-primary: #4a62d6;
+$pindou-primary-dark: #3a4fb8;
+$pindou-primary-light: #eef1fc;
+$pindou-accent: #d97757;
+$pindou-accent-soft: #fceee8;
+$pindou-success: #2d6a4f;
+$pindou-success-bg: #e8f5ee;
+$pindou-warning: #b45309;
+$pindou-warning-bg: #fef3e2;
 
-// 背景
-$pindou-bg-page: #f5f6fa;
-$pindou-bg-card: #ffffff;
-$pindou-bg-muted: #f5f6fa;
-$pindou-bg-subtle: #fafbfc;
+// 背景：暖亚麻纸感
+$pindou-bg-page: #f0ebe3;
+$pindou-bg-card: #fffcf8;
+$pindou-bg-muted: #e8e2d9;
+$pindou-bg-subtle: #f7f4ef;
+$pindou-bg-elevated: #ffffff;
 
 // 文字
-$pindou-text: #1a1a2e;
-$pindou-text-secondary: #666666;
-$pindou-text-muted: #888888;
-$pindou-text-hint: #aaaaaa;
+$pindou-text: #1f1c1a;
+$pindou-text-secondary: #5c5650;
+$pindou-text-muted: #8a837a;
+$pindou-text-hint: #a8a095;
 
 // 边框
-$pindou-border: #eef0f4;
-$pindou-border-light: #f0f0f0;
+$pindou-border: #ddd6cb;
+$pindou-border-light: #ebe5dc;
 
 // 圆角
-$pindou-radius-sm: 8px;
-$pindou-radius-md: 12px;
-$pindou-radius-lg: 16px;
+$pindou-radius-sm: 10px;
+$pindou-radius-md: 14px;
+$pindou-radius-lg: 20px;
 $pindou-radius-pill: 999px;
 
 // 间距
@@ -39,25 +40,36 @@ $pindou-space-sm: 8px;
 $pindou-space-md: 12px;
 $pindou-space-lg: 16px;
 $pindou-space-xl: 24px;
+$pindou-space-2xl: 32px;
 
 // 阴影
-$pindou-shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.04);
-$pindou-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-$pindou-shadow-dock: 0 4px 20px rgba(0, 0, 0, 0.08);
+$pindou-shadow-sm: 0 1px 3px rgba(31, 28, 26, 0.06), 0 1px 2px rgba(31, 28, 26, 0.04);
+$pindou-shadow-md: 0 4px 16px rgba(31, 28, 26, 0.08), 0 2px 6px rgba(31, 28, 26, 0.04);
+$pindou-shadow-dock: 0 8px 32px rgba(31, 28, 26, 0.12), 0 2px 8px rgba(31, 28, 26, 0.06);
+$pindou-shadow-glow: 0 4px 20px rgba($pindou-primary, 0.28);
 
 // 字号
 $pindou-font-xs: 11px;
 $pindou-font-sm: 12px;
 $pindou-font-md: 14px;
 $pindou-font-lg: 16px;
-$pindou-font-xl: 18px;
-$pindou-font-display: 28px;
+$pindou-font-xl: 20px;
+$pindou-font-display: 32px;
+
+// 字体族
+$pindou-font-display: 'Outfit', 'Noto Sans SC', sans-serif;
+$pindou-font-body: 'Noto Sans SC', 'Outfit', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 
 // 布局
 $pindou-content-max: 720px;
 $pindou-content-wide: 1080px;
 
-// 同步 uni / uView 主题（须在 theme.scss 之前定义）
+// 动效
+$pindou-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$pindou-duration-fast: 0.15s;
+$pindou-duration-normal: 0.25s;
+
+// 同步 uni / uView 主题
 $uni-color-primary: $pindou-primary;
 $uni-bg-color-grey: $pindou-bg-page;
 $uni-text-color: $pindou-text;

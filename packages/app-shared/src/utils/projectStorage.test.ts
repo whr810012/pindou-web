@@ -1,3 +1,4 @@
+import { DEFAULT_PHOTO_OPTIMIZE } from '@pindou/bead-core'
 import { describe, expect, it, beforeEach } from 'vitest'
 import { initPlatform } from '../platform/context.js'
 import { normalizeSavedProject, ProjectStorage, createProjectId } from './projectStorage.js'
@@ -24,7 +25,7 @@ function mockPlatform() {
       toBase64: (s) => Buffer.from(s).toString('base64'),
       fromBase64: (s) => Buffer.from(s, 'base64').toString('utf8'),
     },
-    http: { fetchJson: async () => ({}) },
+    http: { fetchJson: async <T>(_url: string) => ({}) as T },
     getMaxGridWidth: () => 120,
   })
   return store
@@ -43,7 +44,7 @@ function sampleProject(id: string): SavedProject {
       palettePresetId: 'pindou-96',
       brand: 'MARD',
       imageAdjust: { brightness: 0, contrast: 0, saturation: 0 },
-      photoOptimize: { denoise: 0, sharpen: 0 },
+      photoOptimize: { ...DEFAULT_PHOTO_OPTIMIZE },
     },
     grid: [
       [

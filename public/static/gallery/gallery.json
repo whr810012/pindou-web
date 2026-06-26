@@ -4,41 +4,57 @@
       "id": "demo-cat",
       "title": "像素小猫拼豆图",
       "description": "96 色卡通拼豆案例 · MARD 主导色模式 · 新手入门推荐",
-      "tags": ["卡通", "96色"],
+      "tags": [
+        "卡通",
+        "96色"
+      ],
       "thumbnail": "/static/gallery/demo-cat.svg",
       "gridWidth": 48,
       "mode": "dominant",
-      "palettePresetId": "pindou-96"
+      "palettePresetId": "pindou-96",
+      "projectFile": "/static/gallery/projects/demo-cat.json"
     },
     {
       "id": "demo-flower",
       "title": "简约花朵拼豆图",
       "description": "168 色花卉拼豆案例 · 低合并阈值 · 细节保留更好",
-      "tags": ["花卉", "168色"],
+      "tags": [
+        "花卉",
+        "168色"
+      ],
       "thumbnail": "/static/gallery/demo-flower.svg",
       "gridWidth": 56,
       "mode": "dominant",
-      "palettePresetId": "pindou-168"
+      "palettePresetId": "pindou-168",
+      "projectFile": "/static/gallery/projects/demo-flower.json"
     },
     {
       "id": "demo-landscape",
       "title": "像素风景拼豆图",
       "description": "渐变天空风景拼豆案例 · 平均色模式 · 适合大面积色块",
-      "tags": ["风景", "真实模式"],
+      "tags": [
+        "风景",
+        "真实模式"
+      ],
       "thumbnail": "/static/gallery/demo-landscape.svg",
       "gridWidth": 72,
       "mode": "average",
-      "palettePresetId": "pindou-168"
+      "palettePresetId": "pindou-168",
+      "projectFile": "/static/gallery/projects/demo-landscape.json"
     },
     {
       "id": "demo-icon",
       "title": "Q版头像拼豆图",
       "description": "小尺寸头像拼豆案例 · 32 格宽 · 快速完成",
-      "tags": ["头像", "快速"],
+      "tags": [
+        "头像",
+        "快速"
+      ],
       "thumbnail": "/static/gallery/demo-icon.svg",
       "gridWidth": 32,
       "mode": "dominant",
-      "palettePresetId": "pindou-96"
+      "palettePresetId": "pindou-96",
+      "projectFile": "/static/gallery/projects/demo-icon.json"
     }
   ]
 }

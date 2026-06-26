@@ -24,6 +24,7 @@ import {
   loadParamPresets,
   saveParamPresets,
 } from '@/utils/paramPresetsStorage'
+import { decodeParamPresetShare, encodeParamPresetShare } from '@/utils/paramPresetShare'
 
 const props = defineProps<{
   show: boolean
@@ -42,6 +43,8 @@ const router = useRouter()
 const paletteStore = usePaletteStore()
 const maxGrid = getMaxGridWidth()
 const savedPresets = ref<ParamPreset[]>([])
+const shareCode = ref('')
+const importCode = ref('')
 
 const presetOptions = computed(() => {
   const custom = paletteStore.customPalettes.map((p) => ({
@@ -92,6 +95,38 @@ function deletePreset(id: string) {
   saveParamPresets(savedPresets.value)
 }
 
+function exportCurrentPresetShare() {
+  shareCode.value = encodeParamPresetShare({
+    name: `当前参数 ${props.params.gridWidth}格`,
+    params: { ...props.params },
+    brand: props.brand,
+  })
+  setClipboardData({
+    data: shareCode.value,
+    success: () => showToast({ title: '已复制参数分享码', icon: 'success' }),
+  })
+}
+
+function exportPresetShare(preset: ParamPreset) {
+  shareCode.value = encodeParamPresetShare(preset)
+  setClipboardData({
+    data: shareCode.value,
+    success: () => showToast({ title: '已复制分享码', icon: 'success' }),
+  })
+}
+
+function importPresetFromCode() {
+  try {
+    const preset = decodeParamPresetShare(importCode.value)
+    savedPresets.value = [preset, ...savedPresets.value.filter((p) => p.id !== preset.id)]
+    saveParamPresets(savedPresets.value)
+    importCode.value = ''
+    showToast({ title: `已导入：${preset.name}`, icon: 'success' })
+  } catch (error) {
+    showToast({ title: (error as Error).message || '解析失败', icon: 'none' })
+  }
+}
+
 function onGridWidthInput(e: Event) {
   const value = Number((e.target as HTMLInputElement).value)
   emit('update', { gridWidth: value })
@@ -134,6 +169,7 @@ function onPhotoOptimizeChange(key: 'denoise' | 'sharpen', value: boolean) {
         <span class="craft-label">我的预设</span>
         <div class="preset-actions">
           <PButton size="mini" type="primary" text="保存当前" @click="saveCurrentPreset" />
+          <PButton size="mini" plain text="分享当前" @click="exportCurrentPresetShare" />
         </div>
         <div v-if="savedPresets.length" scroll-x class="preset-list">
           <div
@@ -144,10 +180,22 @@ function onPhotoOptimizeChange(key: 'denoise' | 'sharpen', value: boolean) {
           >
             <span class="craft-preset-chip__name">{{ preset.name }}</span>
             <span class="craft-preset-chip__meta">{{ preset.params.gridWidth }}格 · {{ preset.params.mode }}</span>
+            <span class="craft-preset-chip__share" title="复制分享码" @click.stop="exportPresetShare(preset)">⎘</span>
             <span class="craft-preset-chip__del" @click.stop="deletePreset(preset.id)">×</span>
           </div>
         </div>
         <span v-else class="craft-hint">暂无保存的预设，调好参数后点「保存当前」</span>
+
+        <div class="import-block">
+          <span class="craft-label">导入参数预设</span>
+          <textarea
+            v-model="importCode"
+            class="craft-textarea import-code"
+            rows="2"
+            placeholder="粘贴 pindou-params-v1:..."
+          />
+          <PButton size="mini" plain text="解析导入" @click="importPresetFromCode" />
+        </div>
       </div>
 
       <PCell title="横向格数">
@@ -328,5 +376,32 @@ function onPhotoOptimizeChange(key: 'denoise' | 'sharpen', value: boolean) {
   white-space: nowrap;
   overflow-x: auto;
   padding-bottom: 4px;
+}
+
+.import-block {
+  margin-top: 14px;
+
+  .craft-label {
+    display: block;
+    margin-bottom: 6px;
+  }
+}
+
+.import-code {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.craft-preset-chip__share {
+  margin-left: 4px;
+  padding: 0 4px;
+  font-size: 14px;
+  color: $pindou-primary;
+  cursor: pointer;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 </style>

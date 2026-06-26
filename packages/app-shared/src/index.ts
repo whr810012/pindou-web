@@ -28,6 +28,7 @@ export {
   exportPaletteCsv,
 } from './utils/customPaletteStorage.js'
 export { loadParamPresets, saveParamPresets, createParamPresetId } from './utils/paramPresetsStorage.js'
+export { encodeParamPresetShare, decodeParamPresetShare } from './utils/paramPresetShare.js'
 export { debounce } from './utils/debounce.js'
 export * from './utils/cropMath.js'
 export * from './utils/suggestParams.js'

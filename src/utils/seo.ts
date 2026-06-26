@@ -24,6 +24,7 @@ export type PageSeoKey =
   | 'projects'
   | 'preview3d'
   | 'paletteEditor'
+  | 'guide'
 
 const PAGE_ROUTES: Record<
   PageSeoKey,
@@ -81,6 +82,12 @@ const PAGE_ROUTES: Record<
     title: '自定义拼豆色板 - Pindou',
     description: '创建与管理自定义拼豆色号，支持导入、分享与从项目提取色板。',
     noindex: true,
+  },
+  guide: {
+    path: '/guide',
+    title: '拼豆新手教程 - 选豆、做图、打印与熨烫 | Pindou',
+    description:
+      '拼豆入门完整指南：如何选色卡与色号、照片转拼豆图纸、29×29 分板打印、采购清单与熨烫技巧。配合 Pindou 免费在线工具使用。',
   },
 }
 

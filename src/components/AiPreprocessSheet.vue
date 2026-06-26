@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, watch } from 'vue'
 import PButton from '@/components/ui/PButton.vue'
 import PDrawer from '@/components/ui/PDrawer.vue'
+import PLineProgress from '@/components/ui/PLineProgress.vue'
 import { showToast } from '@/utils/platform-ui'
 import {
   AI_MOCK_ENABLED,
   AI_PREPROCESS_ENABLED,
   AI_STYLE_OPTIONS,
+  isAiTimeoutError,
   runAiPreprocess,
 } from '@/utils/aiPreprocess'
-import type { AiPreprocessStyle } from '@/utils/aiPreprocess'
+import type { AiPreprocessProgress, AiPreprocessStyle } from '@/utils/aiPreprocess'
 import {
   clearJimengApiKey,
   getJimengApiKey,
@@ -29,16 +31,20 @@ const emit = defineEmits<{
   done: [path: string]
 }>()
 
-const style = ref<AiPreprocessStyle>('cartoon')
+const style = ref<AiPreprocessStyle>('enhance')
 const loading = ref(false)
 const apiKeyDraft = ref('')
 const showKey = ref(false)
+const progress = ref<AiPreprocessProgress | null>(null)
+const lastError = ref('')
 
 watch(
   () => props.show,
   (visible) => {
     if (visible) {
       apiKeyDraft.value = getJimengApiKey()
+      progress.value = null
+      lastError.value = ''
     }
   },
   { immediate: true },
@@ -63,18 +69,23 @@ function hasJimengApiKeyFromStorage() {
 
 const canRun = computed(() => {
   if (!props.imagePath) return false
+  if (loading.value) return false
   if (AI_MOCK_ENABLED) return true
   if (!AI_PREPROCESS_ENABLED) return false
   return Boolean(apiKeyDraft.value.trim()) || hasJimengApiKeyFromStorage()
 })
 
 const runButtonText = computed(() => {
-  if (loading.value) return '处理中...'
+  if (loading.value) return '处理中…'
+  if (lastError.value) return '重试'
   if (AI_MOCK_ENABLED) return '开始处理（Mock）'
   if (!AI_PREPROCESS_ENABLED) return '服务未配置'
-  if (!apiKeyDraft.value.trim()) return '请先填写凭证'
+  if (!apiKeyDraft.value.trim() && !hasJimengApiKeyFromStorage()) return '请先填写凭证'
   return '开始处理'
 })
+
+const progressPercent = computed(() => progress.value?.percent ?? 0)
+const progressMessage = computed(() => progress.value?.message ?? '')
 
 function saveKey() {
   const key = apiKeyDraft.value.trim()
@@ -92,24 +103,59 @@ function onClearKey() {
   showToast({ title: '已清除 API Key', icon: 'none' })
 }
 
-async function run() {
-  if (!props.imagePath || !canRun.value) return
+function onProgress(update: AiPreprocessProgress) {
+  progress.value = update
+}
+
+async function run(forceAggressive = false) {
+  if (!props.imagePath || (!canRun.value && !lastError.value)) return
 
   if (!AI_MOCK_ENABLED && apiKeyDraft.value.trim()) {
     setJimengApiKey(apiKeyDraft.value)
   }
 
   loading.value = true
+  lastError.value = ''
+  progress.value = null
+
   try {
-    const result = await runAiPreprocess(props.imagePath, { style: style.value }, apiKeyDraft.value.trim())
+    const result = await runAiPreprocess(
+      props.imagePath,
+      {
+        style: style.value,
+        onProgress,
+        autoRetryOnTimeout: !forceAggressive,
+        compress: forceAggressive
+          ? { maxEdge: 512, quality: 0.72, maxBytes: 2 * 1024 * 1024 }
+          : undefined,
+      },
+      apiKeyDraft.value.trim(),
+    )
     emit('done', result)
     emit('close')
   } catch (error) {
-    showToast({ title: (error as Error).message || '处理失败', icon: 'none' })
+    const message = (error as Error).message || '处理失败'
+    lastError.value = message
+    if (isAiTimeoutError(message)) {
+      showToast({
+        title: '处理超时，可点「缩小重试」或换更小图片',
+        icon: 'none',
+      })
+    } else {
+      showToast({ title: message, icon: 'none' })
+    }
   } finally {
     loading.value = false
   }
 }
+
+function retryAggressive() {
+  run(true)
+}
+
+onUnmounted(() => {
+  progress.value = null
+})
 </script>
 
 <template>
@@ -176,13 +222,29 @@ async function run() {
         </div>
       </div>
 
+      <div v-if="loading && progress" class="progress-block">
+        <PLineProgress :percentage="progressPercent" :height="10" />
+        <p class="progress-msg">{{ progressMessage }}</p>
+      </div>
+
+      <div v-if="lastError && !loading" class="error-block">
+        <p class="error-text">{{ lastError }}</p>
+        <PButton
+          v-if="isAiTimeoutError(lastError)"
+          plain
+          size="sm"
+          text="缩小图片重试"
+          @click="retryAggressive"
+        />
+      </div>
+
       <PButton
         type="primary"
         block
         :text="runButtonText"
         :loading="loading"
-        :disabled="!canRun"
-        @click="run"
+        :disabled="!canRun && !lastError"
+        @click="run()"
       />
     </div>
   </PDrawer>
@@ -300,5 +362,30 @@ async function run() {
   margin-top: 6px;
   font-size: $pindou-font-xs;
   color: $pindou-accent;
+}
+
+.progress-block {
+  margin-bottom: 14px;
+}
+
+.progress-msg {
+  margin: 8px 0 0;
+  font-size: $pindou-font-xs;
+  color: $pindou-text-muted;
+}
+
+.error-block {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: $pindou-radius-sm;
+  background: rgba($pindou-warning, 0.08);
+  border: 1px solid rgba($pindou-warning, 0.2);
+}
+
+.error-text {
+  margin: 0 0 8px;
+  font-size: $pindou-font-xs;
+  color: $pindou-warning;
+  line-height: 1.45;
 }
 </style>

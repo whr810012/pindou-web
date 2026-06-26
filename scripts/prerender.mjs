@@ -27,6 +27,15 @@ const ROUTES = [
     description:
       '免费在线拼豆工作台：上传照片生成带 MARD、COCO 色号的拼豆图纸，调整格数与色板，支持 AI 预处理、画笔精修与 PDF 导出。',
   },
+  {
+    path: '/guide',
+    outDir: 'guide',
+    outFile: 'index.html',
+    injectSelector: '#app',
+    title: '拼豆新手教程 - 选豆、做图、打印与熨烫 | Pindou',
+    description:
+      '拼豆入门完整指南：如何选色卡与色号、照片转拼豆图纸、29×29 分板打印、采购清单与熨烫技巧。配合 Pindou 免费在线工具使用。',
+  },
 ]
 
 function contentType(filePath) {

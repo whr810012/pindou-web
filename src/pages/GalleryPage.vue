@@ -17,6 +17,9 @@ usePageSeo('gallery')
 
 const router = useRouter()
 
+import type { MappedGrid } from '@pindou/bead-core'
+import type { ProjectParams } from '@/types/app'
+
 interface GalleryItem {
   id: string
   title: string
@@ -26,6 +29,17 @@ interface GalleryItem {
   gridWidth: number
   mode: 'dominant' | 'average'
   palettePresetId: string
+  projectFile?: string
+}
+
+interface GalleryProjectPayload {
+  version: number
+  name: string
+  params: ProjectParams
+  grid: MappedGrid
+  excludedPaletteIds: string[]
+  completedCells: string[]
+  sourcePreview?: string
 }
 
 interface TemplateItem {
@@ -40,6 +54,7 @@ const items = ref<GalleryItem[]>([])
 const templates = ref<TemplateItem[]>([])
 const loading = ref(true)
 const loadingTemplate = ref(false)
+const loadingProjectId = ref<string | null>(null)
 const project = useProjectStore()
 const paletteStore = usePaletteStore()
 
@@ -105,6 +120,47 @@ function applyPreset(item: GalleryItem) {
   }, 400)
 }
 
+function fetchProjectFile(url: string): Promise<GalleryProjectPayload> {
+  return new Promise((resolve, reject) => {
+    request({
+      url,
+      success: (res) => resolve(res.data as GalleryProjectPayload),
+      fail: reject,
+    })
+  })
+}
+
+async function openFullProject(item: GalleryItem) {
+  if (!item.projectFile || loadingProjectId.value) return
+  loadingProjectId.value = item.id
+  try {
+    const data = await fetchProjectFile(item.projectFile)
+    paletteStore.setPreset(data.params.palettePresetId)
+    project.loadSnapshot({
+      grid: data.grid,
+      params: data.params,
+      excludedPaletteIds: data.excludedPaletteIds ?? [],
+      projectName: data.name || item.title,
+      sourcePreview: data.sourcePreview ?? item.thumbnail,
+    })
+    showToast({ title: '案例已加载，可直接编辑', icon: 'success' })
+    router.push('/workspace')
+  } catch (error) {
+    console.error(error)
+    showToast({ title: '加载完整案例失败', icon: 'none' })
+  } finally {
+    loadingProjectId.value = null
+  }
+}
+
+function onPresetCardClick(item: GalleryItem) {
+  if (item.projectFile) {
+    openFullProject(item)
+  } else {
+    applyPreset(item)
+  }
+}
+
 async function useTemplate(item: TemplateItem) {
   if (loadingTemplate.value) return
   loadingTemplate.value = true
@@ -167,11 +223,12 @@ async function useTemplate(item: TemplateItem) {
         <li v-for="item in items" :key="item.id">
           <article
             class="card card--interactive gallery-card"
+            :class="{ 'gallery-card--busy': loadingProjectId === item.id }"
             tabindex="0"
             role="button"
-            :aria-label="`应用案例 ${item.title}`"
-            @click="applyPreset(item)"
-            @keydown.enter="applyPreset(item)"
+            :aria-label="item.projectFile ? `打开完整案例 ${item.title}` : `应用案例 ${item.title}`"
+            @click="onPresetCardClick(item)"
+            @keydown.enter="onPresetCardClick(item)"
           >
             <div class="gallery-card__thumb craft-preview-frame">
               <img :src="item.thumbnail" :alt="`${item.title}拼豆图案例`" loading="lazy" />
@@ -186,6 +243,12 @@ async function useTemplate(item: TemplateItem) {
               </div>
               <div v-if="item.tags.length" class="gallery-card__tags">
                 <PTag v-for="tag in item.tags" :key="tag" :text="tag" plain />
+              </div>
+              <div v-if="item.projectFile" class="gallery-card__actions" @click.stop>
+                <span class="gallery-card__badge">可编辑案例</span>
+                <button type="button" class="gallery-card__link" @click="applyPreset(item)">
+                  仅应用参数
+                </button>
               </div>
             </div>
             <span class="gallery-card__arrow" aria-hidden="true">›</span>
@@ -369,6 +432,37 @@ async function useTemplate(item: TemplateItem) {
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 8px;
+}
+
+.gallery-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.gallery-card__badge {
+  display: inline-flex;
+  padding: 2px 8px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-accent, 0.12);
+  color: $pindou-accent;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.gallery-card__link {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: $pindou-font-xs;
+  color: $pindou-text-muted;
+  cursor: pointer;
+  text-decoration: underline;
+
+  &:hover {
+    color: $pindou-primary;
+  }
 }
 
 .gallery-card__cta {

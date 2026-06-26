@@ -40,6 +40,12 @@ const quickActions = [
     icon: 'text',
     path: '/text',
   },
+  {
+    title: '拼豆教程',
+    desc: '新手入门与熨烫技巧',
+    icon: 'guide',
+    path: '/guide',
+  },
 ]
 
 function go(path: string) {
@@ -274,6 +280,10 @@ function go(path: string) {
 
   &--text {
     background: linear-gradient(135deg, $pindou-primary-light, #fff);
+  }
+
+  &--guide {
+    background: linear-gradient(135deg, #fef3e2, #fff);
   }
 }
 

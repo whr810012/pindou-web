@@ -12,6 +12,7 @@
     "preview": "vite preview",
     "generate:palette": "node scripts/generate-palette.mjs",
     "generate:landing-compare": "node scripts/generate-landing-compare.mjs",
+    "generate:gallery-projects": "npm run build:packages && node scripts/generate-gallery-projects.mjs",
     "type-check": "vue-tsc --noEmit",
     "test": "npm run test --prefix packages/bead-core && vitest run",
     "test:ai": "vitest run server/ai-preprocess",

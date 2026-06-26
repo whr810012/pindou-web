@@ -6,6 +6,7 @@ import PButton from '@/components/ui/PButton.vue'
 import BeforeAfterSlider from '@/components/BeforeAfterSlider.vue'
 import { usePageSeo } from '@/utils/seo'
 import compareMeta from '../../public/static/gallery/landing-compare-meta.json'
+import { CONTACT_EMAIL, CONTACT_WECHAT } from '@/constants/contact'
 
 const router = useRouter()
 usePageSeo('landing')
@@ -49,6 +50,7 @@ function goGallery() {
       </router-link>
       <nav class="landing__nav" aria-label="落地页导航">
         <button type="button" class="landing__link" @click="goGallery">案例画廊</button>
+        <button type="button" class="landing__link" @click="router.push('/guide')">拼豆教程</button>
         <PButton size="sm" type="primary" text="开始制作" @click="goWorkspace" />
       </nav>
     </header>
@@ -178,9 +180,12 @@ function goGallery() {
       <div class="landing__footer-brand">
         <span class="landing__footer-dot" aria-hidden="true" />
         <span>© Pindou · 拼豆图纸生成工具</span>
+        <a class="landing__contact" :href="`mailto:${CONTACT_EMAIL}`">邮箱：{{ CONTACT_EMAIL }}</a>
+        <span class="landing__contact landing__contact--wechat">微信：{{ CONTACT_WECHAT }}</span>
       </div>
       <div class="landing__footer-links">
         <button type="button" class="landing__link" @click="goGallery">案例画廊</button>
+        <button type="button" class="landing__link" @click="router.push('/guide')">拼豆教程</button>
         <button type="button" class="landing__link" @click="enterApp">功能主页</button>
       </div>
     </footer>
@@ -725,7 +730,28 @@ function goGallery() {
 .landing__footer-brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+
+.landing__contact {
+  color: $pindou-text-muted;
+  text-decoration: none;
+  font-size: $pindou-font-xs;
+
+  &:hover {
+    color: $pindou-primary;
+    text-decoration: underline;
+  }
+
+  &--wechat {
+    cursor: default;
+
+    &:hover {
+      color: $pindou-text-muted;
+      text-decoration: none;
+    }
+  }
 }
 
 .landing__footer-dot {

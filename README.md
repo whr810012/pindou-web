@@ -29,6 +29,7 @@ npm run dev
 | `npm run test:xhs` | 运行小红书解析单元测试 |
 | `npm run generate:palette` | 生成色板数据 |
 | `npm run generate:landing-compare` | 生成落地页原图/拼豆对比图 |
+| `npm run generate:gallery-projects` | 生成画廊完整案例 JSON |
 
 ## 环境变量
 
@@ -46,6 +47,9 @@ VITE_SITE_URL=https://dandanpindou.netlify.app
 
 # 开发：联调本地小红书解析（npm run dev:xhs）
 # VITE_XHS_PARSE_URL=http://127.0.0.1:8788/api/xhs-parse
+
+# 可选：Plausible 访问统计（填你的站点域名，不含 https://）
+# VITE_ANALYTICS_DOMAIN=dandanpindou.netlify.app
 ```
 
 生产环境（Netlify）前端默认同域 `/.netlify/functions/ai-preprocess`，一般无需配置 `VITE_AI_PREPROCESS_URL`。
@@ -82,6 +86,18 @@ VITE_SITE_URL=https://dandanpindou.netlify.app
 | **工具** | 像素文字生成 `/text`；落地页原图对比滑块 |
 
 小红书解析详见 [server/xhs-parse/README.md](server/xhs-parse/README.md)。
+
+## 第四期功能（体验补全）
+
+| 模块 | 能力 |
+|------|------|
+| **AI 体验** | 处理进度条；504 超时自动缩小重试；手动「缩小重试」 |
+| **画廊** | 完整可编辑案例（含 grid），一键进工作台 |
+| **参数预设** | `pindou-params-v1:` 分享码导入导出 |
+| **教程** | `/guide` 拼豆入门、分板打印、熨烫技巧（SEO 索引） |
+| **统计** | 可选 Plausible（`VITE_ANALYTICS_DOMAIN`） |
+
+生成画廊完整案例：`npm run generate:gallery-projects`（需 Playwright + 已编译 `bead-core`）。
 
 ## Netlify 部署
 
@@ -141,6 +157,7 @@ AI 图生图可能需 10～25 秒。`netlify.toml` 中 `ai-preprocess` 已设 `t
 | `/projects` | 我的项目 | noindex |
 | `/palette` | 自定义色板 | noindex |
 | `/text` | 像素文字生成 | noindex |
+| `/guide` | 拼豆新手教程 | 索引 |
 
 画廊案例另有静态落地页：`/gallery/demo-cat/` 等。
 
@@ -189,6 +206,11 @@ npm run build
 ```
 
 构建流程：编译共享包 → Playwright 生成 OG 图 → 画廊静态页 → sitemap/robots → Vite 打包 → 注入 SEO meta → Playwright 预渲染关键路由。
+
+## 联系方式
+
+- 邮箱：[1028943406@qq.com](mailto:1028943406@qq.com)
+- 微信：www133595
 
 ## 致谢
 

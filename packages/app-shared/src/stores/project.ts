@@ -102,7 +102,12 @@ export const useProjectStore = defineStore('project', {
       savedProjectId?: string | null
     }) {
       this.grid = cloneGrid(data.grid)
-      this.params = { ...DEFAULT_PARAMS, ...data.params }
+      this.params = {
+        ...DEFAULT_PARAMS,
+        ...data.params,
+        imageAdjust: { ...DEFAULT_PARAMS.imageAdjust, ...data.params.imageAdjust },
+        photoOptimize: { ...DEFAULT_PARAMS.photoOptimize, ...data.params.photoOptimize },
+      }
       this.excludedPaletteIds = [...data.excludedPaletteIds]
       this.projectName = data.projectName ?? '未命名项目'
       this.sourcePath = data.sourcePath ?? ''

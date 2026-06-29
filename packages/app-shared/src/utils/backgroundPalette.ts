@@ -22,17 +22,17 @@ export function resolveBackgroundPaletteIds(entries: PaletteEntry[]): string[] {
   if (!entries.length) return []
 
   const exactWhites = entries.filter((e) => WHITE_HEXES.has(normalizeHex(e.hex)))
-  if (exactWhites.length) return exactWhites.slice(0, 3).map((e) => e.id)
+  if (exactWhites.length) return [exactWhites[0].id]
 
   const neutrals = entries
     .filter((e) => /^neutral-00[0-2]$/i.test(e.id))
     .sort((a, b) => a.id.localeCompare(b.id))
-  if (neutrals.length) return neutrals.map((e) => e.id)
+  if (neutrals.length) return [neutrals[0].id]
 
   const valid = entries.filter((e) => /^#[0-9A-F]{6}$/i.test(normalizeHex(e.hex)))
   if (valid.length) {
     const lightest = [...valid].sort((a, b) => hexLuminance(a.hex) - hexLuminance(b.hex))
-    return lightest.slice(0, 3).map((e) => e.id)
+    return [lightest[0].id]
   }
 
   return [entries[0].id]

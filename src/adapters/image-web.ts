@@ -144,6 +144,7 @@ function prepareCanvas(
   canvas.style.height = `${canvasH}px`
   const ctx = canvas.getContext('2d')!
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  ctx.imageSmoothingEnabled = false
   return ctx
 }
 
@@ -155,6 +156,7 @@ export const h5ImageAdapter: ImageDataAdapter = {
     canvas.width = scaled.width
     canvas.height = scaled.height
     const ctx = canvas.getContext('2d')!
+    ctx.imageSmoothingEnabled = false
     ctx.drawImage(img, 0, 0, scaled.width, scaled.height)
     const pixels = readPixelsFromCanvas(canvas, scaled.width, scaled.height)
     return {
@@ -170,10 +172,14 @@ export const h5ImageAdapter: ImageDataAdapter = {
     const rows = grid.length
     const cols = grid[0]?.length ?? 0
     const layoutW = options.layoutWidth ?? 0
-    const cellSize = layoutW > 0 && cols > 0 ? layoutW / cols : options.cellSize
+    const cellSize = Math.max(
+      1,
+      Math.floor(layoutW > 0 && cols > 0 ? layoutW / cols : options.cellSize),
+    )
     const canvasW = cols * cellSize
     const canvasH = rows * cellSize
     const ctx = prepareCanvas(canvas, canvasW, canvasH, dpr)
+    ctx.clearRect(0, 0, canvasW, canvasH)
     drawGrid(ctx, grid, options, cellSize)
   },
 

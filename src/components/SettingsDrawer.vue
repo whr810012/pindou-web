@@ -243,6 +243,7 @@ function onPhotoOptimizeChange(key: 'denoise' | 'sharpen', value: boolean) {
           </div>
         </template>
       </PCell>
+      <p class="craft-hint">格数越大越清晰（照片可拉到 200+）；合并阈值照片保持 0</p>
 
       <PCell title="最大颜色数">
         <template #value>
@@ -259,7 +260,7 @@ function onPhotoOptimizeChange(key: 'denoise' | 'sharpen', value: boolean) {
           </div>
         </template>
       </PCell>
-      <p class="craft-hint">0 为不限制；头像建议 8～16，风景 16～24</p>
+      <p class="craft-hint">0 为不限制；限色过少会显得颜色不全，头像建议 12～24</p>
 
       <div class="craft-section">
         <span class="craft-label">图片调节</span>

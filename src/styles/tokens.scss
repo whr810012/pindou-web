@@ -1,4 +1,13 @@
 // Pindou 设计令牌 — 工坊实用风（拼豆创作台）
+@use 'sass:color';
+
+@function pindou-darken($base, $amount) {
+  @return color.adjust($base, $lightness: -$amount);
+}
+
+@function pindou-lighten($base, $amount) {
+  @return color.adjust($base, $lightness: $amount);
+}
 
 // 品牌色：靛蓝主色 + 陶土强调
 $pindou-primary: #4a62d6;

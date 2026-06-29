@@ -99,6 +99,20 @@ VITE_SITE_URL=https://dandanpindou.netlify.app
 
 生成画廊完整案例：`npm run generate:gallery-projects`（需 Playwright + 已编译 `bead-core`）。
 
+## 第五期功能（清晰度升级）
+
+| 模块 | 能力 |
+|------|------|
+| **转换引擎** | 独立 `convertImageToPattern` 管线：预处理 → 保边降采样 → CIEDE2000 感知配色 |
+| **配色算法** | 色板匹配由 Oklab 升级为 CIEDE2000（ΔE），与主流拼豆工具一致 |
+| **采样策略** | 最近邻格心采样 + Canvas 关闭平滑，避免边缘被区域平均抹糊 |
+| **智能参数** | 上传后自动识别照片/卡通：照片尽量 1 像素 → 1 格、合并阈值 0、轻锐化；卡通适度降格 |
+| **上限提升** | 最大格宽 256、源图边长 4096；默认格数 100、合并阈值 0 |
+| **预览交互** | 图纸预览支持 Ctrl+滚轮 / 双指捏合缩放与复位 |
+| **渲染** | 拼豆 Canvas 像素化显示；上传换图时自动清除上一张的排除色号 |
+
+`bead-core` 新增 `packages/bead-core/src/conversion/`（`resample`、`quantize`、`colorSpace`、`enhance`）及单元测试 `tests/conversion.test.ts`。
+
 ## Netlify 部署
 
 1. 在 [Netlify](https://app.netlify.com/) 导入 GitHub 仓库 `whr810012/pindou-web`，分支 `main`
@@ -173,7 +187,7 @@ pindou-web/
 │   └── xhs-parse/          # 小红书分享解析、本地 dev-server
 ├── packages/
 │   ├── app-shared/         # 共享 store、工具、平台抽象
-│   └── bead-core/          # 像素化、填充等核心算法
+│   └── bead-core/          # 像素化、CIEDE2000 配色、转换引擎等核心算法
 ├── public/
 ├── scripts/                # SEO、预渲染、画廊页、OG 图
 ├── src/
@@ -193,8 +207,11 @@ pindou-web/
 ## 技术要点
 
 - **平台注入**：`src/platform/web.ts` → `initPlatform()`
-- **Canvas 渲染**：`src/adapters/image-web.ts`、`src/components/BeadCanvas.vue`
-- **设计令牌**：`src/styles/tokens.scss`（SCSS 全局注入）
+- **转换管线**：`packages/bead-core/src/conversion/convertImageToPattern.ts` → `runPipeline`
+- **感知配色**：`packages/bead-core/src/color/ciede2000.ts`（ΔE2000 色板匹配）
+- **智能参数**：`packages/app-shared/src/utils/suggestParams.ts`（照片/卡通识别与一键建议）
+- **Canvas 渲染**：`src/adapters/image-web.ts`、`src/components/BeadCanvas.vue`（`imageSmoothingEnabled: false`、像素化 CSS）
+- **设计令牌**：`src/styles/tokens.scss`（SCSS 全局注入，`pindou-lighten` / `pindou-darken`）
 - **Vite 别名**：`@pindou/app-shared`、`@pindou/bead-core` 指向 `packages/*/src`
 - **页面 SEO**：`src/utils/seo.ts` 运行时更新 title / meta / canonical
 

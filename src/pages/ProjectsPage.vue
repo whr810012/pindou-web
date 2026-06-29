@@ -342,7 +342,7 @@ function importFromCode() {
   &--3 {
     top: 24px;
     right: 16px;
-    background: lighten($pindou-primary, 12%);
+    background: pindou-lighten($pindou-primary, 12%);
   }
 }
 

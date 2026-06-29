@@ -1,6 +1,7 @@
 export * from './types.js'
 export * from './color/oklab.js'
 export * from './color/palette.js'
+export * from './conversion/convertImageToPattern.js'
 export * from './pixelation/mapGrid.js'
 export * from './merge/mergeRegions.js'
 export * from './background/floodFill.js'

@@ -349,7 +349,7 @@
   border-radius: $pindou-radius-sm;
   background: $pindou-warning-bg;
   border: 1px solid rgba($pindou-accent, 0.2);
-  color: darken($pindou-accent, 8%);
+  color: pindou-darken($pindou-accent, 8%);
   font-size: $pindou-font-xs;
   line-height: 1.5;
 

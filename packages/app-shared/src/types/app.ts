@@ -90,9 +90,9 @@ export const DEFAULT_EXPORT_SETTINGS: ExportSettings = {
 }
 
 export const DEFAULT_PARAMS: ProjectParams = {
-  gridWidth: 72,
+  gridWidth: 100,
   mode: 'average',
-  mergeThreshold: 8,
+  mergeThreshold: 0,
   maxColors: 0,
   palettePresetId: 'pindou-full',
   brand: 'MARD',

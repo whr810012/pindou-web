@@ -43,7 +43,7 @@ const model = defineModel<boolean>({ default: false })
 
   input:checked + .p-switch__track {
     background: $pindou-primary;
-    border-color: darken($pindou-primary, 6%);
+    border-color: pindou-darken($pindou-primary, 6%);
 
     &::after {
       transform: translateX(20px);

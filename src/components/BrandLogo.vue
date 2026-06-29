@@ -70,7 +70,7 @@ withDefaults(
   &--3 {
     bottom: 7px;
     right: 8px;
-    background: lighten($pindou-primary, 12%);
+    background: pindou-lighten($pindou-primary, 12%);
   }
 }
 

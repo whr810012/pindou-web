@@ -2,7 +2,7 @@ import { runPipeline, prepareSourcePixels, type MappedGrid } from '@pindou/bead-
 import { getPlatform } from '../platform/context.js'
 import { usePaletteStore } from '../stores/palette.js'
 import { useProjectStore } from '../stores/project.js'
-import { suggestGridWidth, suggestModeForImage } from './suggestParams.js'
+import { buildSuggestedParams } from './suggestParams.js'
 
 export async function processCurrentProject() {
   const project = useProjectStore()
@@ -64,16 +64,12 @@ export async function hydrateProjectSourceFromPath(path: string): Promise<boolea
   }
 }
 
-/** 新图上传后根据尺寸与内容自动建议参数 */
+/** 新图上传后根据尺寸与内容自动建议参数，并清除上一张图的排除色号 */
 export function applySuggestedParamsForImage(width: number, height: number, pixels: Uint8ClampedArray) {
   const project = useProjectStore()
   const maxGrid = getPlatform().getMaxGridWidth()
-  project.setParams({
-    gridWidth: suggestGridWidth(width, height, maxGrid),
-    mode: suggestModeForImage(pixels, width, height),
-    mergeThreshold: 8,
-    palettePresetId: 'pindou-full',
-  })
+  project.restoreAllExcluded()
+  project.setParams(buildSuggestedParams(width, height, pixels, maxGrid))
 }
 
 export function replaceColorInGrid(

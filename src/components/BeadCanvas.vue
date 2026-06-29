@@ -509,6 +509,8 @@ onUnmounted(() => {
 .bead-canvas {
   display: block;
   touch-action: none;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 
   &--no-pointer {
     pointer-events: none;

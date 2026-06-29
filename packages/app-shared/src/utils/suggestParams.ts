@@ -1,14 +1,16 @@
-import type { PixelationMode } from '@pindou/bead-core'
+import type { ImageAdjust, PhotoOptimize, PixelationMode } from '@pindou/bead-core'
+import { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE } from '@pindou/bead-core'
 
-/** 根据裁剪后图片尺寸建议横向格数（约每 8 像素对应 1 格） */
-export function suggestGridWidth(imgWidth: number, imgHeight: number, maxGrid: number): number {
-  const minEdge = Math.min(imgWidth, imgHeight)
-  const raw = Math.round(minEdge / 8)
-  return Math.max(48, Math.min(maxGrid, raw))
+export interface ImageContentHints {
+  variance: number
+  isPhotoLike: boolean
 }
 
-/** 照片类图片更适合平均色 + 较低合并阈值 */
-export function suggestModeForImage(pixels: Uint8ClampedArray, width: number, height: number): PixelationMode {
+export function analyzeImageContent(
+  pixels: Uint8ClampedArray,
+  width: number,
+  height: number,
+): ImageContentHints {
   const step = Math.max(1, Math.floor(Math.min(width, height) / 32))
   let prevL = 0
   let variance = 0
@@ -29,5 +31,81 @@ export function suggestModeForImage(pixels: Uint8ClampedArray, width: number, he
   }
 
   const avgVariance = samples > 1 ? variance / (samples - 1) : 0
-  return avgVariance > 120 ? 'average' : 'dominant'
+  return { variance: avgVariance, isPhotoLike: avgVariance > 100 }
+}
+
+/**
+ * 照片：尽量 1 源像素 → 1 格（上限 maxGrid），清晰度优先。
+ * 卡通：适度降格去噪。
+ */
+export function suggestGridWidth(
+  imgWidth: number,
+  imgHeight: number,
+  maxGrid: number,
+  isPhotoLike = true,
+): number {
+  const minEdge = Math.min(imgWidth, imgHeight)
+  if (isPhotoLike) {
+    return Math.max(48, Math.min(maxGrid, minEdge))
+  }
+  const target = Math.round(minEdge / 3)
+  return Math.max(40, Math.min(maxGrid, target))
+}
+
+export function suggestModeForImage(
+  pixels: Uint8ClampedArray,
+  width: number,
+  height: number,
+): PixelationMode {
+  return analyzeImageContent(pixels, width, height).isPhotoLike ? 'average' : 'dominant'
+}
+
+export function suggestMergeThreshold(variance: number, isPhotoLike = variance > 100): number {
+  if (isPhotoLike) return 0
+  if (variance > 50) return 5
+  return 7
+}
+
+export function suggestPalettePresetId(variance: number, isPhotoLike: boolean): string {
+  if (isPhotoLike) return 'pindou-full'
+  if (variance > 60) return 'pindou-168'
+  return 'pindou-96'
+}
+
+export function suggestImageAdjust(isPhotoLike: boolean): ImageAdjust {
+  if (!isPhotoLike) return { ...DEFAULT_IMAGE_ADJUST }
+  return { brightness: 0, contrast: 12, saturation: 0 }
+}
+
+export function suggestPhotoOptimize(isPhotoLike: boolean): PhotoOptimize {
+  if (!isPhotoLike) return { ...DEFAULT_PHOTO_OPTIMIZE }
+  return { denoise: false, sharpen: true }
+}
+
+export interface SuggestedProjectParams {
+  gridWidth: number
+  mode: PixelationMode
+  mergeThreshold: number
+  maxColors: number
+  palettePresetId: string
+  imageAdjust: ImageAdjust
+  photoOptimize: PhotoOptimize
+}
+
+export function buildSuggestedParams(
+  width: number,
+  height: number,
+  pixels: Uint8ClampedArray,
+  maxGrid: number,
+): SuggestedProjectParams {
+  const hints = analyzeImageContent(pixels, width, height)
+  return {
+    gridWidth: suggestGridWidth(width, height, maxGrid, hints.isPhotoLike),
+    mode: hints.isPhotoLike ? 'average' : 'dominant',
+    mergeThreshold: suggestMergeThreshold(hints.variance, hints.isPhotoLike),
+    maxColors: 0,
+    palettePresetId: suggestPalettePresetId(hints.variance, hints.isPhotoLike),
+    imageAdjust: suggestImageAdjust(hints.isPhotoLike),
+    photoOptimize: suggestPhotoOptimize(hints.isPhotoLike),
+  }
 }

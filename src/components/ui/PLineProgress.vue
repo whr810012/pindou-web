@@ -17,7 +17,7 @@ defineProps<{ percentage?: number; height?: number }>()
 
   &__bar {
     height: 100%;
-    background: linear-gradient(90deg, $pindou-primary 0%, lighten($pindou-primary, 12%) 100%);
+    background: linear-gradient(90deg, $pindou-primary 0%, pindou-lighten($pindou-primary, 12%) 100%);
     border-radius: $pindou-radius-pill;
     transition: width $pindou-duration-normal $pindou-ease-out;
   }

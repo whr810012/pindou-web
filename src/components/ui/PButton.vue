@@ -56,7 +56,7 @@ const sizeClass = computed(() => {
     transform $pindou-duration-fast, box-shadow $pindou-duration-fast;
 
   &:hover:not(:disabled) {
-    border-color: darken($pindou-border, 6%);
+    border-color: pindou-darken($pindou-border, 6%);
     background: $pindou-bg-card;
   }
 
@@ -74,8 +74,8 @@ const sizeClass = computed(() => {
   }
 
   &--primary {
-    background: linear-gradient(180deg, lighten($pindou-primary, 4%), $pindou-primary);
-    border-color: darken($pindou-primary, 4%);
+    background: linear-gradient(180deg, pindou-lighten($pindou-primary, 4%), $pindou-primary);
+    border-color: pindou-darken($pindou-primary, 4%);
     color: #fff;
     box-shadow: $pindou-shadow-glow;
 

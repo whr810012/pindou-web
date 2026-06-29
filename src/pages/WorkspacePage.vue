@@ -72,6 +72,91 @@ const h5PreviewPan = {
   scrollTop: 0,
 }
 
+const PREVIEW_ZOOM_MIN = 0.5
+const PREVIEW_ZOOM_MAX = 3
+const previewZoom = ref(1)
+
+const pinchZoom = {
+  active: false,
+  startDistance: 0,
+  startZoom: 1,
+  anchorX: 0,
+  anchorY: 0,
+}
+
+function clampPreviewZoom(value: number) {
+  return Math.min(PREVIEW_ZOOM_MAX, Math.max(PREVIEW_ZOOM_MIN, value))
+}
+
+function touchDistance(touches: TouchList) {
+  if (touches.length < 2) return 0
+  const dx = touches[1].clientX - touches[0].clientX
+  const dy = touches[1].clientY - touches[0].clientY
+  return Math.hypot(dx, dy)
+}
+
+function touchCenter(touches: TouchList) {
+  if (touches.length < 2) return { x: 0, y: 0 }
+  return {
+    x: (touches[0].clientX + touches[1].clientX) / 2,
+    y: (touches[0].clientY + touches[1].clientY) / 2,
+  }
+}
+
+function setPreviewZoomAt(nextZoom: number, anchorX?: number, anchorY?: number) {
+  const g = project.grid
+  const el = getH5PreviewScrollEl()
+  if (!g?.length) return
+
+  const cols = g[0]?.length ?? 1
+  const rows = g.length
+  const base = basePreviewCellSize.value
+  const prevZoom = previewZoom.value
+  const zoom = clampPreviewZoom(nextZoom)
+  if (Math.abs(zoom - prevZoom) < 0.001) return
+
+  const prevW = cols * base * prevZoom
+  const prevH = rows * base * prevZoom
+
+  previewZoom.value = zoom
+
+  if (!el || anchorX === undefined || anchorY === undefined || prevW <= 0 || prevH <= 0) return
+
+  const rect = el.getBoundingClientRect()
+  const ratioX = (el.scrollLeft + anchorX - rect.left) / prevW
+  const ratioY = (el.scrollTop + anchorY - rect.top) / prevH
+
+  nextTick(() => {
+    const newW = cols * base * zoom
+    const newH = rows * base * zoom
+    el.scrollLeft = Math.max(0, ratioX * newW - (anchorX - rect.left))
+    el.scrollTop = Math.max(0, ratioY * newH - (anchorY - rect.top))
+  })
+}
+
+function zoomPreviewBy(factor: number, anchorX?: number, anchorY?: number) {
+  setPreviewZoomAt(previewZoom.value * factor, anchorX, anchorY)
+}
+
+function zoomPreviewIn() {
+  zoomPreviewBy(1.2)
+}
+
+function zoomPreviewOut() {
+  zoomPreviewBy(1 / 1.2)
+}
+
+function resetPreviewZoom() {
+  setPreviewZoomAt(1)
+  nextTick(() => {
+    const el = getH5PreviewScrollEl()
+    if (el) {
+      el.scrollLeft = 0
+      el.scrollTop = 0
+    }
+  })
+}
+
 function getH5PreviewScrollEl(event?: Event): HTMLElement | null {
   const fromEvent = event?.currentTarget as HTMLElement | undefined
   if (fromEvent) return fromEvent
@@ -89,6 +174,19 @@ function syncPreviewViewportWidth() {
 }
 
 function onH5PreviewTouchStart(event: TouchEvent) {
+  if (event.touches.length === 2) {
+    h5PreviewPan.active = false
+    h5PreviewPan.moved = true
+    pinchZoom.active = true
+    pinchZoom.startDistance = touchDistance(event.touches)
+    pinchZoom.startZoom = previewZoom.value
+    const center = touchCenter(event.touches)
+    pinchZoom.anchorX = center.x
+    pinchZoom.anchorY = center.y
+    return
+  }
+
+  pinchZoom.active = false
   const el = getH5PreviewScrollEl(event)
   const touch = event.touches[0]
   if (!el || !touch) return
@@ -101,6 +199,19 @@ function onH5PreviewTouchStart(event: TouchEvent) {
 }
 
 function onH5PreviewTouchMove(event: TouchEvent) {
+  if (pinchZoom.active && event.touches.length === 2) {
+    const dist = touchDistance(event.touches)
+    if (pinchZoom.startDistance > 0) {
+      const center = touchCenter(event.touches)
+      setPreviewZoomAt(
+        pinchZoom.startZoom * (dist / pinchZoom.startDistance),
+        center.x,
+        center.y,
+      )
+    }
+    return
+  }
+
   if (!h5PreviewPan.active) return
   const el = getH5PreviewScrollEl(event)
   const touch = event.touches[0]
@@ -114,6 +225,11 @@ function onH5PreviewTouchMove(event: TouchEvent) {
 }
 
 function onH5PreviewTouchEnd(event: TouchEvent) {
+  if (event.touches.length < 2) {
+    pinchZoom.active = false
+  }
+  if (pinchZoom.active) return
+
   if (!h5PreviewPan.moved) {
     const touch = event.changedTouches[0]
     if (touch) beadCanvasRef.value?.resolveTapAt(touch.clientX, touch.clientY)
@@ -160,6 +276,14 @@ function onH5PreviewMouseUp(event: MouseEvent) {
 function onH5PreviewWheel(event: WheelEvent) {
   const el = getH5PreviewScrollEl()
   if (!el) return
+
+  if (event.ctrlKey || event.metaKey) {
+    event.preventDefault()
+    const factor = event.deltaY > 0 ? 0.9 : 1.1
+    zoomPreviewBy(factor, event.clientX, event.clientY)
+    return
+  }
+
   if (Math.abs(event.deltaX) > 0) {
     el.scrollLeft += event.deltaX
     event.preventDefault()
@@ -230,7 +354,8 @@ function copyProjectShareCode() {
 /** 预览格点：120×120 等大图固定 6px，保证可横纵拖动查看 */
 const PREVIEW_MIN_CELL = 6
 const LARGE_GRID_THRESHOLD = 60
-const previewCellSize = computed(() => {
+/** 预览基础格点（未缩放） */
+const basePreviewCellSize = computed(() => {
   const g = project.grid
   if (!g?.length || previewWidth.value <= 0) return PREVIEW_MIN_CELL
   const cols = g[0]?.length ?? 1
@@ -240,8 +365,12 @@ const previewCellSize = computed(() => {
   }
   const fitCell = previewWidth.value / cols
   if (cols * PREVIEW_MIN_CELL > previewWidth.value + 0.5) return PREVIEW_MIN_CELL
-  return Math.max(PREVIEW_MIN_CELL, fitCell)
+  return Math.max(PREVIEW_MIN_CELL, Math.floor(fitCell))
 })
+
+const previewCellSize = computed(() =>
+  Math.max(2, Math.floor(basePreviewCellSize.value * previewZoom.value)),
+)
 
 const previewCanvasSize = computed(() => {
   const g = project.grid
@@ -314,7 +443,10 @@ onUnmounted(() => {
 })
 
 watch(hasGrid, async (ready) => {
-  if (!ready) return
+  if (!ready) {
+    previewZoom.value = 1
+    return
+  }
   await nextTick()
   startPreviewWidthObserve()
 })
@@ -746,9 +878,19 @@ async function handleExport(settings: ExportSettings) {
       <div v-if="hasGrid" class="preview-head">
         <div>
           <span class="preview-title">图纸预览</span>
-          <p class="preview-hint">拖动平移 · 点击查看色号</p>
+          <p class="preview-hint">拖动平移 · Ctrl+滚轮或双指缩放 · 点击查看色号</p>
         </div>
-        <button type="button" class="preview-edit" @click="goEditor">精修图纸 ›</button>
+        <div class="preview-head__actions">
+          <div class="preview-zoom" role="group" aria-label="预览缩放">
+            <button type="button" class="preview-zoom__btn" title="缩小" @click="zoomPreviewOut">−</button>
+            <span class="preview-zoom__label">{{ Math.round(previewZoom * 100) }}%</span>
+            <button type="button" class="preview-zoom__btn" title="放大" @click="zoomPreviewIn">+</button>
+            <button type="button" class="preview-zoom__reset" title="恢复 100%" @click="resetPreviewZoom">
+              复位
+            </button>
+          </div>
+          <button type="button" class="preview-edit" @click="goEditor">精修图纸 ›</button>
+        </div>
       </div>
 
       <div v-if="processing && !hasGrid" class="loading-overlay">
@@ -813,7 +955,7 @@ async function handleExport(settings: ExportSettings) {
       <div v-if="tipsExpanded" class="tips-body">
         <span class="tip-line">对比原图找差异，适当提高格数与全色系</span>
         <span class="tip-line">照片用「真实/平均色」，卡通用「主导色」</span>
-        <span class="tip-line">合并阈值 0～12，过高会丢失细节</span>
+        <span class="tip-line">发糊请提高格数（上限 256）、合并阈值保持 0；重新上传以应用新引擎</span>
       </div>
     </section>
 
@@ -1204,6 +1346,63 @@ async function handleExport(settings: ExportSettings) {
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 10px;
+}
+
+.preview-head__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.preview-zoom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  border-radius: 8px;
+  background: $pindou-bg-muted;
+  border: 1px solid $pindou-border-light;
+}
+
+.preview-zoom__btn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  background: $pindou-bg-card;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  color: $pindou-text;
+
+  &:hover {
+    background: $pindou-bg-muted;
+  }
+}
+
+.preview-zoom__label {
+  min-width: 44px;
+  text-align: center;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-secondary;
+}
+
+.preview-zoom__reset {
+  height: 28px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-size: $pindou-font-sm;
+  color: $pindou-primary;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba($pindou-primary, 0.08);
+  }
 }
 
 .preview-edit {

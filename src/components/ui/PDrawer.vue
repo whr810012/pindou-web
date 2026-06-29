@@ -115,7 +115,7 @@ function close() {
   transition: background $pindou-duration-fast;
 
   &:hover {
-    background: darken($pindou-bg-muted, 4%);
+    background: pindou-darken($pindou-bg-muted, 4%);
     color: $pindou-text;
   }
 }

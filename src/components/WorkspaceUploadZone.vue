@@ -347,13 +347,13 @@ function onAltSource(key: (typeof altSources)[number]['key']) {
   &--bl {
     bottom: -5px;
     left: -5px;
-    background: lighten($pindou-primary, 10%);
+    background: pindou-lighten($pindou-primary, 10%);
   }
 
   &--br {
     bottom: -5px;
     right: -5px;
-    background: darken($pindou-accent, 4%);
+    background: pindou-darken($pindou-accent, 4%);
   }
 }
 
@@ -476,7 +476,7 @@ function onAltSource(key: (typeof altSources)[number]['key']) {
   padding: 0;
   border: none;
   border-radius: $pindou-radius-md;
-  background: linear-gradient(135deg, $pindou-primary 0%, lighten($pindou-primary, 8%) 55%, $pindou-primary-dark 100%);
+  background: linear-gradient(135deg, $pindou-primary 0%, pindou-lighten($pindou-primary, 8%) 55%, $pindou-primary-dark 100%);
   color: #fff;
   cursor: pointer;
   box-shadow: $pindou-shadow-glow;

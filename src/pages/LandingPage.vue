@@ -369,11 +369,11 @@ function goGallery() {
       animation-delay: 0.4s;
     }
     &:nth-child(3) {
-      background: lighten($pindou-primary, 14%);
+      background: pindou-lighten($pindou-primary, 14%);
       animation-delay: 0.8s;
     }
     &:nth-child(4) {
-      background: darken($pindou-accent, 6%);
+      background: pindou-darken($pindou-accent, 6%);
       animation-delay: 0.2s;
     }
     &:nth-child(5) {
@@ -407,7 +407,7 @@ function goGallery() {
 
 .landing__title-accent {
   display: block;
-  background: linear-gradient(120deg, $pindou-primary 0%, darken($pindou-accent, 8%) 100%);
+  background: linear-gradient(120deg, $pindou-primary 0%, pindou-darken($pindou-accent, 8%) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;

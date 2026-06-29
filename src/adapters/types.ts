@@ -30,8 +30,8 @@ export interface ImageDataAdapter {
   exportCanvas(canvas: HTMLCanvasElement): string
 }
 
-export const MAX_IMAGE_EDGE = 2048
-export const MAX_GRID_WIDTH = 120
+export const MAX_IMAGE_EDGE = 4096
+export const MAX_GRID_WIDTH = 256
 
 export function getSafeDpr(): number {
   return Math.min(window.devicePixelRatio ?? 1, 3)

@@ -135,7 +135,7 @@ input:focus-visible {
     transform $pindou-duration-fast;
 
   &:hover {
-    border-color: darken($pindou-border, 4%);
+    border-color: pindou-darken($pindou-border, 4%);
   }
 }
 
@@ -257,7 +257,7 @@ input:focus-visible {
   transition: background $pindou-duration-fast, border-color $pindou-duration-fast;
 
   &:hover {
-    background: darken($pindou-bg-muted, 2%);
+    background: pindou-darken($pindou-bg-muted, 2%);
   }
 }
 

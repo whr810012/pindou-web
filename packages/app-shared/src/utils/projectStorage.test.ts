@@ -1,4 +1,4 @@
-import { DEFAULT_PHOTO_OPTIMIZE } from '@pindou/bead-core'
+import { DEFAULT_PHOTO_OPTIMIZE } from '@wangdandan810012/bead-core'
 import { describe, expect, it, beforeEach } from 'vitest'
 import { initPlatform } from '../platform/context.js'
 import { normalizeSavedProject, ProjectStorage, createProjectId } from './projectStorage.js'

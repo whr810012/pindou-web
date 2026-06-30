@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PaletteEntry } from '@pindou/bead-core'
+import type { PaletteEntry } from '@wangdandan810012/bead-core'
 import { computed, ref, watch } from 'vue'
 import PButton from '@/components/ui/PButton.vue'
 import PDrawer from '@/components/ui/PDrawer.vue'
@@ -65,12 +65,12 @@ function confirmPick() {
 <template>
   <PDrawer :model-value="show" @update:model-value="(v) => !v && emit('close')">
     <div class="picker">
-      <span class="title">从全色系勾选</span>
-      <input v-model="keyword" class="search" placeholder="搜索色号 / HEX" />
+      <span class="title">从全色系勾�?/span>
+      <input v-model="keyword" class="search" placeholder="杜索色坷 / HEX" />
       <div class="toolbar">
-        <span class="hint">已选 {{ picked.size }} 色</span>
+        <span class="hint">已�?{{ picked.size }} �?/span>
         <div class="actions">
-          <PButton size="mini" plain text="全选当前" @click="selectAllVisible" />
+          <PButton size="mini" plain text="全选当�? @click="selectAllVisible" />
           <PButton size="mini" plain text="清空" @click="clearPicked" />
         </div>
       </div>
@@ -87,12 +87,12 @@ function confirmPick() {
             <span class="code">{{ entry.codes[paletteStore.brand] }}</span>
             <span class="hex">{{ entry.hex }}</span>
           </div>
-          <span class="check">{{ picked.has(entry.id) ? '✓' : '' }}</span>
+          <span class="check">{{ picked.has(entry.id) ? '�? : '' }}</span>
         </div>
       </div>
       <div class="footer">
-        <PButton text="取消" @click="emit('close')" />
-        <PButton type="primary" text="添加到色板" @click="confirmPick" />
+        <PButton text="坖消" @click="emit('close')" />
+        <PButton type="primary" text="添加到色�? @click="confirmPick" />
       </div>
     </div>
   </PDrawer>

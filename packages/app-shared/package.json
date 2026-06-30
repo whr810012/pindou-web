@@ -16,7 +16,7 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@pindou/bead-core": "file:../bead-core",
+    "@wangdandan810012/bead-core": "^0.1.0",
     "pinia": "^2.1.7"
   },
   "devDependencies": {

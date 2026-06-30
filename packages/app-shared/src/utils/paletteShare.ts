@@ -1,4 +1,4 @@
-import type { BrandSystem, PaletteEntry } from '@pindou/bead-core'
+import type { BrandSystem, PaletteEntry } from '@wangdandan810012/bead-core'
 import { getPlatform } from '../platform/context.js'
 import { createCustomEntryId } from './customPaletteStorage.js'
 
@@ -22,13 +22,13 @@ export function encodePaletteShare(name: string, entries: PaletteEntry[]): strin
 export function decodePaletteShare(text: string): { name: string; entries: PaletteEntry[] } {
   const raw = text.trim()
   if (!raw.startsWith(SHARE_PREFIX)) {
-    throw new Error('无效的色板分享码')
+    throw new Error('无效的色板分享砝')
   }
   const payload = JSON.parse(
     getPlatform().codec.fromBase64(raw.slice(SHARE_PREFIX.length)),
   ) as SharePayload
   if (!payload.entries?.length) {
-    throw new Error('分享码中无色号数据')
+    throw new Error('分享砝中无色坷数杮')
   }
   const entries: PaletteEntry[] = payload.entries.map((row) => ({
     id: createCustomEntryId(),
@@ -39,7 +39,7 @@ export function decodePaletteShare(text: string): { name: string; entries: Palet
 }
 
 export function extractEntriesFromGrid(
-  grid: import('@pindou/bead-core').MappedGrid,
+  grid: import('@wangdandan810012/bead-core').MappedGrid,
   lookup: (id: string) => PaletteEntry | undefined,
 ): PaletteEntry[] {
   const map = new Map<string, PaletteEntry>()

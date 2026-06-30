@@ -1,5 +1,5 @@
-import type { ImageAdjust, PhotoOptimize, PixelationMode } from '@pindou/bead-core'
-import { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE } from '@pindou/bead-core'
+import type { ImageAdjust, PhotoOptimize, PixelationMode } from '@wangdandan810012/bead-core'
+import { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE } from '@wangdandan810012/bead-core'
 
 export interface ImageContentHints {
   variance: number
@@ -35,9 +35,7 @@ export function analyzeImageContent(
 }
 
 /**
- * 照片：尽量 1 源像素 → 1 格（上限 maxGrid），清晰度优先。
- * 卡通：适度降格去噪。
- */
+ * 照片：尽�?1 溝僝�?�?1 格（上陝 maxGrid），清晰度优先�? * 坡通：适度陝格去噪�? */
 export function suggestGridWidth(
   imgWidth: number,
   imgHeight: number,

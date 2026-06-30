@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 
 export interface BeadSceneHandle {
   resize: () => void

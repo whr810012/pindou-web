@@ -1,4 +1,4 @@
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 
 export interface LoadedImage {
   path: string
@@ -16,7 +16,7 @@ export interface RenderGridOptions {
   showColorCode?: boolean
   isZoneActive?: (row: number, col: number) => boolean
   layoutWidth?: number
-  /** 空白格仅填色、不画斜纹（大图性能优化） */
+  /** 空白格仅填色、不画斜纹（大图性能优化�?*/
   simpleExternal?: boolean
 }
 

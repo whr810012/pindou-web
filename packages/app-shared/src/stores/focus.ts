@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import type { MappedGrid } from '@pindou/bead-core'
-import { countCompleted, countTotalBeads } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
+import { countCompleted, countTotalBeads } from '@wangdandan810012/bead-core'
 import {
   getZoneBounds,
   isCellInZone,

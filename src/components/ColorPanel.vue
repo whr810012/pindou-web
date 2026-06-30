@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import PButton from '@/components/ui/PButton.vue'
-import type { ColorStat } from '@pindou/bead-core'
+import type { ColorStat } from '@wangdandan810012/bead-core'
 
 const props = defineProps<{
   stats: ColorStat[]
@@ -22,7 +22,7 @@ const excludedCount = computed(() => props.excludedIds.length)
     <div class="color-panel__head">
       <div>
         <span class="color-panel__title">采购清单</span>
-        <span class="color-panel__summary">{{ stats.length }} 色 · 共 {{ totalBeads }} 豆</span>
+        <span class="color-panel__summary">{{ stats.length }} �?· �?{{ totalBeads }} �?/span>
       </div>
       <PButton
         v-if="excludedCount"
@@ -32,7 +32,7 @@ const excludedCount = computed(() => props.excludedIds.length)
         @click="emit('restoreAll')"
       />
     </div>
-    <p class="color-panel__hint">点击色号可排除该颜色（自动重映射最近色）</p>
+    <p class="color-panel__hint">点击色号可排除该颜色（自动重映射最近色�?/p>
     <div class="color-panel__list">
       <button
         v-for="stat in stats"
@@ -44,7 +44,7 @@ const excludedCount = computed(() => props.excludedIds.length)
       >
         <span class="color-item__swatch" :style="{ backgroundColor: stat.hex }" />
         <span class="color-item__code">{{ stat.displayCode }}</span>
-        <span class="color-item__count">{{ stat.count }} 粒</span>
+        <span class="color-item__count">{{ stat.count }} �?/span>
       </button>
     </div>
   </div>

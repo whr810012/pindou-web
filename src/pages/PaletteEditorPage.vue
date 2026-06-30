@@ -3,7 +3,7 @@ import PButton from '@/components/ui/PButton.vue'
 import PDrawer from '@/components/ui/PDrawer.vue'
 import PTag from '@/components/ui/PTag.vue'
 import { showToast, showModal } from '@/utils/platform-ui'
-import type { PaletteEntry } from '@pindou/bead-core'
+import type { PaletteEntry } from '@wangdandan810012/bead-core'
 import { computed, onMounted, ref } from 'vue'
 import PalettePickerModal from '@/components/PalettePickerModal.vue'
 import PaletteShareSheet from '@/components/PaletteShareSheet.vue'
@@ -78,8 +78,8 @@ function createPalette() {
 
 function renamePalette() {
   if (!activeId.value) return
-  paletteStore.renameCustomPalette(activeId.value, paletteName.value.trim() || '未命名色板')
-  showToast({ title: '已保存名称', icon: 'success' })
+  paletteStore.renameCustomPalette(activeId.value, paletteName.value.trim() || '未命名色�?)
+  showToast({ title: '已保存名�?, icon: 'success' })
 }
 
 function deletePalette() {
@@ -104,7 +104,7 @@ function addEntry() {
   try {
     paletteStore.addCustomEntry(activeId.value, newHex.value, newCode.value.trim())
     newCode.value = ''
-    showToast({ title: '已添加', icon: 'success' })
+    showToast({ title: '已添�?, icon: 'success' })
   } catch (error) {
     showToast({ title: '颜色格式无效', icon: 'none' })
   }
@@ -124,7 +124,7 @@ function doImport(mode: 'append' | 'replace') {
     paletteStore.importCustomEntries(activeId.value, parsed, mode)
     importVisible.value = false
     importText.value = ''
-    showToast({ title: `已导入 ${parsed.length} 色`, icon: 'success' })
+    showToast({ title: `已导�?${parsed.length} 色`, icon: 'success' })
   } catch (error) {
     showToast({ title: (error as Error).message || '导入失败', icon: 'none' })
   }
@@ -149,7 +149,7 @@ function copyExport(format: 'json' | 'csv') {
 
   
   navigator.clipboard.writeText(text)
-  showToast({ title: '已复制到剪贴板', icon: 'success' })
+  showToast({ title: '已复制到剪贴�?, icon: 'success' })
 }
 
 function onPickerConfirm(selected: PaletteEntry[]) {
@@ -160,13 +160,13 @@ function onPickerConfirm(selected: PaletteEntry[]) {
   const cloned = selected.map((e) => ({ ...e, id: createCustomEntryId() }))
   paletteStore.importCustomEntries(activeId.value, cloned, 'append')
   pickerVisible.value = false
-  showToast({ title: `已添加 ${cloned.length} 色`, icon: 'success' })
+  showToast({ title: `已添�?${cloned.length} 色`, icon: 'success' })
 }
 
 function onShareImport(payload: { name: string; entries: PaletteEntry[] }) {
   showModal({
     title: '导入分享色板',
-    content: `「${payload.name}」共 ${payload.entries.length} 色，新建还是追加到当前色板？`,
+    content: `�?{payload.name}」共 ${payload.entries.length} 色，新建还是追加到当前色板？`,
     confirmText: '新建',
     cancelText: '追加',
     success: (res) => {
@@ -194,7 +194,7 @@ function extractFromProject() {
     return
   }
   paletteStore.importCustomEntries(activeId.value, extracted, 'append')
-  showToast({ title: `已提取 ${extracted.length} 色`, icon: 'success' })
+  showToast({ title: `已提�?${extracted.length} 色`, icon: 'success' })
 }
 
 function pickImportFile() {
@@ -214,8 +214,8 @@ function pickImportFile() {
 <template>
   <div class="page page-enter">
     <header class="craft-page-head">
-      <h1 class="craft-page-head__title">自定义色板</h1>
-      <p class="craft-page-head__sub">管理色号集合，导入导出或从当前图纸提取颜色。</p>
+      <h1 class="craft-page-head__title">自定义色�?/h1>
+      <p class="craft-page-head__sub">管理色号集合，导入导出或从当前图纸提取颜色�?/p>
     </header>
 
     <div class="card palette-panel">
@@ -237,7 +237,7 @@ function pickImportFile() {
         <PButton size="small" plain text="新建" @click="createPalette" />
         <PButton size="small" plain text="删除" @click="deletePalette" />
         <PButton size="small" plain text="分享" @click="shareVisible = true" />
-        <PButton size="small" type="primary" text="应用到项目" @click="applyPalette" />
+        <PButton size="small" type="primary" text="应用到项�? @click="applyPalette" />
       </div>
     </div>
 
@@ -273,12 +273,12 @@ function pickImportFile() {
 
     <div class="card palette-panel">
       <div class="list-head">
-        <span class="craft-label list-head__label">色号列表 · {{ entries.length }} 色</span>
+        <span class="craft-label list-head__label">色号列表 · {{ entries.length }} �?/span>
         <div class="list-head__actions">
-          <button type="button" class="tool-chip" @click="pickerVisible = true">全色系</button>
-          <button type="button" class="tool-chip" @click="extractFromProject">从项目</button>
+          <button type="button" class="tool-chip" @click="pickerVisible = true">全色�?/button>
+          <button type="button" class="tool-chip" @click="extractFromProject">从项�?/button>
           <button type="button" class="tool-chip" @click="importVisible = true">导入</button>
-          <button type="button" class="tool-chip" @click="pickImportFile">选文件</button>
+          <button type="button" class="tool-chip" @click="pickImportFile">选文�?/button>
           <button type="button" class="tool-chip" @click="copyExport('json')">JSON</button>
           <button type="button" class="tool-chip" @click="copyExport('csv')">CSV</button>
         </div>
@@ -303,14 +303,14 @@ function pickImportFile() {
       </div>
       <div v-else class="palette-empty">
         <span class="palette-empty__icon" aria-hidden="true" />
-        <p>暂无色号，请添加、导入或从项目提取</p>
+        <p>暂无色号，请添加、导入或从项目提�?/p>
       </div>
     </div>
 
     <PDrawer :model-value="importVisible" @update:model-value="importVisible = false">
       <div class="craft-drawer">
         <span class="craft-drawer__title">导入色号</span>
-        <p class="craft-hint">支持 JSON 数组或 CSV（code,hex），例如 R1,#FF0000</p>
+        <p class="craft-hint">支持 JSON 数组�?CSV（code,hex），例如 R1,#FF0000</p>
         <textarea v-model="importText" class="craft-textarea" rows="6" placeholder="粘贴 JSON / CSV 内容" />
         <div class="import-actions">
           <PButton text="追加导入" @click="doImport('append')" />

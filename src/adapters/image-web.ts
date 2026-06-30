@@ -1,6 +1,6 @@
 import type { ImageDataAdapter, LoadedImage, RenderGridOptions } from './types'
 import { MAX_IMAGE_EDGE, getSafeDpr } from './types'
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 
 function loadImageElement(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {

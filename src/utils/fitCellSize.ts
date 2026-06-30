@@ -1,5 +1,5 @@
 import { type ComputedRef, type Ref, computed } from 'vue'
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 
 export function useFitCellSize(
   grid: ComputedRef<MappedGrid | null>,

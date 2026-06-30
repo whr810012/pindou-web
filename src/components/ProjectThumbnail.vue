@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 import { getImageAdapter } from '@/adapters'
 
 const props = withDefaults(

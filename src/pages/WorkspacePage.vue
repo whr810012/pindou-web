@@ -21,7 +21,7 @@ import { useFocusStore } from '@/stores/focus'
 import { usePaletteStore } from '@/stores/palette'
 import { useProjectStore } from '@/stores/project'
 import { type ExportSettings } from '@/types/app'
-import { trimGrid } from '@pindou/bead-core'
+import { trimGrid } from '@wangdandan810012/bead-core'
 import { encodeProjectShare } from '@/utils/projectShare'
 import { debounce } from '@/utils/debounce'
 import {
@@ -345,16 +345,16 @@ function copyProjectShareCode() {
     })
   } catch (error) {
     showToast({
-      title: error instanceof Error ? error.message : '生成分享码失败',
+      title: error instanceof Error ? error.message : '生成分享码失�?,
       icon: 'none',
     })
   }
 }
 
-/** 预览格点：120×120 等大图固定 6px，保证可横纵拖动查看 */
+/** 预览格点�?20×120 等大图固�?6px，保证可横纵拖动查看 */
 const PREVIEW_MIN_CELL = 6
 const LARGE_GRID_THRESHOLD = 60
-/** 预览基础格点（未缩放） */
+/** 预览基础格点（未缩放�?*/
 const basePreviewCellSize = computed(() => {
   const g = project.grid
   if (!g?.length || previewWidth.value <= 0) return PREVIEW_MIN_CELL
@@ -413,9 +413,9 @@ function startPreviewWidthObserve() {
 
 const statusText = computed(() => {
   if (!hasGrid.value) return ''
-  if (project.dirty) return '未保存'
-  if (project.savedProjectId) return '已保存'
-  return '未保存'
+  if (project.dirty) return '未保�?
+  if (project.savedProjectId) return '已保�?
+  return '未保�?
 })
 
 const debouncedReprocess = debounce(() => {
@@ -519,7 +519,7 @@ function onDrop(event: DragEvent) {
   if (file && file.type.startsWith('image/')) {
     openImageFile(file)
   } else if (file) {
-    showToast({ title: '请选择图片文件（JPG / PNG / WebP）', icon: 'none' })
+    showToast({ title: '请选择图片文件（JPG / PNG / WebP�?, icon: 'none' })
   }
 }
 
@@ -539,7 +539,7 @@ function onReplaceImage() {
   if (hasGrid.value && project.dirty) {
     showModal({
       title: '更换图片',
-      content: '当前项目有未保存修改，换图后将重新生成图纸。',
+      content: '当前项目有未保存修改，换图后将重新生成图纸�?,
       success: (res) => {
         if (res.confirm) startPickImage()
       },
@@ -573,7 +573,7 @@ function onTrimGrid() {
   if (!project.grid) return
   const trimmed = trimGrid(project.grid)
   project.setGrid(trimmed)
-  showToast({ title: '已自动裁边', icon: 'success' })
+  showToast({ title: '已自动裁�?, icon: 'success' })
 }
 
 async function onCropConfirm(path: string) {
@@ -721,7 +721,7 @@ async function handleExport(settings: ExportSettings) {
   if (settings.format === 'pdf') {
     const pdf = await exportPatternPdf(project.grid, settings, codeLookup, project.projectName, stats.value)
     if (pdf) downloadBlobH5('pindou-pattern.pdf', pdf)
-    showToast({ title: 'PDF 已导出', icon: 'success' })
+    showToast({ title: 'PDF 已导�?, icon: 'success' })
     return
   }
 
@@ -742,12 +742,12 @@ async function handleExport(settings: ExportSettings) {
   <div class="page page--dock page--workspace">
     <!-- 项目信息 -->
     <section
-      v-if="hasGrid || project.projectName !== '未命名项目'"
+      v-if="hasGrid || project.projectName !== '未命名项�?"
       class="workspace-hero card"
     >
       <div class="workspace-hero__media">
         <img v-if="compareSource" class="workspace-hero__thumb" :src="compareSource" alt="" />
-        <div v-else class="workspace-hero__thumb workspace-hero__thumb--empty" aria-hidden="true">◇</div>
+        <div v-else class="workspace-hero__thumb workspace-hero__thumb--empty" aria-hidden="true">�?/div>
       </div>
       <div class="workspace-hero__body">
         <div class="workspace-hero__title-row">
@@ -768,8 +768,8 @@ async function handleExport(settings: ExportSettings) {
         </div>
         <div v-if="gridInfo" class="workspace-hero__chips">
           <span class="stat-chip">{{ gridInfo.cols }}×{{ gridInfo.rows }}</span>
-          <span class="stat-chip">{{ gridInfo.colorCount }} 色</span>
-          <span class="stat-chip">{{ gridInfo.beads }} 豆</span>
+          <span class="stat-chip">{{ gridInfo.colorCount }} �?/span>
+          <span class="stat-chip">{{ gridInfo.beads }} �?/span>
         </div>
         <span v-else class="workspace-hero__meta">等待生成图纸</span>
       </div>
@@ -783,7 +783,7 @@ async function handleExport(settings: ExportSettings) {
       @open-settings="settingsVisible = true"
     />
 
-    <!-- 工具栏 -->
+    <!-- 工具�?-->
     <section class="workspace-toolbar card">
       <div class="workspace-toolbar__scroll">
         <div class="toolbar-group">
@@ -793,34 +793,34 @@ async function handleExport(settings: ExportSettings) {
             :class="{ 'action-chip--primary': !hasGrid }"
             @click="hasGrid ? onReplaceImage() : onPickImage()"
           >
-            <span class="action-chip__icon" aria-hidden="true">{{ hasGrid ? '↻' : '↑' }}</span>
+            <span class="action-chip__icon" aria-hidden="true">{{ hasGrid ? '�? : '�? }}</span>
             <span>{{ hasGrid ? '换图' : '上传' }}</span>
           </button>
           <button type="button" class="action-chip" @click="onAiPick">
-            <span class="action-chip__icon" aria-hidden="true">✦</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
             <span>AI</span>
           </button>
           <button type="button" class="action-chip" @click="templateVisible = true">
-            <span class="action-chip__icon" aria-hidden="true">▦</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
             <span>素材</span>
           </button>
           <button type="button" class="action-chip" @click="xhsVisible = true">
-            <span class="action-chip__icon" aria-hidden="true">红</span>
-            <span>小红书</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
+            <span>小红�?/span>
           </button>
         </div>
         <span class="toolbar-divider" aria-hidden="true" />
         <div class="toolbar-group">
           <button type="button" class="action-chip" :disabled="!hasGrid" @click="onTrimGrid">
-            <span class="action-chip__icon" aria-hidden="true">✂</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
             <span>裁边</span>
           </button>
           <button type="button" class="action-chip" :disabled="!hasGrid" @click="compareVisible = true">
-            <span class="action-chip__icon" aria-hidden="true">⇄</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
             <span>对比</span>
           </button>
           <button type="button" class="action-chip" @click="settingsVisible = true">
-            <span class="action-chip__icon" aria-hidden="true">⚙</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
             <span>参数</span>
           </button>
         </div>
@@ -836,7 +836,7 @@ async function handleExport(settings: ExportSettings) {
             :disabled="!hasGrid"
             @click="openSave"
           >
-            <span class="action-chip__icon" aria-hidden="true">↓</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
             <span>保存</span>
           </button>
           <button
@@ -845,7 +845,7 @@ async function handleExport(settings: ExportSettings) {
             :disabled="!hasGrid"
             @click="exportVisible = true"
           >
-            <span class="action-chip__icon" aria-hidden="true">⤓</span>
+            <span class="action-chip__icon" aria-hidden="true">�?/span>
             <span>导出</span>
           </button>
         </div>
@@ -878,25 +878,25 @@ async function handleExport(settings: ExportSettings) {
       <div v-if="hasGrid" class="preview-head">
         <div>
           <span class="preview-title">图纸预览</span>
-          <p class="preview-hint">拖动平移 · Ctrl+滚轮或双指缩放 · 点击查看色号</p>
+          <p class="preview-hint">拖动平移 · Ctrl+滚轮或双指缩�?· 点击查看色号</p>
         </div>
         <div class="preview-head__actions">
           <div class="preview-zoom" role="group" aria-label="预览缩放">
-            <button type="button" class="preview-zoom__btn" title="缩小" @click="zoomPreviewOut">−</button>
+            <button type="button" class="preview-zoom__btn" title="缩小" @click="zoomPreviewOut">�?/button>
             <span class="preview-zoom__label">{{ Math.round(previewZoom * 100) }}%</span>
             <button type="button" class="preview-zoom__btn" title="放大" @click="zoomPreviewIn">+</button>
             <button type="button" class="preview-zoom__reset" title="恢复 100%" @click="resetPreviewZoom">
               复位
             </button>
           </div>
-          <button type="button" class="preview-edit" @click="goEditor">精修图纸 ›</button>
+          <button type="button" class="preview-edit" @click="goEditor">精修图纸 �?/button>
         </div>
       </div>
 
       <div v-if="processing && !hasGrid" class="loading-overlay">
         <div class="loading-spinner" />
-        <span class="loading-text">正在生成图纸…</span>
-        <span class="loading-sub">本地处理中，大图可能需要几秒</span>
+        <span class="loading-text">正在生成图纸�?/span>
+        <span class="loading-sub">本地处理中，大图可能需要几�?/span>
       </div>
 
       <WorkspaceUploadZone
@@ -940,13 +940,13 @@ async function handleExport(settings: ExportSettings) {
         </div>
         <div v-if="processing" class="loading-overlay loading-overlay--float">
           <div class="loading-spinner" />
-          <span class="loading-text">正在生成图纸…</span>
-          <span class="loading-sub">本地处理中，稍候即可</span>
+          <span class="loading-text">正在生成图纸�?/span>
+          <span class="loading-sub">本地处理中，稍候即�?/span>
         </div>
       </div>
     </section>
 
-    <!-- 调优提示（可折叠） -->
+    <!-- 调优提示（可折叠�?-->
     <section v-if="hasGrid" class="card tips-card">
       <button type="button" class="tips-head" @click="tipsExpanded = !tipsExpanded">
         <span class="tips-title">效果调优提示</span>
@@ -954,8 +954,8 @@ async function handleExport(settings: ExportSettings) {
       </button>
       <div v-if="tipsExpanded" class="tips-body">
         <span class="tip-line">对比原图找差异，适当提高格数与全色系</span>
-        <span class="tip-line">照片用「真实/平均色」，卡通用「主导色」</span>
-        <span class="tip-line">发糊请提高格数（上限 256）、合并阈值保持 0；重新上传以应用新引擎</span>
+        <span class="tip-line">照片用「真�?平均色」，卡通用「主导色�?/span>
+        <span class="tip-line">发糊请提高格数（上限 256）、合并阈值保�?0；重新上传以应用新引�?/span>
       </div>
     </section>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PaletteEntry } from '@pindou/bead-core'
+import type { PaletteEntry } from '@wangdandan810012/bead-core'
 import { ref, watch } from 'vue'
 import PButton from '@/components/ui/PButton.vue'
 import PDrawer from '@/components/ui/PDrawer.vue'
@@ -54,9 +54,9 @@ function importFromPaste() {
       <p class="craft-hint">复制分享码或粘贴，可在另一设备导入相同色板</p>
 
       <div v-if="entries.length" class="share-block">
-        <span class="craft-label">分享码</span>
+        <span class="craft-label">分享�?/span>
         <textarea class="craft-textarea share-code" readonly :value="shareCode" rows="4" />
-        <PButton size="sm" plain text="复制分享码" @click="copyShareCode" />
+        <PButton size="sm" plain text="复制分享�? @click="copyShareCode" />
       </div>
 
       <div class="share-block">

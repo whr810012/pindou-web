@@ -8,7 +8,7 @@ import PNumberBox from '@/components/ui/PNumberBox.vue'
 import PLineProgress from '@/components/ui/PLineProgress.vue'
 import { showToast, showModal, showActionSheet, setClipboardData, getSystemInfoSync, scanCode, chooseMessageFile, getFileSystemManager, request } from '@/utils/platform-ui'
 import { computed, ref, watch } from 'vue'
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 import BeadCanvas from '@/components/BeadCanvas.vue'
 import { renderGridFitBox } from '@/utils/thumbnail'
 
@@ -248,7 +248,7 @@ watch(
         />
         <span class="craft-label compare-sheet__side">图纸</span>
       </div>
-      <span v-if="mode === 'compare' && grid" class="craft-hint compare-sheet__drag-hint">在图上左右滑动，或拖动下方滑条</span>
+      <span v-if="mode === 'compare' && grid" class="craft-hint compare-sheet__drag-hint">在图上左右滑动，或拖动下方滑�?/span>
     </div>
   </PDrawer>
 </template>

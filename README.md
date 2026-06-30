@@ -21,7 +21,7 @@ npm run dev
 | `npm run dev:ai` | 本地 AI 预处理 API（端口 8787） |
 | `npm run dev:xhs` | 本地小红书解析 API（端口 8788） |
 | `npm run build` | 生产构建（含共享包编译、SEO / 预渲染） |
-| `npm run build:packages` | 仅编译 `packages/bead-core` 与 `packages/app-shared` |
+| `npm run build:packages` | 仅编译 `packages/app-shared` |
 | `npm run preview` | 预览 `dist` |
 | `npm run type-check` | `vue-tsc` 类型检查 |
 | `npm run test` | 运行 `bead-core` 与根目录单元测试 |
@@ -111,7 +111,7 @@ VITE_SITE_URL=https://dandanpindou.netlify.app
 | **预览交互** | 图纸预览支持 Ctrl+滚轮 / 双指捏合缩放与复位 |
 | **渲染** | 拼豆 Canvas 像素化显示；上传换图时自动清除上一张的排除色号 |
 
-`bead-core` 新增 `packages/bead-core/src/conversion/`（`resample`、`quantize`、`colorSpace`、`enhance`）及单元测试 `tests/conversion.test.ts`。
+`bead-core` 已拆为独立 npm 包 [@wangdandan810012/bead-core](https://www.npmjs.com/package/@wangdandan810012/bead-core)（源码：[GitHub](https://github.com/whr810012/bead-core)），含 `conversion/` 模块及单元测试。详见 [docs/BEAD_CORE_SPLIT.md](docs/BEAD_CORE_SPLIT.md)。
 
 ## Netlify 部署
 
@@ -187,7 +187,7 @@ pindou-web/
 │   └── xhs-parse/          # 小红书分享解析、本地 dev-server
 ├── packages/
 │   ├── app-shared/         # 共享 store、工具、平台抽象
-│   └── bead-core/          # 像素化、CIEDE2000 配色、转换引擎等核心算法
+│   └── bead-core/          # 已拆至 github.com/whr810012/bead-core
 ├── public/
 ├── scripts/                # SEO、预渲染、画廊页、OG 图
 ├── src/
@@ -207,12 +207,12 @@ pindou-web/
 ## 技术要点
 
 - **平台注入**：`src/platform/web.ts` → `initPlatform()`
-- **转换管线**：`packages/bead-core/src/conversion/convertImageToPattern.ts` → `runPipeline`
-- **感知配色**：`packages/bead-core/src/color/ciede2000.ts`（ΔE2000 色板匹配）
+- **转换管线**：[@wangdandan810012/bead-core](https://www.npmjs.com/package/@wangdandan810012/bead-core) → `convertImageToPattern` → `runPipeline`
+- **感知配色**：`@wangdandan810012/bead-core` — CIEDE2000（ΔE2000 色板匹配）
 - **智能参数**：`packages/app-shared/src/utils/suggestParams.ts`（照片/卡通识别与一键建议）
 - **Canvas 渲染**：`src/adapters/image-web.ts`、`src/components/BeadCanvas.vue`（`imageSmoothingEnabled: false`、像素化 CSS）
 - **设计令牌**：`src/styles/tokens.scss`（SCSS 全局注入，`pindou-lighten` / `pindou-darken`）
-- **Vite 别名**：`@pindou/app-shared`、`@pindou/bead-core` 指向 `packages/*/src`
+- **Vite 别名**：`@pindou/app-shared` → `packages/app-shared/src`
 - **页面 SEO**：`src/utils/seo.ts` 运行时更新 title / meta / canonical
 
 ## 构建产物

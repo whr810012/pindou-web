@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import type { MappedGrid } from '@pindou/bead-core'
-import { cloneGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
+import { cloneGrid } from '@wangdandan810012/bead-core'
 import type { EditorTool } from '../types/app.js'
 
 interface HistoryEntry {

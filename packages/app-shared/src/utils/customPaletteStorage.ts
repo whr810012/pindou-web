@@ -1,4 +1,4 @@
-import type { BrandSystem, PaletteEntry } from '@pindou/bead-core'
+import type { BrandSystem, PaletteEntry } from '@wangdandan810012/bead-core'
 import { getPlatform } from '../platform/context.js'
 import type { CustomPalette } from '../types/app.js'
 

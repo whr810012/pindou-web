@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:packages": "npm run build --prefix packages/bead-core && npm run build --prefix packages/app-shared",
+    "build:packages": "npm run build --prefix packages/app-shared",
     "dev": "vite",
     "dev:ai": "tsx server/ai-preprocess/dev-server.ts",
     "dev:xhs": "tsx server/xhs-parse/dev-server.ts",
@@ -14,13 +14,13 @@
     "generate:landing-compare": "node scripts/generate-landing-compare.mjs",
     "generate:gallery-projects": "npm run build:packages && node scripts/generate-gallery-projects.mjs",
     "type-check": "vue-tsc --noEmit",
-    "test": "npm run test --prefix packages/bead-core && vitest run",
+    "test": "vitest run",
     "test:ai": "vitest run server/ai-preprocess",
     "test:xhs": "vitest run server/xhs-parse"
   },
   "dependencies": {
     "@pindou/app-shared": "file:./packages/app-shared",
-    "@pindou/bead-core": "file:./packages/bead-core",
+    "@wangdandan810012/bead-core": "^0.1.0",
     "@volcengine/openapi": "^1.36.2",
     "jspdf": "^4.2.1",
     "pinia": "^2.1.7",

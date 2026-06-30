@@ -1,6 +1,6 @@
-import type { BrandSystem, PaletteEntry, PixelationMode } from '@pindou/bead-core'
-import type { ImageAdjust, PhotoOptimize } from '@pindou/bead-core'
-import { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE } from '@pindou/bead-core'
+import type { BrandSystem, PaletteEntry, PixelationMode } from '@wangdandan810012/bead-core'
+import type { ImageAdjust, PhotoOptimize } from '@wangdandan810012/bead-core'
+import { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE } from '@wangdandan810012/bead-core'
 
 export type { ImageAdjust, PhotoOptimize }
 export { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE }
@@ -45,7 +45,7 @@ export interface SavedProject {
   thumbnail?: string
   sourcePreview?: string
   params: ProjectParams
-  grid: import('@pindou/bead-core').MappedGrid
+  grid: import('@wangdandan810012/bead-core').MappedGrid
   excludedPaletteIds: string[]
   completedCells: string[]
 }

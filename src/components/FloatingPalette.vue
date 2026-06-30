@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { PaletteEntry } from '@pindou/bead-core'
+import type { PaletteEntry } from '@wangdandan810012/bead-core'
 import { computed, ref } from 'vue'
 
 const props = defineProps<{

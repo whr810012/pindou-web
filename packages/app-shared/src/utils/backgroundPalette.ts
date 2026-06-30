@@ -1,4 +1,4 @@
-import type { PaletteEntry } from '@pindou/bead-core'
+import type { PaletteEntry } from '@wangdandan810012/bead-core'
 
 const WHITE_HEXES = new Set(['#FFFFFF', '#FEFEFE', '#F5F5F5', '#F4F4F4', '#FAFAFA'])
 
@@ -17,7 +17,7 @@ function hexLuminance(hex: string): number {
   return 0.2126 * r + 0.7152 * g + 0.0722 * b
 }
 
-/** 解析用于背景剔除 / 橡皮的色号 ID 列表 */
+/** 解析用于背景剔除 / 橡皮的色�?ID 列表 */
 export function resolveBackgroundPaletteIds(entries: PaletteEntry[]): string[] {
   if (!entries.length) return []
 

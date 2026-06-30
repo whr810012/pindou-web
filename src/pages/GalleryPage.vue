@@ -17,7 +17,7 @@ usePageSeo('gallery')
 
 const router = useRouter()
 
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 import type { ProjectParams } from '@/types/app'
 
 interface GalleryItem {
@@ -96,13 +96,13 @@ function fetchTemplates(): Promise<{ items: TemplateItem[] }> {
 }
 
 function modeLabel(mode: GalleryItem['mode']) {
-  return mode === 'average' ? '平均色' : '主导色'
+  return mode === 'average' ? '平均�? : '主导�?
 }
 
 function paletteLabel(presetId: string) {
-  if (presetId.includes('96')) return '96 色'
-  if (presetId.includes('168')) return '168 色'
-  if (presetId.includes('full')) return '全色系'
+  if (presetId.includes('96')) return '96 �?
+  if (presetId.includes('168')) return '168 �?
+  if (presetId.includes('full')) return '全色�?
   return presetId.replace('pindou-', '')
 }
 
@@ -114,7 +114,7 @@ function applyPreset(item: GalleryItem) {
   })
   paletteStore.setPreset(item.palettePresetId)
   project.projectName = item.title
-  showToast({ title: '已应用推荐参数', icon: 'success' })
+  showToast({ title: '已应用推荐参�?, icon: 'success' })
   setTimeout(() => {
     router.push('/workspace')
   }, 400)
@@ -143,7 +143,7 @@ async function openFullProject(item: GalleryItem) {
       projectName: data.name || item.title,
       sourcePreview: data.sourcePreview ?? item.thumbnail,
     })
-    showToast({ title: '案例已加载，可直接编辑', icon: 'success' })
+    showToast({ title: '案例已加载，可直接编�?, icon: 'success' })
     router.push('/workspace')
   } catch (error) {
     console.error(error)
@@ -172,7 +172,7 @@ async function useTemplate(item: TemplateItem) {
     const preview = await createSourcePreview(item.image)
     project.setSourcePreview(preview)
     await processCurrentProject()
-    showToast({ title: '模板已加载', icon: 'success' })
+    showToast({ title: '模板已加�?, icon: 'success' })
     router.push('/workspace')
   } catch (error) {
     console.error(error)
@@ -188,8 +188,7 @@ async function useTemplate(item: TemplateItem) {
     <header class="craft-page-head">
       <h1 class="craft-page-head__title">拼豆图案例与素材</h1>
       <p class="craft-page-head__sub">
-        浏览参数推荐案例，或选用模板素材一键进入工作台生成图纸。
-      </p>
+        浏览参数推荐案例，或选用模板素材一键进入工作台生成图纸�?      </p>
     </header>
 
     <div class="craft-tabs gallery-tabs">
@@ -215,7 +214,7 @@ async function useTemplate(item: TemplateItem) {
 
     <div v-if="loading" class="gallery-loading card craft-intro-card">
       <div class="gallery-loading__spinner" aria-hidden="true" />
-      <span>加载案例中…</span>
+      <span>加载案例中�?/span>
     </div>
 
     <template v-else-if="activeTab === 'presets'">
@@ -237,7 +236,7 @@ async function useTemplate(item: TemplateItem) {
               <h2 class="gallery-card__title">{{ item.title }}</h2>
               <p class="gallery-card__desc">{{ item.description }}</p>
               <div class="gallery-card__params">
-                <span class="gallery-chip">{{ item.gridWidth }} 格</span>
+                <span class="gallery-chip">{{ item.gridWidth }} �?/span>
                 <span class="gallery-chip">{{ modeLabel(item.mode) }}</span>
                 <span class="gallery-chip">{{ paletteLabel(item.palettePresetId) }}</span>
               </div>
@@ -245,13 +244,12 @@ async function useTemplate(item: TemplateItem) {
                 <PTag v-for="tag in item.tags" :key="tag" :text="tag" plain />
               </div>
               <div v-if="item.projectFile" class="gallery-card__actions" @click.stop>
-                <span class="gallery-card__badge">可编辑案例</span>
+                <span class="gallery-card__badge">可编辑案�?/span>
                 <button type="button" class="gallery-card__link" @click="applyPreset(item)">
-                  仅应用参数
-                </button>
+                  仅应用参�?                </button>
               </div>
             </div>
-            <span class="gallery-card__arrow" aria-hidden="true">›</span>
+            <span class="gallery-card__arrow" aria-hidden="true">�?/span>
           </article>
         </li>
       </ul>
@@ -277,8 +275,8 @@ async function useTemplate(item: TemplateItem) {
             </div>
             <div class="gallery-card__body">
               <h2 class="gallery-card__title">{{ item.title }}</h2>
-              <p class="gallery-card__desc">点击加载模板并自动生成图纸</p>
-              <span class="gallery-card__cta">一键生成 ›</span>
+              <p class="gallery-card__desc">点击加载模板并自动生成图�?/p>
+              <span class="gallery-card__cta">一键生�?�?/span>
             </div>
           </article>
         </li>

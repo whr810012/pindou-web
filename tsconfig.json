@@ -5,9 +5,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@pindou/app-shared": ["./packages/app-shared/src/index.ts"],
-      "@pindou/app-shared/*": ["./packages/app-shared/src/*"],
-      "@pindou/bead-core": ["./packages/bead-core/src/index.ts"],
-      "@pindou/bead-core/*": ["./packages/bead-core/src/*"]
+      "@pindou/app-shared/*": ["./packages/app-shared/src/*"]
     },
     "strict": true,
     "skipLibCheck": true,

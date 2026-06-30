@@ -1,5 +1,5 @@
-import type { BrandSystem, ColorStat, MappedGrid } from '@pindou/bead-core'
-import { computeColorStats } from '@pindou/bead-core'
+import type { BrandSystem, ColorStat, MappedGrid } from '@wangdandan810012/bead-core'
+import { computeColorStats } from '@wangdandan810012/bead-core'
 import type { ExportSettings } from '@/types/app'
 import { BOARD_SIZE, BEADS_PER_BAG } from '@/types/app'
 
@@ -337,7 +337,7 @@ async function exportBoardsPdf(
       pdf.setFontSize(14)
       pdf.text(title || 'Pindou 拼豆图纸', 12, 18)
       pdf.setFontSize(11)
-      pdf.text(`拼板 ${label}  ·  第 ${pageIndex + 1} / ${totalPages} 页`, 12, 32)
+      pdf.text(`拼板 ${label}  ·  �?${pageIndex + 1} / ${totalPages} 页`, 12, 32)
       pdf.addImage(patternData, 'PNG', 0, PDF_HEADER + 16, chunkLayout.width, chunkLayout.height)
 
       pageIndex++

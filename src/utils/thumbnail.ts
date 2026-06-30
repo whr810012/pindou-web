@@ -1,4 +1,4 @@
-import type { MappedGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 
 const PREVIEW_MAX = 160
 

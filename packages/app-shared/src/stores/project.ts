@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import type { MappedGrid } from '@pindou/bead-core'
-import { cloneGrid } from '@pindou/bead-core'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
+import { cloneGrid } from '@wangdandan810012/bead-core'
 import type { ProjectParams } from '../types/app.js'
 import { DEFAULT_PARAMS } from '../types/app.js'
 

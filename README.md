@@ -172,6 +172,7 @@ AI 图生图可能需 10～25 秒。`netlify.toml` 中 `ai-preprocess` 已设 `t
 | `/palette` | 自定义色板 | noindex |
 | `/text` | 像素文字生成 | noindex |
 | `/guide` | 拼豆新手教程 | 索引 |
+| `/bead-core` | 开源算法库 npm 介绍 | 索引 |
 
 画廊案例另有静态落地页：`/gallery/demo-cat/` 等。
 

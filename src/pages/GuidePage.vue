@@ -146,6 +146,7 @@ function go(path: string) {
       </p>
       <div class="guide-footer__actions">
         <PButton type="primary" text="免费开始制作" @click="go('/workspace')" />
+        <PButton plain text="开源算法库" @click="go('/bead-core')" />
         <PButton plain text="返回首页" @click="go('/home')" />
       </div>
     </footer>

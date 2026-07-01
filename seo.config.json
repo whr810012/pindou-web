@@ -27,6 +27,11 @@
       "path": "/guide",
       "changefreq": "monthly",
       "priority": "0.88"
+    },
+    {
+      "path": "/bead-core",
+      "changefreq": "monthly",
+      "priority": "0.82"
     }
   ],
   "galleryLandingPrefix": "/gallery",

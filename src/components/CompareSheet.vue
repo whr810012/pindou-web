@@ -248,7 +248,7 @@ watch(
         />
         <span class="craft-label compare-sheet__side">图纸</span>
       </div>
-      <span v-if="mode === 'compare' && grid" class="craft-hint compare-sheet__drag-hint">在图上左右滑动，或拖动下方滑�?/span>
+      <span v-if="mode === 'compare' && grid" class="craft-hint compare-sheet__drag-hint">在图上左右滑动，或拖动下方滑条</span>
     </div>
   </PDrawer>
 </template>

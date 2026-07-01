@@ -46,6 +46,12 @@ const quickActions = [
     icon: 'guide',
     path: '/guide',
   },
+  {
+    title: '开源算法库',
+    desc: 'npm @wangdandan810012/bead-core',
+    icon: 'code',
+    path: '/bead-core',
+  },
 ]
 
 function go(path: string) {
@@ -284,6 +290,11 @@ function go(path: string) {
 
   &--guide {
     background: linear-gradient(135deg, #fef3e2, #fff);
+  }
+
+  &--code {
+    background: linear-gradient(135deg, #1e2230, #4a62d6);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
   }
 }
 

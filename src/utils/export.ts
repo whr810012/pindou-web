@@ -337,7 +337,7 @@ async function exportBoardsPdf(
       pdf.setFontSize(14)
       pdf.text(title || 'Pindou 拼豆图纸', 12, 18)
       pdf.setFontSize(11)
-      pdf.text(`拼板 ${label}  ·  �?${pageIndex + 1} / ${totalPages} 页`, 12, 32)
+      pdf.text(`拼板 ${label}  ·  第 ${pageIndex + 1} / ${totalPages} 页`, 12, 32)
       pdf.addImage(patternData, 'PNG', 0, PDF_HEADER + 16, chunkLayout.width, chunkLayout.height)
 
       pageIndex++

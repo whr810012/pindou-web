@@ -36,6 +36,15 @@ const ROUTES = [
     description:
       '拼豆入门完整指南：如何选色卡与色号、照片转拼豆图纸、29×29 分板打印、采购清单与熨烫技巧。配合 Pindou 免费在线工具使用。',
   },
+  {
+    path: '/bead-core',
+    outDir: 'bead-core',
+    outFile: 'index.html',
+    injectSelector: '#app',
+    title: 'bead-core 开源算法库 - npm @wangdandan810012/bead-core | Pindou',
+    description:
+      '蛋蛋拼豆核心算法库介绍：图片转拼豆图纸、CIEDE2000 感知配色、零 UI 依赖。npm 安装 @wangdandan810012/bead-core，MIT 开源。',
+  },
 ]
 
 function contentType(filePath) {

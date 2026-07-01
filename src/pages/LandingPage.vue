@@ -51,6 +51,7 @@ function goGallery() {
       <nav class="landing__nav" aria-label="落地页导航">
         <button type="button" class="landing__link" @click="goGallery">案例画廊</button>
         <button type="button" class="landing__link" @click="router.push('/guide')">拼豆教程</button>
+        <button type="button" class="landing__link" @click="router.push('/bead-core')">开源库</button>
         <PButton size="sm" type="primary" text="开始制作" @click="goWorkspace" />
       </nav>
     </header>
@@ -186,6 +187,7 @@ function goGallery() {
       <div class="landing__footer-links">
         <button type="button" class="landing__link" @click="goGallery">案例画廊</button>
         <button type="button" class="landing__link" @click="router.push('/guide')">拼豆教程</button>
+        <button type="button" class="landing__link" @click="router.push('/bead-core')">开源库</button>
         <button type="button" class="landing__link" @click="enterApp">功能主页</button>
       </div>
     </footer>

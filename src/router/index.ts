@@ -14,6 +14,7 @@ const router = createRouter({
     { path: '/palette', name: 'palette', component: () => import('@/pages/PaletteEditorPage.vue') },
     { path: '/text', name: 'pixel-text', component: () => import('@/pages/PixelTextPage.vue') },
     { path: '/guide', name: 'guide', component: () => import('@/pages/GuidePage.vue') },
+    { path: '/bead-core', name: 'bead-core', component: () => import('@/pages/BeadCorePage.vue') },
     { path: '/gallery/:slug', name: 'gallery-detail', component: () => import('@/pages/GalleryDetailPage.vue') },
   ],
   scrollBehavior: () => ({ top: 0 }),

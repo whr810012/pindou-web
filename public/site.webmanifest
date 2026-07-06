@@ -1,7 +1,7 @@
 {
-  "name": "Pindou 拼豆 - 免费在线图片转拼豆图纸生成器",
+  "name": "Pindou 拼豆 - 免费在线照片转拼豆图纸生成器",
   "short_name": "Pindou 拼豆",
-  "description": "上传图片一键生成带色号的拼豆图纸，支持多品牌色卡与 PDF 导出，图片本地处理不上传服务器。",
+  "description": "免费把照片变成带色号的拼豆图纸。支持 MARD/COCO 色卡、在线编辑与 PDF 导出，浏览器本地处理更安心。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

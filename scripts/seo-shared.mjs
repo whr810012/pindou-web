@@ -27,23 +27,52 @@ export function buildJsonLd(config, siteUrl) {
     text: step.text,
   }))
 
+  const orgConfig = config.organization
+  const organization = orgConfig
+    ? {
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        name: organizationName(config),
+        url: siteUrl,
+        logo: orgConfig.logoPath ? `${siteUrl}${orgConfig.logoPath}` : undefined,
+        email: orgConfig.email,
+        areaServed: orgConfig.areaServed,
+        availableLanguage: orgConfig.availableLanguage,
+        contactPoint: orgConfig.email
+          ? [
+              {
+                '@type': 'ContactPoint',
+                contactType: orgConfig.contactType || 'customer support',
+                email: orgConfig.email,
+                availableLanguage: orgConfig.availableLanguage,
+                areaServed: orgConfig.areaServed,
+              },
+            ]
+          : undefined,
+      }
+    : null
+
   return {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'WebSite',
+        '@id': `${siteUrl}/#website`,
         name: config.siteName,
         url: `${siteUrl}/`,
         description: config.defaultDescription,
         inLanguage: 'zh-CN',
+        publisher: organization ? { '@id': `${siteUrl}/#organization` } : undefined,
         potentialAction: {
           '@type': 'SearchAction',
           target: `${siteUrl}/gallery?q={search_term_string}`,
           'query-input': 'required name=search_term_string',
         },
       },
+      ...(organization ? [organization] : []),
       {
         '@type': 'WebApplication',
+        '@id': `${siteUrl}/#webapp`,
         name: config.siteName,
         url: `${siteUrl}/workspace`,
         description: config.defaultDescription,
@@ -52,6 +81,8 @@ export function buildJsonLd(config, siteUrl) {
         browserRequirements: 'Requires JavaScript',
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'CNY' },
         featureList: config.features,
+        provider: organization ? { '@id': `${siteUrl}/#organization` } : undefined,
+        inLanguage: 'zh-CN',
       },
       { '@type': 'FAQPage', mainEntity: faqEntities },
       {
@@ -59,9 +90,14 @@ export function buildJsonLd(config, siteUrl) {
         name: config.howTo.name,
         description: config.howTo.description,
         step: howToSteps,
+        provider: organization ? { '@id': `${siteUrl}/#organization` } : undefined,
       },
     ],
   }
+}
+
+function organizationName(config) {
+  return config.organization?.name || config.siteName
 }
 
 export const DIST_DIR = join(root, 'dist')

@@ -1,12 +1,26 @@
 {
   "siteName": "Pindou 拼豆",
-  "defaultSiteUrl": "https://dandanpindou.netlify.app",
+  "defaultSiteUrl": "https://dandanhub.vip",
   "defaultTitle": "Pindou 拼豆 - 免费在线照片转拼豆图纸生成器",
   "defaultDescription": "Pindou 免费在线拼豆图纸生成器：上传照片一键转拼豆像素图，支持 MARD、COCO、漫漫等主流色号，在线编辑画笔精修、导出 PDF 采购清单。图片默认本地处理保护隐私，可选 AI 预处理优化效果。",
   "ogDescription": "免费把照片变成带色号的拼豆图纸。支持 MARD/COCO 色卡、在线编辑与 PDF 导出，浏览器本地处理更安心。",
   "defaultKeywords": "拼豆,拼豆图纸,拼豆图纸生成器,照片转拼豆,图片转拼豆,像素豆,perler beads,拼豆工具,拼豆色号,MARD色号,COCO色号,在线拼豆,拼豆图案,拼豆像素化,免费拼豆",
   "ogImagePath": "/static/seo/og-cover.png",
   "themeColor": "#5B6CFF",
+  "organization": {
+    "name": "Pindou 拼豆",
+    "url": "https://dandanhub.vip",
+    "logoPath": "/favicon.svg",
+    "email": "1028943406@qq.com",
+    "wechat": "www133595",
+    "contactType": "customer support",
+    "availableLanguage": [
+      "zh-CN"
+    ],
+    "areaServed": [
+      "CN"
+    ]
+  },
   "publicPages": [
     {
       "path": "/",

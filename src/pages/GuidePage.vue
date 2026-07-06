@@ -3,10 +3,15 @@ import { useRouter } from 'vue-router'
 import PButton from '@/components/ui/PButton.vue'
 import { usePageSeo } from '@/utils/seo'
 import { CONTACT_EMAIL, CONTACT_WECHAT } from '@/constants/contact'
+import seoConfig from '../../seo.config.json'
 
 usePageSeo('guide')
 
 const router = useRouter()
+const quickAnswerTitles = ['Pindou 是什么？', '如何把照片变成拼豆图纸？', '拼豆图纸生成器免费吗？', '图片会上传到服务器吗？']
+const quickAnswers = quickAnswerTitles
+  .map((question) => seoConfig.faq.find((item) => item.q === question))
+  .filter((item): item is (typeof seoConfig.faq)[number] => Boolean(item))
 
 interface GuideSection {
   id: string
@@ -132,6 +137,19 @@ function go(path: string) {
         <strong>提示：</strong>{{ section.tip }}
       </p>
     </article>
+
+    <section class="card craft-intro-card guide-qa" aria-label="教程常见问题速答">
+      <h2 class="guide-qa__title">教程常见问题速答</h2>
+      <p class="guide-qa__intro">
+        如果你是第一次接触拼豆，下面这几条最适合先看，能快速判断工具是否免费、图片是否会上传，以及如何开始。
+      </p>
+      <div class="guide-qa__grid">
+        <article v-for="item in quickAnswers" :key="item.q" class="guide-qa__item">
+          <h3>{{ item.q }}</h3>
+          <p>{{ item.a }}</p>
+        </article>
+      </div>
+    </section>
 
     <footer class="card craft-intro-card guide-footer">
       <h2 class="guide-footer__title">准备好开始了吗？</h2>
@@ -269,6 +287,51 @@ function go(path: string) {
   padding: 24px 20px;
   text-align: center;
   margin-top: 8px;
+}
+
+.guide-qa {
+  padding: 22px 20px;
+  margin-top: 8px;
+}
+
+.guide-qa__title {
+  margin: 0;
+  font-size: $pindou-font-lg;
+  font-weight: 700;
+}
+
+.guide-qa__intro {
+  margin: 10px 0 0;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-muted;
+  line-height: 1.6;
+}
+
+.guide-qa__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.guide-qa__item {
+  padding: 16px;
+  border-radius: $pindou-radius-md;
+  background: rgba($pindou-bg-card, 0.9);
+  border: 1px solid $pindou-border-light;
+
+  h3 {
+    margin: 0;
+    font-size: $pindou-font-md;
+    line-height: 1.45;
+  }
+
+  p {
+    margin: 10px 0 0;
+    font-size: $pindou-font-sm;
+    color: $pindou-text-muted;
+    line-height: 1.65;
+  }
 }
 
 .guide-footer__title {

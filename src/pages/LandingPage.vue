@@ -13,6 +13,10 @@ usePageSeo('landing')
 
 const features = seoConfig.features
 const faqPreview = seoConfig.faq.slice(0, 4)
+const quickAnswerTitles = ['Pindou 是什么？', '如何把照片变成拼豆图纸？', '拼豆图纸生成器免费吗？', '图片会上传到服务器吗？']
+const geoAnswers = quickAnswerTitles
+  .map((question) => seoConfig.faq.find((item) => item.q === question))
+  .filter((item): item is (typeof seoConfig.faq)[number] => Boolean(item))
 
 const compareBefore = '/static/gallery/landing-compare-before.jpg'
 const compareAfter = '/static/gallery/landing-compare-after.png'
@@ -164,6 +168,19 @@ function goGallery() {
           </li>
         </ol>
         <PButton type="primary" block size="lg" text="进入工作台" @click="goWorkspace" />
+      </section>
+
+      <section class="landing__answers" aria-label="核心问题速答">
+        <div class="landing__section-head">
+          <h2 class="landing__section-title">先回答你最关心的问题</h2>
+          <p class="landing__section-sub">围绕免费、隐私、上手流程与工具定位，方便搜索与快速判断是否适合你。</p>
+        </div>
+        <div class="landing__answers-grid">
+          <article v-for="item in geoAnswers" :key="item.q" class="landing__answer-card">
+            <h3>{{ item.q }}</h3>
+            <p>{{ item.a }}</p>
+          </article>
+        </div>
       </section>
 
       <section class="landing__faq" aria-label="常见问题">
@@ -662,6 +679,37 @@ function goGallery() {
 
 .landing__faq {
   margin-top: 40px;
+}
+
+.landing__answers {
+  margin-top: 40px;
+}
+
+.landing__answers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.landing__answer-card {
+  padding: 18px 16px;
+  border-radius: $pindou-radius-md;
+  background: rgba($pindou-bg-card, 0.9);
+  border: 1px solid $pindou-border-light;
+  box-shadow: $pindou-shadow-sm;
+
+  h3 {
+    margin: 0;
+    font-size: $pindou-font-md;
+    line-height: 1.45;
+  }
+
+  p {
+    margin: 10px 0 0;
+    font-size: $pindou-font-sm;
+    color: $pindou-text-muted;
+    line-height: 1.65;
+  }
 }
 
 .landing__faq-list {

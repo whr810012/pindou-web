@@ -54,6 +54,10 @@ function contentType(filePath) {
   if (filePath.endsWith('.json')) return 'application/json'
   if (filePath.endsWith('.svg')) return 'image/svg+xml'
   if (filePath.endsWith('.png')) return 'image/png'
+  if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) return 'image/jpeg'
+  if (filePath.endsWith('.webp')) return 'image/webp'
+  if (filePath.endsWith('.gif')) return 'image/gif'
+  if (filePath.endsWith('.ico')) return 'image/x-icon'
   if (filePath.endsWith('.woff2')) return 'font/woff2'
   return 'application/octet-stream'
 }

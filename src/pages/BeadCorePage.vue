@@ -14,6 +14,25 @@ usePageSeo('beadCore')
 
 const router = useRouter()
 const copied = ref(false)
+const developerFaqs = [
+  {
+    q: 'bead-core 适合什么场景？',
+    a: '适合需要把图片转成拼豆色号网格的 Web、小程序、Node 批处理项目，库本身不包含 UI。',
+  },
+  {
+    q: 'Pindou 网页和 bead-core 是什么关系？',
+    a: 'Pindou 网页端使用同一套核心算法完成上传、生成、精修与导出；bead-core 则独立发布，方便开发者集成。',
+  },
+  {
+    q: '如何安装 bead-core？',
+    a: `执行 ${BEAD_CORE_INSTALL_CMD} 即可安装，MIT 开源，可在 npm 与 GitHub 查看文档与源码。`,
+  },
+]
+const relatedLinks = [
+  { label: '免费在线工作台', path: '/workspace' },
+  { label: '拼豆新手教程', path: '/guide' },
+  { label: '案例画廊', path: '/gallery' },
+]
 
 const highlights = [
   { label: '零运行时依赖', desc: '不绑定 Vue / Canvas，Node 与浏览器均可使用' },
@@ -153,6 +172,30 @@ runPipeline
         <li>详细算法说明见 GitHub 仓库 <code>docs/algorithms/</code> 目录。</li>
         <li>许可证：MIT，Copyright © 蛋蛋。</li>
       </ul>
+    </section>
+
+    <section class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">开发者常见问题</h2>
+      <div class="bead-core-faq">
+        <article v-for="item in developerFaqs" :key="item.q" class="bead-core-faq__item">
+          <h3>{{ item.q }}</h3>
+          <p>{{ item.a }}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">相关页面</h2>
+      <div class="bead-core-related">
+        <router-link v-for="link in relatedLinks" :key="link.path" class="bead-core-related__link" :to="link.path">
+          {{ link.label }}
+        </router-link>
+      </div>
+      <p class="bead-core-section__text">
+        如果你只是想快速做图，直接进入工作台即可；如果想了解拼豆流程，可阅读
+        <router-link to="/guide">拼豆教程</router-link>
+        。
+      </p>
     </section>
 
     <footer class="card craft-intro-card bead-core-footer">
@@ -361,6 +404,66 @@ runPipeline
   code {
     font-size: 0.92em;
     color: $pindou-primary;
+  }
+}
+
+.bead-core-faq {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.bead-core-faq__item {
+  padding: 14px;
+  border-radius: $pindou-radius-md;
+  background: rgba($pindou-bg-card, 0.9);
+  border: 1px solid $pindou-border-light;
+
+  h3 {
+    margin: 0;
+    font-size: $pindou-font-md;
+    line-height: 1.45;
+  }
+
+  p {
+    margin: 10px 0 0;
+    font-size: $pindou-font-sm;
+    color: $pindou-text-muted;
+    line-height: 1.65;
+  }
+}
+
+.bead-core-related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.bead-core-related__link {
+  display: inline-flex;
+  padding: 8px 14px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-primary, 0.08);
+  border: 1px solid rgba($pindou-primary, 0.14);
+  color: $pindou-primary;
+  font-size: $pindou-font-xs;
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba($pindou-primary, 0.14);
+  }
+}
+
+.bead-core-section__text a {
+  color: $pindou-primary;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
 

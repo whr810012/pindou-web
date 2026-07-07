@@ -6,6 +6,7 @@ export const DEFAULT_TITLE = seoConfig.defaultTitle
 export const DEFAULT_DESCRIPTION = seoConfig.defaultDescription
 export const DEFAULT_KEYWORDS = seoConfig.defaultKeywords
 export const OG_IMAGE_PATH = seoConfig.ogImagePath
+export const OG_IMAGE_ALT = seoConfig.ogImageAlt
 
 export interface PageSeoOptions {
   title?: string
@@ -46,7 +47,7 @@ const PAGE_ROUTES: Record<
     path: '/gallery',
     title: '拼豆图案例与参数推荐 - Pindou',
     description:
-      '浏览像素小猫、花朵、风景等拼豆图案例与推荐参数，支持 MARD、COCO 色卡预设，一键应用到工作台快速开始拼豆创作。',
+      '浏览像素小猫、花朵、风景、头像等拼豆案例与推荐参数，支持 MARD、COCO 色卡预设，一键应用到工作台生成带色号拼豆图纸。',
   },
   workspace: {
     path: '/workspace',
@@ -154,7 +155,12 @@ export function setPageSeo(options: PageSeoOptions = {}) {
     setMeta('name', 'twitter:image', ogImage)
   }
 
-  const robots = options.noindex ? 'noindex, nofollow' : 'index, follow'
+  setMeta('property', 'og:image:alt', OG_IMAGE_ALT)
+  setMeta('name', 'twitter:image:alt', OG_IMAGE_ALT)
+
+  const robots = options.noindex
+    ? 'noindex, nofollow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+    : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
   setMeta('name', 'robots', robots)
 }
 

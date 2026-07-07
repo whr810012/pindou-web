@@ -11,6 +11,7 @@ const config = loadSeoConfig()
 const siteUrl = resolveSiteUrl(config)
 const today = new Date().toISOString().slice(0, 10)
 const ogImage = `${siteUrl}${config.ogImagePath}`
+const ogImageAlt = config.ogImageAlt
 const indexCanonical = `${siteUrl}${config.publicPages[0].path}`
 
 function writePublicAssets() {
@@ -102,6 +103,10 @@ function patchDistIndexHtml() {
       `<meta name="keywords" content="${config.defaultKeywords}" />`,
     )
     .replace(
+      /<meta name="robots" content="[^"]*"\s*\/>/,
+      '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />',
+    )
+    .replace(
       /<meta property="og:title" content="[^"]*"\s*\/>/,
       `<meta property="og:title" content="${config.defaultTitle}" />`,
     )
@@ -114,6 +119,10 @@ function patchDistIndexHtml() {
       `<meta property="og:image" content="${ogImage}" />`,
     )
     .replace(
+      /<meta property="og:image:alt" content="[^"]*"\s*\/>/,
+      `<meta property="og:image:alt" content="${ogImageAlt}" />`,
+    )
+    .replace(
       /<meta name="twitter:title" content="[^"]*"\s*\/>/,
       `<meta name="twitter:title" content="${config.defaultTitle}" />`,
     )
@@ -124,6 +133,10 @@ function patchDistIndexHtml() {
     .replace(
       /<meta name="twitter:image" content="[^"]*"\s*\/>/,
       `<meta name="twitter:image" content="${ogImage}" />`,
+    )
+    .replace(
+      /<meta name="twitter:image:alt" content="[^"]*"\s*\/>/,
+      `<meta name="twitter:image:alt" content="${ogImageAlt}" />`,
     )
     .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/, `<script type="application/ld+json">\n${jsonLd}\n    </script>`)
 

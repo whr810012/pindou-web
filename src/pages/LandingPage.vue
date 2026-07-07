@@ -12,7 +12,29 @@ const router = useRouter()
 usePageSeo('landing')
 
 const features = seoConfig.features
-const faqPreview = seoConfig.faq.slice(0, 4)
+const faqPreview = seoConfig.faq.slice(0, 6)
+const relatedPages = [
+  {
+    label: '在线拼豆工作台',
+    path: '/workspace',
+    desc: '上传照片，生成带 MARD/COCO 色号的拼豆图纸',
+  },
+  {
+    label: '拼豆案例画廊',
+    path: '/gallery',
+    desc: '浏览卡通、花卉、风景等案例与推荐参数',
+  },
+  {
+    label: '拼豆新手教程',
+    path: '/guide',
+    desc: '从选豆、做图、打印到熨烫的完整入门',
+  },
+  {
+    label: '开源算法库',
+    path: '/bead-core',
+    desc: '了解 bead-core 核心算法与 npm 集成方式',
+  },
+]
 const quickAnswerTitles = ['Pindou 是什么？', '如何把照片变成拼豆图纸？', '拼豆图纸生成器免费吗？', '图片会上传到服务器吗？']
 const geoAnswers = quickAnswerTitles
   .map((question) => seoConfig.faq.find((item) => item.q === question))
@@ -183,8 +205,26 @@ function goGallery() {
         </div>
       </section>
 
+      <section class="landing__related" aria-label="相关页面">
+        <div class="landing__section-head">
+          <h2 class="landing__section-title">从这里继续</h2>
+          <p class="landing__section-sub">按你的目标进入工作台、案例、教程或开源库，帮助用户与搜索引擎更快理解站点结构。</p>
+        </div>
+        <div class="landing__related-grid">
+          <router-link v-for="page in relatedPages" :key="page.path" class="landing__related-card" :to="page.path">
+            <h3>{{ page.label }}</h3>
+            <p>{{ page.desc }}</p>
+          </router-link>
+        </div>
+      </section>
+
       <section class="landing__faq" aria-label="常见问题">
         <h2 class="landing__section-title">常见问题</h2>
+        <p class="landing__faq-intro">
+          更多入门与打印技巧可查看
+          <button type="button" class="landing__inline-link" @click="router.push('/guide')">拼豆新手教程</button>
+          。
+        </p>
         <div class="landing__faq-list">
           <details v-for="item in faqPreview" :key="item.q" class="landing__faq-item">
             <summary>{{ item.q }}</summary>
@@ -679,6 +719,70 @@ function goGallery() {
 
 .landing__faq {
   margin-top: 40px;
+}
+
+.landing__faq-intro {
+  margin: 8px 0 0;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-muted;
+  line-height: 1.6;
+}
+
+.landing__inline-link {
+  border: none;
+  background: none;
+  padding: 0;
+  color: $pindou-primary;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.landing__related {
+  margin-top: 40px;
+}
+
+.landing__related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.landing__related-card {
+  display: block;
+  min-height: 72px;
+  padding: 16px;
+  border-radius: $pindou-radius-md;
+  background: rgba($pindou-bg-card, 0.9);
+  border: 1px solid $pindou-border-light;
+  box-shadow: $pindou-shadow-sm;
+  text-decoration: none;
+  transition:
+    border-color $pindou-duration-fast,
+    box-shadow $pindou-duration-fast,
+    transform $pindou-duration-fast;
+
+  h3 {
+    margin: 0;
+    color: $pindou-primary;
+    font-size: $pindou-font-sm;
+    font-weight: 700;
+    line-height: 1.45;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: $pindou-text-muted;
+    font-size: $pindou-font-xs;
+    line-height: 1.55;
+  }
+
+  &:hover {
+    border-color: rgba($pindou-primary, 0.28);
+    box-shadow: $pindou-shadow-md;
+    transform: translateY(-2px);
+  }
 }
 
 .landing__answers {

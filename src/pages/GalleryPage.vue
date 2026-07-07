@@ -60,6 +60,13 @@ const paletteStore = usePaletteStore()
 
 const presetCount = computed(() => items.value.length)
 const templateCount = computed(() => templates.value.length)
+const caseLandingLinks = computed(() =>
+  items.value.map((item) => ({
+    id: item.id,
+    title: item.title,
+    href: `/gallery/${item.id}/`,
+  })),
+)
 
 onMounted(async () => {
   await paletteStore.loadPalettes()
@@ -93,6 +100,10 @@ function fetchTemplates(): Promise<{ items: TemplateItem[] }> {
       fail: reject,
     })
   })
+}
+
+function caseLandingHref(id: string) {
+  return `/gallery/${id}/`
 }
 
 function modeLabel(mode: GalleryItem['mode']) {
@@ -188,9 +199,31 @@ async function useTemplate(item: TemplateItem) {
     <header class="craft-page-head">
       <h1 class="craft-page-head__title">拼豆图案例与素材</h1>
       <p class="craft-page-head__sub">
-        浏览参数推荐案例，或选用模板素材一键进入工作台生成图纸。
+        浏览卡通、花卉、风景、头像等拼豆案例与推荐参数，支持 MARD、COCO 色卡预设，一键进入工作台生成带色号图纸。
       </p>
     </header>
+
+    <section class="card craft-intro-card gallery-seo" aria-label="案例页说明">
+      <p class="gallery-seo__text">
+        每个案例都包含格数、配色模式与色板建议。新手可先看
+        <router-link to="/guide">拼豆教程</router-link>
+        ，想直接做图可进入
+        <router-link to="/workspace">在线工作台</router-link>
+        ，开发者可了解
+        <router-link to="/bead-core">bead-core 开源算法库</router-link>
+        。
+      </p>
+      <div v-if="caseLandingLinks.length" class="gallery-seo__links">
+        <a
+          v-for="item in caseLandingLinks"
+          :key="item.id"
+          class="gallery-seo__link"
+          :href="item.href"
+        >
+          {{ item.title }}
+        </a>
+      </div>
+    </section>
 
     <div class="craft-tabs gallery-tabs">
       <button
@@ -246,9 +279,13 @@ async function useTemplate(item: TemplateItem) {
               </div>
               <div v-if="item.projectFile" class="gallery-card__actions" @click.stop>
                 <span class="gallery-card__badge">可编辑案例</span>
+                <a class="gallery-card__link" :href="caseLandingHref(item.id)">查看案例页</a>
                 <button type="button" class="gallery-card__link" @click="applyPreset(item)">
                   仅应用参数
                 </button>
+              </div>
+              <div v-else class="gallery-card__actions" @click.stop>
+                <a class="gallery-card__link" :href="caseLandingHref(item.id)">查看案例页</a>
               </div>
             </div>
             <span class="gallery-card__arrow" aria-hidden="true">›</span>
@@ -287,10 +324,100 @@ async function useTemplate(item: TemplateItem) {
         <p>暂无模板素材</p>
       </div>
     </template>
+
+    <section class="card craft-intro-card gallery-seo gallery-seo--footer" aria-label="相关页面">
+      <h2 class="gallery-seo__title">继续探索 Pindou</h2>
+      <p class="gallery-seo__text">
+        上传自己的照片生成拼豆图纸，或阅读教程了解选豆、分板打印与熨烫技巧。
+      </p>
+      <div class="gallery-seo__actions">
+        <router-link class="gallery-seo__action" to="/workspace">免费开始制作</router-link>
+        <router-link class="gallery-seo__action" to="/guide">拼豆新手教程</router-link>
+        <router-link class="gallery-seo__action" to="/">返回首页</router-link>
+      </div>
+    </section>
   </div>
 </template>
 
 <style scoped lang="scss">
+.gallery-seo {
+  padding: 16px 18px;
+  margin-bottom: $pindou-space-md;
+}
+
+.gallery-seo__text {
+  margin: 0;
+  font-size: $pindou-font-sm;
+  color: $pindou-text-secondary;
+  line-height: 1.65;
+
+  a {
+    color: $pindou-primary;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.gallery-seo__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.gallery-seo__link {
+  display: inline-flex;
+  padding: 6px 12px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-primary, 0.08);
+  border: 1px solid rgba($pindou-primary, 0.14);
+  color: $pindou-primary;
+  font-size: $pindou-font-xs;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba($pindou-primary, 0.14);
+  }
+}
+
+.gallery-seo--footer {
+  margin-top: $pindou-space-md;
+}
+
+.gallery-seo__title {
+  margin: 0;
+  font-size: $pindou-font-md;
+  font-weight: 700;
+}
+
+.gallery-seo__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.gallery-seo__action {
+  display: inline-flex;
+  padding: 8px 14px;
+  border-radius: $pindou-radius-pill;
+  background: rgba($pindou-primary, 0.08);
+  border: 1px solid rgba($pindou-primary, 0.14);
+  color: $pindou-primary;
+  font-size: $pindou-font-xs;
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba($pindou-primary, 0.14);
+  }
+}
+
 .gallery-tabs__count {
   display: inline-flex;
   align-items: center;

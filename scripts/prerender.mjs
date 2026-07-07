@@ -2,7 +2,7 @@ import { createServer } from 'node:http'
 import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { DIST_DIR, loadSeoConfig, resolveSiteUrl } from './seo-shared.mjs'
+import { DIST_DIR, buildPageJsonLd, loadSeoConfig, resolveSiteUrl } from './seo-shared.mjs'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
@@ -89,7 +89,7 @@ function pathCanonical(siteUrl, routePath) {
   return routePath === '/' ? `${siteUrl}/` : `${siteUrl}${routePath}`
 }
 
-function mergePrerenderedHtml(baseHtml, appHtml, route, siteUrl) {
+function mergePrerenderedHtml(baseHtml, appHtml, route, siteUrl, config) {
   const canonical = pathCanonical(siteUrl, route.path)
   let html = baseHtml
 
@@ -99,6 +99,10 @@ function mergePrerenderedHtml(baseHtml, appHtml, route, siteUrl) {
       .replace(
         /<meta name="description" content="[^"]*"\s*\/>/,
         `<meta name="description" content="${route.description}" />`,
+      )
+      .replace(
+        /<meta name="robots" content="[^"]*"\s*\/>/,
+        '<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />',
       )
       .replace(/<meta property="og:title" content="[^"]*"\s*\/>/, `<meta property="og:title" content="${route.title}" />`)
       .replace(
@@ -116,6 +120,14 @@ function mergePrerenderedHtml(baseHtml, appHtml, route, siteUrl) {
     .replace(/<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonical}" />`)
     .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
 
+  const pageJsonLd = buildPageJsonLd(config, siteUrl, route.path)
+  if (pageJsonLd) {
+    html = html.replace(
+      /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
+      `<script type="application/ld+json">\n${JSON.stringify(pageJsonLd, null, 2)}\n    </script>`,
+    )
+  }
+
   const prerenderBlock = `\n    <div id="prerender" data-prerender-route="${route.path}">\n${appHtml}\n    </div>\n`
   html = html.replace('<div id="app"><!--app-html--></div>', `<div id="app"><!--app-html-->${prerenderBlock}</div>`)
   return html
@@ -131,7 +143,8 @@ async function main() {
   const port = 4173 + Math.floor(Math.random() * 200)
   const server = await createStaticServer(DIST_DIR, port)
   const baseHtml = readFileSync(join(DIST_DIR, 'index.html'), 'utf8')
-  const siteUrl = resolveSiteUrl(loadSeoConfig())
+  const config = loadSeoConfig()
+  const siteUrl = resolveSiteUrl(config)
 
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } })
@@ -143,7 +156,7 @@ async function main() {
       await page.waitForTimeout(2000)
 
       const appHtml = await page.$eval(route.injectSelector, (el) => el.innerHTML)
-      const merged = mergePrerenderedHtml(baseHtml, appHtml, route, siteUrl)
+      const merged = mergePrerenderedHtml(baseHtml, appHtml, route, siteUrl, config)
 
       const outPath = route.outDir
         ? join(DIST_DIR, route.outDir, route.outFile)

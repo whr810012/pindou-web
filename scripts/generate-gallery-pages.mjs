@@ -31,24 +31,53 @@ for (const item of galleryItems) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${escapeHtml(item.title)} - 拼豆图案例 | Pindou</title>
   <meta name="description" content="${escapeHtml(item.description)}。${escapeHtml(tags)}拼豆参数推荐，一键在 Pindou 工作台应用。" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <link rel="canonical" href="${pageUrl}" />
   <meta property="og:type" content="article" />
   <meta property="og:title" content="${escapeHtml(item.title)} - Pindou 拼豆案例" />
   <meta property="og:description" content="${escapeHtml(item.description)}" />
   <meta property="og:image" content="${siteUrl}${item.thumbnail}" />
+  <meta property="og:image:alt" content="${escapeHtml(item.title)}拼豆图案例预览" />
   <meta property="og:url" content="${pageUrl}" />
   <script type="application/ld+json">
 ${JSON.stringify(
     {
       '@context': 'https://schema.org',
-      '@type': 'CreativeWork',
-      name: item.title,
-      description: item.description,
-      image: `${siteUrl}${item.thumbnail}`,
-      url: pageUrl,
-      keywords: item.tags.join(', '),
-      provider: { '@type': 'Organization', name: config.siteName },
+      '@graph': [
+        {
+          '@type': 'BreadcrumbList',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              name: '首页',
+              item: `${siteUrl}/`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              name: '案例画廊',
+              item: `${siteUrl}/gallery`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: item.title,
+              item: pageUrl,
+            },
+          ],
+        },
+        {
+          '@type': 'CreativeWork',
+          name: item.title,
+          description: item.description,
+          image: `${siteUrl}${item.thumbnail}`,
+          url: pageUrl,
+          keywords: item.tags.join(', '),
+          inLanguage: 'zh-CN',
+          provider: { '@type': 'Organization', name: config.siteName, url: siteUrl },
+        },
+      ],
     },
     null,
     2,
@@ -61,7 +90,8 @@ ${JSON.stringify(
     <p>${escapeHtml(item.description)}</p>
     <p>标签：${escapeHtml(tags)}</p>
     <img src="${item.thumbnail}" alt="${escapeHtml(item.title)}拼豆图案例" width="320" height="320" />
-    <p><a href="${siteUrl}/workspace">用此案例参数开始制作</a> · <a href="${siteUrl}/gallery">查看更多拼豆案例</a> · <a href="${siteUrl}/">返回首页</a></p>
+    <p>推荐参数：${item.gridWidth} 格 · ${item.mode === 'average' ? '平均色' : '主导色'} · ${escapeHtml(item.palettePresetId.replace('pindou-', ''))} 色板</p>
+    <p><a href="${siteUrl}/workspace">用此案例参数开始制作</a> · <a href="${siteUrl}/gallery">查看更多拼豆案例</a> · <a href="${siteUrl}/guide">拼豆新手教程</a> · <a href="${siteUrl}/">返回首页</a></p>
   </main>
 </body>
 </html>

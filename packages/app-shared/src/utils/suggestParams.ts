@@ -1,41 +1,32 @@
 import type { ImageAdjust, PhotoOptimize, PixelationMode } from '@wangdandan810012/bead-core'
-import { DEFAULT_IMAGE_ADJUST, DEFAULT_PHOTO_OPTIMIZE } from '@wangdandan810012/bead-core'
+import {
+  DEFAULT_IMAGE_ADJUST,
+  DEFAULT_PHOTO_OPTIMIZE,
+  analyzeImageContent,
+  countDistinctColors,
+  computePrepTargetDimensions,
+  suggestPrepColorCount,
+  suggestGridWidthForPrepImage,
+  suggestPrepMergeThreshold,
+  type ImageContentHints,
+  type PrepTargetDimensions,
+} from '@wangdandan810012/bead-core'
 
-export interface ImageContentHints {
-  variance: number
-  isPhotoLike: boolean
-}
+export type { ImageContentHints, PrepTargetDimensions }
 
-export function analyzeImageContent(
-  pixels: Uint8ClampedArray,
-  width: number,
-  height: number,
-): ImageContentHints {
-  const step = Math.max(1, Math.floor(Math.min(width, height) / 32))
-  let prevL = 0
-  let variance = 0
-  let samples = 0
-
-  for (let y = 0; y < height; y += step) {
-    for (let x = 0; x < width; x += step) {
-      const i = (y * width + x) * 4
-      if (pixels[i + 3] < 128) continue
-      const l = 0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2]
-      if (samples > 0) {
-        const d = l - prevL
-        variance += d * d
-      }
-      prevL = l
-      samples++
-    }
-  }
-
-  const avgVariance = samples > 1 ? variance / (samples - 1) : 0
-  return { variance: avgVariance, isPhotoLike: avgVariance > 100 }
+export {
+  analyzeImageContent,
+  countDistinctColors,
+  computePrepTargetDimensions,
+  suggestPrepColorCount,
+  suggestGridWidthForPrepImage,
+  suggestPrepMergeThreshold,
 }
 
 /**
- * 照片：尽�?1 溝僝�?�?1 格（上陝 maxGrid），清晰度优先�? * 坡通：适度陝格去噪�? */
+ * 照片：尽量 1 源像素 → 1 格（上限 maxGrid），清晰度优先。
+ * 卡通：适度降格去噪。
+ */
 export function suggestGridWidth(
   imgWidth: number,
   imgHeight: number,
@@ -90,6 +81,12 @@ export interface SuggestedProjectParams {
   photoOptimize: PhotoOptimize
 }
 
+export interface PrepImageMeta {
+  gridWidth: number
+  gridHeight: number
+  colorCount?: number
+}
+
 export function buildSuggestedParams(
   width: number,
   height: number,
@@ -105,5 +102,37 @@ export function buildSuggestedParams(
     palettePresetId: suggestPalettePresetId(hints.variance, hints.isPhotoLike),
     imageAdjust: suggestImageAdjust(hints.isPhotoLike),
     photoOptimize: suggestPhotoOptimize(hints.isPhotoLike),
+  }
+}
+
+export function suggestPrepPalettePresetId(colorCount: number): string {
+  if (colorCount > 100) return 'pindou-full'
+  if (colorCount > 64) return 'pindou-168'
+  if (colorCount > 36) return 'pindou-168'
+  return 'pindou-96'
+}
+
+/** 由拼豆专用图生成图纸时的参数建议 */
+export function buildSuggestedParamsForPrepImage(
+  width: number,
+  height: number,
+  pixels: Uint8ClampedArray,
+  maxGrid: number,
+  meta?: PrepImageMeta,
+): SuggestedProjectParams {
+  const distinctColors = meta?.colorCount ?? countDistinctColors(pixels, width, height)
+  const hints = analyzeImageContent(pixels, width, height)
+  const gridWidth = meta?.gridWidth
+    ? Math.max(40, Math.min(maxGrid, meta.gridWidth))
+    : suggestGridWidthForPrepImage(width, height, maxGrid)
+
+  return {
+    gridWidth,
+    mode: 'dominant',
+    mergeThreshold: suggestPrepMergeThreshold(distinctColors, hints.variance),
+    maxColors: 0,
+    palettePresetId: suggestPrepPalettePresetId(distinctColors),
+    imageAdjust: { ...DEFAULT_IMAGE_ADJUST },
+    photoOptimize: { ...DEFAULT_PHOTO_OPTIMIZE },
   }
 }

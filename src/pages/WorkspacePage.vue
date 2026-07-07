@@ -5,6 +5,7 @@ import { showToast, showModal, showActionSheet, getSystemInfoSync, setClipboardD
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { usePageSeo } from '@/utils/seo'
 import AiPreprocessSheet from '@/components/AiPreprocessSheet.vue'
+import ImportModeSheet from '@/components/ImportModeSheet.vue'
 import BeadCanvas from '@/components/BeadCanvas.vue'
 import ColorPanel from '@/components/ColorPanel.vue'
 import CompareSheet from '@/components/CompareSheet.vue'
@@ -26,11 +27,13 @@ import { encodeProjectShare } from '@/utils/projectShare'
 import { debounce } from '@/utils/debounce'
 import {
   applySuggestedParamsForImage,
+  applySuggestedParamsForPrepImage,
   hydrateProjectSourceFromPath,
   loadImageToProject,
   pickImage,
   processCurrentProject,
 } from '@/utils/pipeline'
+import type { PrepImageMeta } from '@pindou/app-shared/utils/suggestParams'
 import {
   buildColorStats,
   downloadBlobH5,
@@ -44,6 +47,7 @@ import {
 import { ProjectStorage, createProjectId } from '@/utils/projectStorage'
 import { loadImageFromFile, pickImageFileFromClipboard } from '@/utils/pickImage'
 import { createSourcePreview, gridMeta, renderGridThumbnail } from '@/utils/thumbnail'
+import { createBeadPrepImage } from '@/utils/beadPrepImage'
 import {
   defaultPreviewContainerWidth,
   observeElementWidth,
@@ -296,9 +300,11 @@ function onH5PreviewWheel(event: WheelEvent) {
 }
 
 const processing = ref(false)
+const processingHint = ref('正在生成图纸…')
 const exportVisible = ref(false)
 const settingsVisible = ref(false)
 const cropperVisible = ref(false)
+const importModeVisible = ref(false)
 const saveVisible = ref(false)
 const saveLoading = ref(false)
 const compareVisible = ref(false)
@@ -483,7 +489,14 @@ function openImageFile(file: File) {
 }
 
 function onWindowPaste(event: ClipboardEvent) {
-  if (cropperVisible.value || aiVisible.value || exportVisible.value || settingsVisible.value || xhsVisible.value) {
+  if (
+    cropperVisible.value ||
+    importModeVisible.value ||
+    aiVisible.value ||
+    exportVisible.value ||
+    settingsVisible.value ||
+    xhsVisible.value
+  ) {
     return
   }
   const items = event.clipboardData?.items
@@ -578,20 +591,66 @@ function onTrimGrid() {
 
 async function onCropConfirm(path: string) {
   cropperVisible.value = false
+  pendingImagePath.value = path
+  importModeVisible.value = true
+}
+
+async function finalizeImportedImage(
+  path: string,
+  successTitle = '生成成功',
+  options?: { fromPrepImage?: boolean; prepMeta?: PrepImageMeta },
+) {
+  processing.value = true
   try {
-    processing.value = true
     const loaded = await loadImageToProject(path)
-    applySuggestedParamsForImage(loaded.width, loaded.height, loaded.pixels)
+    if (options?.fromPrepImage) {
+      applySuggestedParamsForPrepImage(loaded.width, loaded.height, loaded.pixels, options.prepMeta)
+    } else {
+      applySuggestedParamsForImage(loaded.width, loaded.height, loaded.pixels)
+    }
     paletteStore.setPreset(project.params.palettePresetId)
     const preview = await createSourcePreview(path)
     project.setSourcePreview(preview)
+    processingHint.value = '正在生成图纸…'
     await processCurrentProject()
-    showToast({ title: '生成成功', icon: 'success' })
+    showToast({ title: successTitle, icon: 'success' })
   } catch (error) {
     showToast({ title: '处理失败', icon: 'none' })
     console.error(error)
   } finally {
     processing.value = false
+    processingHint.value = '正在生成图纸…'
+  }
+}
+
+async function onImportModeChoose(mode: 'direct' | 'bead-prep') {
+  importModeVisible.value = false
+  const path = pendingImagePath.value
+  if (!path) return
+
+  if (mode === 'direct') {
+    await finalizeImportedImage(path)
+    return
+  }
+
+  processing.value = true
+  try {
+    const prep = await createBeadPrepImage(path, (progress) => {
+      processingHint.value = progress.message
+    })
+    await finalizeImportedImage(prep.dataUrl, '已用拼豆专用图生成图纸', {
+      fromPrepImage: true,
+      prepMeta: {
+        gridWidth: prep.gridWidth,
+        gridHeight: prep.gridHeight,
+        colorCount: prep.colorCount,
+      },
+    })
+  } catch (error) {
+    showToast({ title: '拼豆专用图生成失败', icon: 'none' })
+    console.error(error)
+    processing.value = false
+    processingHint.value = '正在生成图纸…'
   }
 }
 
@@ -895,7 +954,7 @@ async function handleExport(settings: ExportSettings) {
 
       <div v-if="processing && !hasGrid" class="loading-overlay">
         <div class="loading-spinner" />
-        <span class="loading-text">正在生成图纸…</span>
+        <span class="loading-text">{{ processingHint }}</span>
         <span class="loading-sub">本地处理中，大图可能需要几秒</span>
       </div>
 
@@ -940,7 +999,7 @@ async function handleExport(settings: ExportSettings) {
         </div>
         <div v-if="processing" class="loading-overlay loading-overlay--float">
           <div class="loading-spinner" />
-          <span class="loading-text">正在生成图纸…</span>
+          <span class="loading-text">{{ processingHint }}</span>
           <span class="loading-sub">本地处理中，稍候即可</span>
         </div>
       </div>
@@ -995,6 +1054,12 @@ async function handleExport(settings: ExportSettings) {
       :image-path="pendingImagePath"
       @close="cropperVisible = false"
       @confirm="onCropConfirm"
+    />
+
+    <ImportModeSheet
+      :show="importModeVisible"
+      @close="importModeVisible = false"
+      @choose="onImportModeChoose"
     />
 
     <ProjectSaveSheet

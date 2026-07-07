@@ -2,7 +2,7 @@ import { runPipeline, prepareSourcePixels, type MappedGrid } from '@wangdandan81
 import { getPlatform } from '../platform/context.js'
 import { usePaletteStore } from '../stores/palette.js'
 import { useProjectStore } from '../stores/project.js'
-import { buildSuggestedParams } from './suggestParams.js'
+import { buildSuggestedParams, buildSuggestedParamsForPrepImage, type PrepImageMeta } from './suggestParams.js'
 
 export async function processCurrentProject() {
   const project = useProjectStore()
@@ -70,6 +70,19 @@ export function applySuggestedParamsForImage(width: number, height: number, pixe
   const maxGrid = getPlatform().getMaxGridWidth()
   project.restoreAllExcluded()
   project.setParams(buildSuggestedParams(width, height, pixels, maxGrid))
+}
+
+/** 拼豆专用图二次出图：格数按专用图生成时的像素尺寸自动设定 */
+export function applySuggestedParamsForPrepImage(
+  width: number,
+  height: number,
+  pixels: Uint8ClampedArray,
+  meta?: PrepImageMeta,
+) {
+  const project = useProjectStore()
+  const maxGrid = getPlatform().getMaxGridWidth()
+  project.restoreAllExcluded()
+  project.setParams(buildSuggestedParamsForPrepImage(width, height, pixels, maxGrid, meta))
 }
 
 export function replaceColorInGrid(

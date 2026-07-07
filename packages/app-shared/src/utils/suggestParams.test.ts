@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeImageContent, buildSuggestedParams, suggestMergeThreshold, suggestGridWidth } from './suggestParams.js'
+import {
+  analyzeImageContent,
+  buildSuggestedParams,
+  buildSuggestedParamsForPrepImage,
+  computePrepTargetDimensions,
+  countDistinctColors,
+  suggestMergeThreshold,
+  suggestGridWidth,
+} from './suggestParams.js'
 
 function solidPixels(w: number, h: number, r: number, g: number, b: number): Uint8ClampedArray {
   const pixels = new Uint8ClampedArray(w * h * 4)
@@ -57,5 +65,39 @@ describe('suggestParams', () => {
     expect(params.mode).toBe('dominant')
     expect(params.mergeThreshold).toBeGreaterThanOrEqual(6)
     expect(params.palettePresetId).toBe('pindou-96')
+  })
+
+  it('suggests 1:1 grid for prep images based on pixel width', () => {
+    const pixels = solidPixels(180, 140, 40, 180, 90)
+    const params = buildSuggestedParamsForPrepImage(180, 140, pixels, 256)
+    expect(params.gridWidth).toBe(180)
+    expect(params.mode).toBe('dominant')
+    expect(params.photoOptimize.sharpen).toBe(false)
+  })
+
+  it('uses prep meta for grid and palette when provided', () => {
+    const pixels = solidPixels(160, 120, 40, 180, 90)
+    const params = buildSuggestedParamsForPrepImage(160, 120, pixels, 256, {
+      gridWidth: 160,
+      gridHeight: 120,
+      colorCount: 42,
+    })
+    expect(params.gridWidth).toBe(160)
+    expect(params.mergeThreshold).toBe(2)
+    expect(params.palettePresetId).toBe('pindou-168')
+  })
+
+  it('computes prep target dimensions from source complexity', () => {
+    const hints = analyzeImageContent(gradientPixels(800, 600), 800, 600)
+    const target = computePrepTargetDimensions(800, 600, hints, 256)
+    expect(target.width).toBeGreaterThanOrEqual(40)
+    expect(target.height).toBeGreaterThanOrEqual(80)
+    expect(target.width).toBeLessThanOrEqual(256)
+    expect(target.height).toBeLessThanOrEqual(256)
+  })
+
+  it('counts distinct colors in flat images', () => {
+    const pixels = solidPixels(32, 32, 255, 0, 0)
+    expect(countDistinctColors(pixels, 32, 32)).toBe(1)
   })
 })

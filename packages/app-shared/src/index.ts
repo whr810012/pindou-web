@@ -42,6 +42,7 @@ export {
   loadImageToProject,
   hydrateProjectSourceFromPath,
   applySuggestedParamsForImage,
+  applySuggestedParamsForPrepImage,
   replaceColorInGrid,
 } from './utils/pipeline.js'
 export {

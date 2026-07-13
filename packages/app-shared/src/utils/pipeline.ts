@@ -2,7 +2,7 @@ import { runPipeline, prepareSourcePixels, type MappedGrid } from '@wangdandan81
 import { getPlatform } from '../platform/context.js'
 import { usePaletteStore } from '../stores/palette.js'
 import { useProjectStore } from '../stores/project.js'
-import { buildSuggestedParams, buildSuggestedParamsForPrepImage, type PrepImageMeta } from './suggestParams.js'
+import { buildSuggestedParams, buildSuggestedParamsForPrepImage, buildSuggestedParamsForFlatTile, type PrepImageMeta } from './suggestParams.js'
 
 export async function processCurrentProject() {
   const project = useProjectStore()
@@ -13,13 +13,16 @@ export async function processCurrentProject() {
     throw new Error('请先上传图片')
   }
 
-  const pixels = prepareSourcePixels(
-    project.sourcePixels,
-    project.sourceWidth,
-    project.sourceHeight,
-    project.params.imageAdjust,
-    project.params.photoOptimize,
-  )
+  const rawPixels = project.sourcePixels!
+  const pixels = project.params.flatTile
+    ? rawPixels
+    : prepareSourcePixels(
+        rawPixels,
+        project.sourceWidth,
+        project.sourceHeight,
+        project.params.imageAdjust,
+        project.params.photoOptimize,
+      )
 
   const result = runPipeline(
     pixels,
@@ -33,6 +36,7 @@ export async function processCurrentProject() {
       backgroundPaletteIds: paletteStore.backgroundIds,
       excludedPaletteIds: project.excludedPaletteIds,
       palette: paletteStore.activeEntries,
+      flatTile: project.params.flatTile,
     },
   )
 
@@ -83,6 +87,14 @@ export function applySuggestedParamsForPrepImage(
   const maxGrid = getPlatform().getMaxGridWidth()
   project.restoreAllExcluded()
   project.setParams(buildSuggestedParamsForPrepImage(width, height, pixels, maxGrid, meta))
+}
+
+/** 原图平铺：格宽对齐图像宽度，不做预处理 */
+export function applySuggestedParamsForFlatTile(width: number, height: number) {
+  const project = useProjectStore()
+  const maxGrid = getPlatform().getMaxGridWidth()
+  project.restoreAllExcluded()
+  project.setParams(buildSuggestedParamsForFlatTile(width, height, maxGrid))
 }
 
 export function replaceColorInGrid(

@@ -63,7 +63,8 @@ describe('suggestParams', () => {
     const pixels = solidPixels(200, 200, 40, 180, 90)
     const params = buildSuggestedParams(200, 200, pixels, 256)
     expect(params.mode).toBe('dominant')
-    expect(params.mergeThreshold).toBeGreaterThanOrEqual(6)
+    expect(params.mergeThreshold).toBe(0)
+    expect(params.gridWidth).toBe(200)
     expect(params.palettePresetId).toBe('pindou-96')
   })
 
@@ -73,6 +74,16 @@ describe('suggestParams', () => {
     expect(params.gridWidth).toBe(180)
     expect(params.mode).toBe('dominant')
     expect(params.photoOptimize.sharpen).toBe(false)
+  })
+
+  it('suggests zero merge threshold for prep images with few colors', () => {
+    const pixels = solidPixels(160, 120, 40, 180, 90)
+    const params = buildSuggestedParamsForPrepImage(160, 120, pixels, 256, {
+      gridWidth: 160,
+      gridHeight: 120,
+      colorCount: 8,
+    })
+    expect(params.mergeThreshold).toBe(0)
   })
 
   it('uses prep meta for grid and palette when provided', () => {

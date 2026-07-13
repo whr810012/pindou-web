@@ -8,7 +8,7 @@ defineProps<{
 
 const emit = defineEmits<{
   close: []
-  choose: [mode: 'direct' | 'bead-prep']
+  choose: [mode: 'direct' | 'bead-prep' | 'pixel-art' | 'flat-tile']
 }>()
 </script>
 
@@ -29,6 +29,18 @@ const emit = defineEmits<{
         <span class="import-mode__badge">方式二 · 推荐</span>
         <strong>先生成拼豆专用图，再生成图纸</strong>
         <p>简化为大色块参考图（非图纸），再交给正式管线匹配色板并生成建议图纸。</p>
+      </button>
+
+      <button type="button" class="import-mode__card" @click="emit('choose', 'pixel-art')">
+        <span class="import-mode__badge">方式三</span>
+        <strong>先转像素风，再生成图纸</strong>
+        <p>经典最近邻像素化，块状硬边，复古像素观感，再匹配色板生成图纸。</p>
+      </button>
+
+      <button type="button" class="import-mode__card" @click="emit('choose', 'flat-tile')">
+        <span class="import-mode__badge">方式四</span>
+        <strong>原图平铺（零处理）</strong>
+        <p>不做预处理与智能简化，按最近邻把原图平铺到格子上，再匹配色板生成图纸。</p>
       </button>
     </div>
 

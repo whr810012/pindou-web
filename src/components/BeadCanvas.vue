@@ -167,8 +167,8 @@ const fillLayoutSize = computed(() => {
   const rows = props.grid?.length ?? 0
   const w = effectiveContainerWidth.value
   if (!props.fillWidth || cols <= 0 || rows <= 0 || w <= 0) return null
-  const cell = w / cols
-  return { width: w, height: rows * cell, cellSize: cell }
+  const cell = Math.max(1, Math.floor(w / cols))
+  return { width: cols * cell, height: rows * cell, cellSize: cell }
 })
 
 const renderCellSize = computed(() => {
@@ -178,7 +178,7 @@ const renderCellSize = computed(() => {
   const cols = props.grid?.[0]?.length ?? 0
   const width = effectiveContainerWidth.value
   if (props.fillWidth && width > 0 && cols > 0) {
-    return Math.max(2, width / cols)
+    return Math.max(2, Math.floor(width / cols))
   }
   return props.cellSize
 })

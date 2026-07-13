@@ -5,6 +5,7 @@ import {
   analyzeImageContent,
   countDistinctColors,
   computePrepTargetDimensions,
+  isDetailSensitiveCartoon,
   suggestPrepColorCount,
   suggestGridWidthForPrepImage,
   suggestPrepMergeThreshold,
@@ -18,6 +19,7 @@ export {
   analyzeImageContent,
   countDistinctColors,
   computePrepTargetDimensions,
+  isDetailSensitiveCartoon,
   suggestPrepColorCount,
   suggestGridWidthForPrepImage,
   suggestPrepMergeThreshold,
@@ -32,10 +34,14 @@ export function suggestGridWidth(
   imgHeight: number,
   maxGrid: number,
   isPhotoLike = true,
+  detailSensitive = false,
 ): number {
   const minEdge = Math.min(imgWidth, imgHeight)
   if (isPhotoLike) {
     return Math.max(48, Math.min(maxGrid, minEdge))
+  }
+  if (detailSensitive) {
+    return Math.max(64, Math.min(maxGrid, minEdge))
   }
   const target = Math.round(minEdge / 3)
   return Math.max(40, Math.min(maxGrid, target))
@@ -49,8 +55,12 @@ export function suggestModeForImage(
   return analyzeImageContent(pixels, width, height).isPhotoLike ? 'average' : 'dominant'
 }
 
-export function suggestMergeThreshold(variance: number, isPhotoLike = variance > 100): number {
-  if (isPhotoLike) return 0
+export function suggestMergeThreshold(
+  variance: number,
+  isPhotoLike = variance > 100,
+  detailSensitive = false,
+): number {
+  if (isPhotoLike || detailSensitive) return 0
   if (variance > 50) return 5
   return 7
 }
@@ -79,6 +89,7 @@ export interface SuggestedProjectParams {
   palettePresetId: string
   imageAdjust: ImageAdjust
   photoOptimize: PhotoOptimize
+  flatTile?: boolean
 }
 
 export interface PrepImageMeta {
@@ -94,14 +105,34 @@ export function buildSuggestedParams(
   maxGrid: number,
 ): SuggestedProjectParams {
   const hints = analyzeImageContent(pixels, width, height)
+  const detailSensitive = isDetailSensitiveCartoon(pixels, width, height, hints)
   return {
-    gridWidth: suggestGridWidth(width, height, maxGrid, hints.isPhotoLike),
+    gridWidth: suggestGridWidth(width, height, maxGrid, hints.isPhotoLike, detailSensitive),
     mode: hints.isPhotoLike ? 'average' : 'dominant',
-    mergeThreshold: suggestMergeThreshold(hints.variance, hints.isPhotoLike),
+    mergeThreshold: suggestMergeThreshold(hints.variance, hints.isPhotoLike, detailSensitive),
     maxColors: 0,
     palettePresetId: suggestPalettePresetId(hints.variance, hints.isPhotoLike),
     imageAdjust: suggestImageAdjust(hints.isPhotoLike),
     photoOptimize: suggestPhotoOptimize(hints.isPhotoLike),
+    flatTile: false,
+  }
+}
+
+/** 原图平铺：1 源像素尽量对应 1 格，不做预处理与区域合并 */
+export function buildSuggestedParamsForFlatTile(
+  width: number,
+  height: number,
+  maxGrid: number,
+): SuggestedProjectParams {
+  return {
+    gridWidth: Math.max(40, Math.min(maxGrid, width)),
+    mode: 'average',
+    mergeThreshold: 0,
+    maxColors: 0,
+    palettePresetId: 'pindou-full',
+    imageAdjust: { ...DEFAULT_IMAGE_ADJUST },
+    photoOptimize: { ...DEFAULT_PHOTO_OPTIMIZE },
+    flatTile: true,
   }
 }
 
@@ -134,5 +165,6 @@ export function buildSuggestedParamsForPrepImage(
     palettePresetId: suggestPrepPalettePresetId(distinctColors),
     imageAdjust: { ...DEFAULT_IMAGE_ADJUST },
     photoOptimize: { ...DEFAULT_PHOTO_OPTIMIZE },
+    flatTile: false,
   }
 }

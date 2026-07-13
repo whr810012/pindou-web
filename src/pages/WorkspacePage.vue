@@ -28,6 +28,7 @@ import { debounce } from '@/utils/debounce'
 import {
   applySuggestedParamsForImage,
   applySuggestedParamsForPrepImage,
+  applySuggestedParamsForFlatTile,
   hydrateProjectSourceFromPath,
   loadImageToProject,
   pickImage,
@@ -48,6 +49,7 @@ import { ProjectStorage, createProjectId } from '@/utils/projectStorage'
 import { loadImageFromFile, pickImageFileFromClipboard } from '@/utils/pickImage'
 import { createSourcePreview, gridMeta, renderGridThumbnail } from '@/utils/thumbnail'
 import { createBeadPrepImage } from '@/utils/beadPrepImage'
+import { createPixelArtImage } from '@/utils/pixelArtImage'
 import {
   defaultPreviewContainerWidth,
   observeElementWidth,
@@ -598,19 +600,42 @@ async function onCropConfirm(path: string) {
 async function finalizeImportedImage(
   path: string,
   successTitle = '生成成功',
-  options?: { fromPrepImage?: boolean; prepMeta?: PrepImageMeta },
+  options?: {
+    fromPrepImage?: boolean
+    fromFlatTile?: boolean
+    prepMeta?: PrepImageMeta
+    prepPixels?: { width: number; height: number; pixels: Uint8ClampedArray; previewDataUrl: string }
+  },
 ) {
   processing.value = true
   try {
-    const loaded = await loadImageToProject(path)
-    if (options?.fromPrepImage) {
-      applySuggestedParamsForPrepImage(loaded.width, loaded.height, loaded.pixels, options.prepMeta)
+    let width: number
+    let height: number
+    let pixels: Uint8ClampedArray
+
+    if (options?.prepPixels) {
+      width = options.prepPixels.width
+      height = options.prepPixels.height
+      pixels = options.prepPixels.pixels
+      project.setSource(path, width, height, pixels)
+      project.setSourcePreview(options.prepPixels.previewDataUrl)
     } else {
-      applySuggestedParamsForImage(loaded.width, loaded.height, loaded.pixels)
+      const loaded = await loadImageToProject(path)
+      width = loaded.width
+      height = loaded.height
+      pixels = loaded.pixels
+      const preview = await createSourcePreview(path)
+      project.setSourcePreview(preview)
+    }
+
+    if (options?.fromFlatTile) {
+      applySuggestedParamsForFlatTile(width, height)
+    } else if (options?.fromPrepImage) {
+      applySuggestedParamsForPrepImage(width, height, pixels, options.prepMeta)
+    } else {
+      applySuggestedParamsForImage(width, height, pixels)
     }
     paletteStore.setPreset(project.params.palettePresetId)
-    const preview = await createSourcePreview(path)
-    project.setSourcePreview(preview)
     processingHint.value = '正在生成图纸…'
     await processCurrentProject()
     showToast({ title: successTitle, icon: 'success' })
@@ -623,7 +648,7 @@ async function finalizeImportedImage(
   }
 }
 
-async function onImportModeChoose(mode: 'direct' | 'bead-prep') {
+async function onImportModeChoose(mode: 'direct' | 'bead-prep' | 'pixel-art' | 'flat-tile') {
   importModeVisible.value = false
   const path = pendingImagePath.value
   if (!path) return
@@ -633,21 +658,54 @@ async function onImportModeChoose(mode: 'direct' | 'bead-prep') {
     return
   }
 
+  if (mode === 'flat-tile') {
+    await finalizeImportedImage(path, '已用原图平铺生成图纸', { fromFlatTile: true })
+    return
+  }
+
   processing.value = true
   try {
-    const prep = await createBeadPrepImage(path, (progress) => {
+    if (mode === 'bead-prep') {
+      const prep = await createBeadPrepImage(path, (progress) => {
+        processingHint.value = progress.message
+      })
+      await finalizeImportedImage(prep.dataUrl, '已用拼豆专用图生成图纸', {
+        fromPrepImage: true,
+        prepMeta: {
+          gridWidth: prep.gridWidth,
+          gridHeight: prep.gridHeight,
+          colorCount: prep.colorCount,
+        },
+        prepPixels: {
+          width: prep.width,
+          height: prep.height,
+          pixels: prep.pixels,
+          previewDataUrl: prep.dataUrl,
+        },
+      })
+      return
+    }
+
+    const pixel = await createPixelArtImage(path, (progress) => {
       processingHint.value = progress.message
     })
-    await finalizeImportedImage(prep.dataUrl, '已用拼豆专用图生成图纸', {
+    await finalizeImportedImage(pixel.dataUrl, '已用像素风图生成图纸', {
       fromPrepImage: true,
       prepMeta: {
-        gridWidth: prep.gridWidth,
-        gridHeight: prep.gridHeight,
-        colorCount: prep.colorCount,
+        gridWidth: pixel.gridWidth,
+        gridHeight: pixel.gridHeight,
+        colorCount: pixel.colorCount,
+      },
+      prepPixels: {
+        width: pixel.width,
+        height: pixel.height,
+        pixels: pixel.pixels,
+        previewDataUrl: pixel.dataUrl,
       },
     })
   } catch (error) {
-    showToast({ title: '拼豆专用图生成失败', icon: 'none' })
+    const title = mode === 'bead-prep' ? '拼豆专用图生成失败' : '像素风图生成失败'
+    showToast({ title, icon: 'none' })
     console.error(error)
     processing.value = false
     processingHint.value = '正在生成图纸…'

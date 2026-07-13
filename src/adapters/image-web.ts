@@ -47,17 +47,23 @@ function drawExternalCell(
   y: number,
   cellSize: number,
   simple: boolean,
+  useGapGrid: boolean,
 ) {
+  const fillSize = useGapGrid ? cellSize - 1 : cellSize
+  if (useGapGrid) {
+    ctx.fillStyle = '#D8D8D8'
+    ctx.fillRect(x, y, cellSize, cellSize)
+  }
   ctx.fillStyle = '#E4E4E4'
-  ctx.fillRect(x, y, cellSize, cellSize)
+  ctx.fillRect(x, y, fillSize, fillSize)
   if (simple) return
   ctx.strokeStyle = 'rgba(0,0,0,0.06)'
   ctx.lineWidth = 1
-  const step = Math.max(4, Math.floor(cellSize / 3))
-  for (let i = -cellSize; i < cellSize * 2; i += step) {
+  const step = Math.max(4, Math.floor(fillSize / 3))
+  for (let i = -fillSize; i < fillSize * 2; i += step) {
     ctx.beginPath()
     ctx.moveTo(x + i, y)
-    ctx.lineTo(x + i + cellSize, y + cellSize)
+    ctx.lineTo(x + i + fillSize, y + fillSize)
     ctx.stroke()
   }
 }
@@ -76,29 +82,33 @@ export function drawGridCell(
   const y = row * cellSize
   const key = `${row},${col}`
   const zoneActive = options.isZoneActive?.(row, col) ?? true
+  const useGapGrid = !!(options.showGrid && cellSize >= 3)
+  const fillSize = useGapGrid ? cellSize - 1 : cellSize
 
   if (cell.isExternal) {
-    drawExternalCell(ctx, x, y, cellSize, !!options.simpleExternal)
-  } else if (!zoneActive) {
-    ctx.fillStyle = dimColor(cell.hex)
-    ctx.fillRect(x, y, cellSize, cellSize)
-  } else if (options.completedCells?.has(key)) {
-    ctx.fillStyle = '#CCCCCC'
-    ctx.fillRect(x, y, cellSize, cellSize)
-  } else if (
-    options.highlightPaletteId &&
-    cell.paletteId !== options.highlightPaletteId
-  ) {
-    ctx.fillStyle = '#F0F0F0'
-    ctx.fillRect(x, y, cellSize, cellSize)
+    drawExternalCell(ctx, x, y, cellSize, !!options.simpleExternal, useGapGrid)
   } else {
-    ctx.fillStyle = cell.hex
-    ctx.fillRect(x, y, cellSize, cellSize)
-  }
+    let fill = cell.hex
+    if (!zoneActive) fill = dimColor(cell.hex)
+    else if (options.completedCells?.has(key)) fill = '#CCCCCC'
+    else if (options.highlightPaletteId && cell.paletteId !== options.highlightPaletteId) {
+      fill = '#F0F0F0'
+    }
 
-  if (options.showGrid) {
-    ctx.strokeStyle = 'rgba(0,0,0,0.15)'
-    ctx.strokeRect(x, y, cellSize, cellSize)
+    if (useGapGrid) {
+      ctx.fillStyle = '#D8D8D8'
+      ctx.fillRect(x, y, cellSize, cellSize)
+      ctx.fillStyle = fill
+      ctx.fillRect(x, y, fillSize, fillSize)
+    } else {
+      ctx.fillStyle = fill
+      ctx.fillRect(x, y, cellSize, cellSize)
+      if (options.showGrid) {
+        ctx.strokeStyle = 'rgba(0,0,0,0.12)'
+        ctx.lineWidth = 1
+        ctx.strokeRect(x + 0.5, y + 0.5, cellSize - 1, cellSize - 1)
+      }
+    }
   }
 
   if (options.showColorCode && !cell.isExternal && cellSize >= 12) {
@@ -172,10 +182,8 @@ export const h5ImageAdapter: ImageDataAdapter = {
     const rows = grid.length
     const cols = grid[0]?.length ?? 0
     const layoutW = options.layoutWidth ?? 0
-    const cellSize = Math.max(
-      1,
-      Math.floor(layoutW > 0 && cols > 0 ? layoutW / cols : options.cellSize),
-    )
+    const rawCell = layoutW > 0 && cols > 0 ? layoutW / cols : options.cellSize
+    const cellSize = Math.max(1, Math.round(rawCell))
     const canvasW = cols * cellSize
     const canvasH = rows * cellSize
     const ctx = prepareCanvas(canvas, canvasW, canvasH, dpr)

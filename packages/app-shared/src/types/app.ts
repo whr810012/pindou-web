@@ -36,6 +36,8 @@ export interface ProjectParams {
   brand: BrandSystem
   imageAdjust: ImageAdjust
   photoOptimize: PhotoOptimize
+  /** 原图平铺模式：不预处理、不区域合并 */
+  flatTile?: boolean
 }
 
 export interface SavedProject {
@@ -98,6 +100,7 @@ export const DEFAULT_PARAMS: ProjectParams = {
   brand: 'MARD',
   imageAdjust: { ...DEFAULT_IMAGE_ADJUST },
   photoOptimize: { ...DEFAULT_PHOTO_OPTIMIZE },
+  flatTile: false,
 }
 
 export const BRAND_OPTIONS: Array<{ label: string; value: BrandSystem }> = [

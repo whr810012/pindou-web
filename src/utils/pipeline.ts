@@ -5,5 +5,6 @@ export {
   hydrateProjectSourceFromPath,
   applySuggestedParamsForImage,
   applySuggestedParamsForPrepImage,
+  applySuggestedParamsForFlatTile,
   replaceColorInGrid,
 } from '@pindou/app-shared'

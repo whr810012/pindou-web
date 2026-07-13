@@ -1,13 +1,13 @@
-import { createBeadPrepPixels } from '@wangdandan810012/bead-core'
+import { createPixelArtPrepPixels } from '@wangdandan810012/bead-core'
 import { MAX_IMAGE_EDGE } from '@/adapters/types'
 import { getMaxGridWidth } from '@/adapters'
 
-export interface BeadPrepProgress {
+export interface PixelArtProgress {
   percent: number
   message: string
 }
 
-export interface BeadPrepResult {
+export interface PixelArtResult {
   dataUrl: string
   pixels: Uint8ClampedArray
   width: number
@@ -64,18 +64,18 @@ function pixelsToDataUrl(pixels: Uint8ClampedArray, width: number, height: numbe
   return canvas.toDataURL('image/png')
 }
 
-/** 浏览器端：加载图片并调用 bead-core 生成拼豆专用图 */
-export async function createBeadPrepImage(
+/** 浏览器端：加载图片并调用 bead-core 生成经典像素风中间图 */
+export async function createPixelArtImage(
   imagePath: string,
-  onProgress?: (progress: BeadPrepProgress) => void,
-): Promise<BeadPrepResult> {
+  onProgress?: (progress: PixelArtProgress) => void,
+): Promise<PixelArtResult> {
   onProgress?.({ percent: 5, message: '读取图片…' })
   const { pixels, width, height } = await loadImagePixels(imagePath)
 
-  onProgress?.({ percent: 20, message: '分析并简化画面…' })
-  const result = createBeadPrepPixels(pixels, width, height, getMaxGridWidth())
+  onProgress?.({ percent: 20, message: '最近邻像素化…' })
+  const result = createPixelArtPrepPixels(pixels, width, height, getMaxGridWidth())
 
-  onProgress?.({ percent: 88, message: '生成拼豆专用图…' })
+  onProgress?.({ percent: 88, message: '生成像素风图…' })
   const dataUrl = pixelsToDataUrl(result.pixels, result.width, result.height)
   onProgress?.({ percent: 100, message: '完成' })
 

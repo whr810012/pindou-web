@@ -21,7 +21,7 @@
   "dependencies": {
     "@pindou/app-shared": "file:./packages/app-shared",
     "@volcengine/openapi": "^1.36.2",
-    "@wangdandan810012/bead-core": "file:../bead-core",
+    "@wangdandan810012/bead-core": "^0.3.0",
     "jspdf": "^4.2.1",
     "pinia": "^2.1.7",
     "three": "^0.184.0",

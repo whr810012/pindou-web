@@ -9,59 +9,29 @@ import {
   BEAD_CORE_NPM_PACKAGE,
   BEAD_CORE_NPM_URL,
 } from '@/constants/beadCore'
+import {
+  BEAD_CORE_API_ROWS,
+  BEAD_CORE_CODE_BROWSER,
+  BEAD_CORE_CODE_EDIT,
+  BEAD_CORE_CODE_NODE,
+  BEAD_CORE_CODE_PALETTE,
+  BEAD_CORE_CODE_PREP,
+  BEAD_CORE_CODE_PREPROCESS,
+  BEAD_CORE_CODE_QUICKSTART,
+  BEAD_CORE_CODE_STEPWISE,
+  BEAD_CORE_DOCS_TOC,
+  BEAD_CORE_FAQS,
+  BEAD_CORE_HIGHLIGHTS,
+  BEAD_CORE_PIPELINE_ASCII,
+  BEAD_CORE_PIPELINE_PARAMS,
+  BEAD_CORE_RELATED_LINKS,
+} from '@/constants/beadCoreDocs'
 
 usePageSeo('beadCore')
 
 const router = useRouter()
 const copied = ref(false)
-const developerFaqs = [
-  {
-    q: 'bead-core 适合什么场景？',
-    a: '适合需要把图片转成拼豆色号网格的 Web、小程序、Node 批处理项目，库本身不包含 UI。',
-  },
-  {
-    q: 'Pindou 网页和 bead-core 是什么关系？',
-    a: 'Pindou 网页端使用同一套核心算法完成上传、生成、精修与导出；bead-core 则独立发布，方便开发者集成。',
-  },
-  {
-    q: '如何安装 bead-core？',
-    a: `执行 ${BEAD_CORE_INSTALL_CMD} 即可安装，MIT 开源，可在 npm 与 GitHub 查看文档与源码。`,
-  },
-]
-const relatedLinks = [
-  { label: '免费在线工作台', path: '/workspace' },
-  { label: '拼豆新手教程', path: '/guide' },
-  { label: '案例画廊', path: '/gallery' },
-]
-
-const highlights = [
-  { label: '零运行时依赖', desc: '不绑定 Vue / Canvas，Node 与浏览器均可使用' },
-  { label: 'CIEDE2000 配色', desc: '感知色差 ΔE，与主流拼豆工具一致的色板匹配' },
-  { label: '照片清晰度优化', desc: '最近邻降采样 + 可调合并阈值，保留边缘细节' },
-  { label: '完整流水线', desc: '转换 → 合并 → 限色 → 背景标记 → 排除色重映射' },
-]
-
-const apiRows = [
-  { name: 'runPipeline', desc: '主流水线入口' },
-  { name: 'convertImageToPattern', desc: '图片 → 拼豆网格' },
-  { name: 'prepareSourcePixels', desc: '亮度 / 对比度 / 锐化 / 降噪' },
-  { name: 'mergeSimilarRegions', desc: '相似色区域合并' },
-  { name: 'markExternalBackground', desc: '贴边背景洪水填充' },
-  { name: 'computeColorStats', desc: '色号用量统计' },
-]
-
-const exampleCode = `import { prepareSourcePixels, runPipeline } from '${BEAD_CORE_NPM_PACKAGE}'
-
-const adjusted = prepareSourcePixels(pixels, width, height, imageAdjust, photoOptimize)
-const { grid } = runPipeline(adjusted, width, height, {
-  gridWidth: 100,
-  mode: 'average',
-  mergeThreshold: 0,
-  maxColors: 0,
-  palette,
-  backgroundPaletteIds: ['neutral-001'],
-  excludedPaletteIds: [],
-})`
+const algorithmsUrl = `${BEAD_CORE_GITHUB_URL}/tree/main/docs/algorithms`
 
 async function copyInstall() {
   try {
@@ -87,10 +57,11 @@ function openGithub() {
 <template>
   <div class="page bead-core-page page-enter">
     <header class="craft-page-head bead-core-hero">
-      <p class="bead-core-hero__badge">开源 · MIT · npm</p>
-      <h1 class="craft-page-head__title">@wangdandan810012/bead-core</h1>
+      <p class="bead-core-hero__badge">开源 · MIT · npm · 使用手册</p>
+      <h1 class="craft-page-head__title">{{ BEAD_CORE_NPM_PACKAGE }}</h1>
       <p class="craft-page-head__sub">
-        蛋蛋拼豆核心算法库 — Pindou 网页端背后的图片转图纸引擎。将 RGBA 像素映射为拼豆色号网格，供开发者集成到自己的应用。
+        蛋蛋拼豆核心算法库详细使用介绍 — 从安装、色板与像素约定，到
+        <code>runPipeline</code>、拼豆 Prep、编辑与统计的完整跟做示例。
       </p>
       <div class="bead-core-hero__cta">
         <PButton type="primary" text="在 npm 查看" @click="openNpm" />
@@ -99,8 +70,33 @@ function openGithub() {
       </div>
     </header>
 
-    <section class="card craft-intro-card bead-core-install" aria-label="安装">
-      <h2 class="bead-core-section__title">安装</h2>
+    <nav class="card craft-intro-card bead-core-toc" aria-label="文档目录">
+      <h2 class="bead-core-section__title">目录</h2>
+      <ol class="bead-core-toc__list">
+        <li v-for="item in BEAD_CORE_DOCS_TOC" :key="item.id">
+          <a :href="`#${item.id}`">{{ item.label }}</a>
+        </li>
+      </ol>
+    </nav>
+
+    <section class="bead-core-highlights" aria-label="特性">
+      <article
+        v-for="item in BEAD_CORE_HIGHLIGHTS"
+        :key="item.label"
+        class="card craft-intro-card bead-core-highlight"
+      >
+        <h3 class="bead-core-highlight__title">{{ item.label }}</h3>
+        <p class="bead-core-highlight__desc">{{ item.desc }}</p>
+      </article>
+    </section>
+
+    <section id="install" class="card craft-intro-card bead-core-section bead-core-install">
+      <h2 class="bead-core-section__title">1. 安装</h2>
+      <p class="bead-core-section__text">
+        本包为 <strong>ESM</strong>，需 Node.js ≥ 18。请在
+        <code>package.json</code> 中设置 <code>"type": "module"</code>，或在 TypeScript 中使用
+        <code>"module": "ESNext"</code>。
+      </p>
       <div class="bead-core-install__row">
         <code class="bead-core-install__cmd">{{ BEAD_CORE_INSTALL_CMD }}</code>
         <button type="button" class="bead-core-install__copy" @click="copyInstall">
@@ -113,71 +109,142 @@ function openGithub() {
       </p>
     </section>
 
-    <section class="bead-core-highlights" aria-label="特性">
-      <article
-        v-for="item in highlights"
-        :key="item.label"
-        class="card craft-intro-card bead-core-highlight"
-      >
-        <h3 class="bead-core-highlight__title">{{ item.label }}</h3>
-        <p class="bead-core-highlight__desc">{{ item.desc }}</p>
-      </article>
-    </section>
-
-    <section class="card craft-intro-card bead-core-section">
-      <h2 class="bead-core-section__title">处理流水线</h2>
-      <pre class="bead-core-pipeline" aria-label="流水线示意"><code>prepareSourcePixels
-       ↓
-runPipeline
-  ├─ convertImageToPattern（降采样 + CIEDE2000 配色）
-  ├─ mergeSimilarRegions
-  ├─ limitGridColors
-  ├─ markExternalBackground
-  └─ remapExcludedColors</code></pre>
+    <section id="concepts" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">2. 核心概念</h2>
       <p class="bead-core-section__text">
-        色板数据由调用方传入（支持 MARD、COCO 等多品牌色号映射），库本身不包含 UI，适合 Web、小程序或 Node 批处理场景。
+        库<strong>不内置色板</strong>。调用方需提供
+        <code>PaletteEntry[]</code>；像素为 RGBA
+        <code>Uint8ClampedArray</code>；输出为二维 <code>MappedGrid</code>（含可选
+        <code>isExternal</code> 背景标记）。
+      </p>
+      <h3 class="bead-core-section__subtitle">色板结构</h3>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_PALETTE }}</code></pre>
+      <p class="bead-core-section__text">
+        <code>codes</code> 键为品牌体系
+        <code>MARD | COCO | MANMAN | PANPAN | MIXIAOWO</code>。不用的品牌填空字符串即可。
       </p>
     </section>
 
-    <section class="card craft-intro-card bead-core-section">
-      <h2 class="bead-core-section__title">主要 API</h2>
+    <section id="quickstart" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">3. 快速开始</h2>
+      <p class="bead-core-section__text">
+        完整路径：迷你色板 → 像素 → 预处理 → <code>runPipeline</code> → 裁边 → 统计。可直接复制运行逻辑。
+      </p>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_QUICKSTART }}</code></pre>
+    </section>
+
+    <section id="load-image" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">4. 读取图片</h2>
+      <h3 class="bead-core-section__subtitle">浏览器 Canvas</h3>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_BROWSER }}</code></pre>
+      <h3 class="bead-core-section__subtitle">Node.js + sharp</h3>
+      <p class="bead-core-section__text">
+        <code>sharp</code> 不是本库依赖，需自行 <code>npm install sharp</code>。
+      </p>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_NODE }}</code></pre>
+    </section>
+
+    <section id="pipeline" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">5. runPipeline 参数</h2>
+      <pre class="bead-core-pipeline" aria-label="流水线示意"><code>{{ BEAD_CORE_PIPELINE_ASCII }}</code></pre>
       <div class="bead-core-table-wrap">
         <table class="bead-core-table">
           <thead>
             <tr>
+              <th scope="col">参数</th>
+              <th scope="col">类型</th>
+              <th scope="col">说明</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="row in BEAD_CORE_PIPELINE_PARAMS" :key="row.name">
+              <td><code>{{ row.name }}</code></td>
+              <td><code>{{ row.type }}</code></td>
+              <td>{{ row.desc }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bead-core-section__text">
+        配色内部使用 CIEDE2000；对外可用 <code>colorDistance</code> 与
+        <code>findClosestPaletteEntry</code>。
+      </p>
+    </section>
+
+    <section id="stepwise" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">6. 分步调用</h2>
+      <p class="bead-core-section__text">不需要完整流水线时，可单独使用各模块：</p>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_STEPWISE }}</code></pre>
+    </section>
+
+    <section id="preprocess" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">7. 图像预处理</h2>
+      <p class="bead-core-section__text">
+        进入流水线前可选调节源图。也可用
+        <code>DEFAULT_IMAGE_ADJUST</code> / <code>DEFAULT_PHOTO_OPTIMIZE</code> 作为起点。
+      </p>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_PREPROCESS }}</code></pre>
+    </section>
+
+    <section id="prep" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">8. 拼豆专用 Prep</h2>
+      <p class="bead-core-section__text">
+        <code>createBeadPrepPixels</code> 生成大色块硬边缘中间图，再以
+        <code>flatTile: true</code> 一像素一豆进流水线；像素风可用
+        <code>createPixelArtPrepPixels</code>。
+      </p>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_PREP }}</code></pre>
+    </section>
+
+    <section id="edit" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">9. 编辑与统计</h2>
+      <p class="bead-core-section__text">
+        编辑函数均返回<strong>新网格</strong>（不可变）。外部背景格会被跳过。
+      </p>
+      <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_EDIT }}</code></pre>
+    </section>
+
+    <section id="api" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">10. API 一览</h2>
+      <div class="bead-core-table-wrap">
+        <table class="bead-core-table">
+          <thead>
+            <tr>
+              <th scope="col">分类</th>
               <th scope="col">导出</th>
               <th scope="col">说明</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="row in apiRows" :key="row.name">
+            <tr v-for="row in BEAD_CORE_API_ROWS" :key="`${row.category}-${row.name}`">
+              <td>{{ row.category }}</td>
               <td><code>{{ row.name }}</code></td>
               <td>{{ row.desc }}</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <p class="bead-core-section__text">
+        算法深挖见
+        <a :href="algorithmsUrl" target="_blank" rel="noopener noreferrer">GitHub docs/algorithms</a>
+        ；包内 README 与本页保持同步的使用说明。
+      </p>
     </section>
 
-    <section class="card craft-intro-card bead-core-section">
-      <h2 class="bead-core-section__title">快速示例</h2>
-      <pre class="bead-core-code"><code>{{ exampleCode }}</code></pre>
-    </section>
-
-    <section class="card craft-intro-card bead-core-section">
-      <h2 class="bead-core-section__title">与 Pindou 网页的关系</h2>
+    <section id="relation" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">11. 与 Pindou 网页的关系</h2>
       <ul class="bead-core-list">
-        <li>本站在浏览器中调用同一套算法完成「上传 → 生成 → 精修 → 导出」。</li>
-        <li>算法库独立发布，便于其他开发者复用或二次集成。</li>
-        <li>详细算法说明见 GitHub 仓库 <code>docs/algorithms/</code> 目录。</li>
+        <li>本站浏览器端调用同一套算法完成「上传 → 生成 → 精修 → 导出」。</li>
+        <li>色板、项目存储与 UI 在应用层；核心只处理像素与网格。</li>
+        <li>工作台封装流水线与 prep；精修页使用 <code>fillRegion</code> / <code>paintRect</code> / 翻转等编辑 API。</li>
         <li>许可证：MIT，Copyright © 蛋蛋。</li>
       </ul>
     </section>
 
-    <section class="card craft-intro-card bead-core-section">
-      <h2 class="bead-core-section__title">开发者常见问题</h2>
+    <section id="faq" class="card craft-intro-card bead-core-section">
+      <h2 class="bead-core-section__title">12. FAQ</h2>
       <div class="bead-core-faq">
-        <article v-for="item in developerFaqs" :key="item.q" class="bead-core-faq__item">
+        <article v-for="item in BEAD_CORE_FAQS" :key="item.q" class="bead-core-faq__item">
           <h3>{{ item.q }}</h3>
           <p>{{ item.a }}</p>
         </article>
@@ -187,12 +254,19 @@ runPipeline
     <section class="card craft-intro-card bead-core-section">
       <h2 class="bead-core-section__title">相关页面</h2>
       <div class="bead-core-related">
-        <router-link v-for="link in relatedLinks" :key="link.path" class="bead-core-related__link" :to="link.path">
+        <router-link
+          v-for="link in BEAD_CORE_RELATED_LINKS"
+          :key="link.path"
+          class="bead-core-related__link"
+          :to="link.path"
+        >
           {{ link.label }}
         </router-link>
       </div>
       <p class="bead-core-section__text">
-        如果你只是想快速做图，直接进入工作台即可；如果想了解拼豆流程，可阅读
+        只想快速做图可直接进
+        <router-link to="/workspace">工作台</router-link>
+        ；想了解拼豆流程可读
         <router-link to="/guide">拼豆教程</router-link>
         。
       </p>
@@ -214,6 +288,7 @@ runPipeline
   max-width: 720px;
   margin: 0 auto;
   padding: 20px 16px 48px;
+  scroll-behavior: smooth;
 }
 
 .bead-core-hero {
@@ -229,6 +304,11 @@ runPipeline
     max-width: 560px;
     margin-left: auto;
     margin-right: auto;
+
+    code {
+      font-size: 0.92em;
+      color: $pindou-primary;
+    }
   }
 }
 
@@ -252,8 +332,33 @@ runPipeline
   margin-top: 18px;
 }
 
-.bead-core-install {
+.bead-core-toc {
   margin-bottom: $pindou-space-md;
+  padding: 18px 18px 8px;
+}
+
+.bead-core-toc__list {
+  margin: 12px 0 8px;
+  padding-left: 1.35em;
+  columns: 2;
+  column-gap: 24px;
+  font-size: $pindou-font-sm;
+  line-height: 1.8;
+  color: $pindou-text;
+
+  @media (max-width: 520px) {
+    columns: 1;
+  }
+
+  a {
+    color: $pindou-primary;
+    text-decoration: none;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .bead-core-install__row {
@@ -332,6 +437,7 @@ runPipeline
 .bead-core-section {
   margin-bottom: $pindou-space-md;
   padding: 20px 18px;
+  scroll-margin-top: 16px;
 }
 
 .bead-core-section__title {
@@ -341,11 +447,33 @@ runPipeline
   color: $pindou-text;
 }
 
+.bead-core-section__subtitle {
+  margin: 18px 0 0;
+  font-size: $pindou-font-md;
+  font-weight: 700;
+  color: $pindou-text;
+}
+
 .bead-core-section__text {
   margin: 14px 0 0;
   font-size: $pindou-font-sm;
   color: $pindou-text-secondary;
   line-height: 1.65;
+
+  code {
+    font-size: 0.92em;
+    color: $pindou-primary;
+  }
+
+  a {
+    color: $pindou-primary;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 
 .bead-core-pipeline,
@@ -359,6 +487,7 @@ runPipeline
   font-size: 12px;
   line-height: 1.55;
   overflow-x: auto;
+  white-space: pre;
 }
 
 .bead-core-table-wrap {
@@ -376,6 +505,7 @@ runPipeline
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid $pindou-border-light;
+    vertical-align: top;
   }
 
   th {
@@ -454,16 +584,6 @@ runPipeline
 
   &:hover {
     background: rgba($pindou-primary, 0.14);
-  }
-}
-
-.bead-core-section__text a {
-  color: $pindou-primary;
-  font-weight: 600;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
   }
 }
 

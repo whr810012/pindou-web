@@ -41,9 +41,9 @@ const ROUTES = [
     outDir: 'bead-core',
     outFile: 'index.html',
     injectSelector: '#app',
-    title: 'bead-core 开源算法库 - npm @wangdandan810012/bead-core | Pindou',
+    title: 'bead-core 使用文档 - npm @wangdandan810012/bead-core | Pindou',
     description:
-      '蛋蛋拼豆核心算法库介绍：图片转拼豆图纸、CIEDE2000 感知配色、零 UI 依赖。npm 安装 @wangdandan810012/bead-core，MIT 开源。',
+      'bead-core 详细使用介绍：安装、色板与像素约定、runPipeline 参数、浏览器/Node 读图、拼豆 Prep、编辑与统计示例。CIEDE2000 配色，零 UI 依赖，MIT。',
   },
 ]
 

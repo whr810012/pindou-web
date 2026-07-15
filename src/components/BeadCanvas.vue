@@ -280,6 +280,7 @@ function paintCellAt(clientX: number, clientY: number, force = false) {
   const cell = cellFromPoint(clientX, clientY)
   if (!cell) return
   const key = `${cell.row},${cell.col}`
+  // 拖绘时同一格只触发一次，避免重复 updateCell
   if (!force && key === lastPaintKey.value) return
   lastPaintKey.value = key
   updateTooltip(cell)
@@ -527,8 +528,9 @@ onUnmounted(() => {
 
 .bead-selection {
   position: absolute;
-  border: 2px solid $pindou-primary;
-  background: rgba(41, 121, 255, 0.15);
+  border: 2px dashed $pindou-primary;
+  background: rgba(41, 121, 255, 0.22);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7) inset;
   pointer-events: none;
 }
 

@@ -37,7 +37,7 @@ export const EDITOR_TOOL_META: Record<
   replace: {
     icon: '🔄',
     label: '换色',
-    hint: '先点图纸上的旧色，再选新色，最后点一下完成全图替换',
+    hint: '先点图纸上的旧色，再在色板选新色即可全图替换',
     shortcut: 'R',
   },
 }

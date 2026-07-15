@@ -66,15 +66,10 @@ const tools = Object.entries(EDITOR_TOOL_META).map(([key, meta]) => ({
 
 <style scoped lang="scss">
 .toolbar {
-  position: fixed;
-  left: $pindou-space-md;
-  right: $pindou-space-md;
-  bottom: calc(#{$pindou-space-lg} + var(--pindou-safe-bottom, 0px));
   background: rgba(255, 255, 255, 0.97);
   border-radius: $pindou-radius-md;
   padding: $pindou-space-sm;
   box-shadow: $pindou-shadow-md;
-  z-index: 100;
 }
 
 .tool-row {
@@ -126,10 +121,13 @@ const tools = Object.entries(EDITOR_TOOL_META).map(([key, meta]) => ({
 .tool.active {
   background: $pindou-primary;
   color: #fff;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.35);
+  font-weight: 600;
 }
 
 .tool.disabled {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
+  pointer-events: none;
 }
 </style>

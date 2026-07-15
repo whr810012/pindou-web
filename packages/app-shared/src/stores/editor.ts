@@ -6,6 +6,7 @@ import type { EditorTool } from '../types/app.js'
 interface HistoryEntry {
   grid: MappedGrid
   at: number
+  label?: string
 }
 
 interface EditorState {
@@ -37,7 +38,7 @@ export const useEditorStore = defineStore('editor', {
       return state.history.map((entry, index) => ({
         index,
         at: entry.at,
-        label: `步骤 ${index + 1}`,
+        label: entry.label || `步骤 ${index + 1}`,
       }))
     },
     snapshotCount(state) {
@@ -53,16 +54,16 @@ export const useEditorStore = defineStore('editor', {
       this.selectedPaletteId = paletteId
       this.selectedHex = hex
     },
-    beginStroke(grid: MappedGrid) {
+    beginStroke(grid: MappedGrid, label = '画笔') {
       if (this.strokeOpen) return
-      this.pushHistory(grid)
+      this.pushHistory(grid, label)
       this.strokeOpen = true
     },
     endStroke() {
       this.strokeOpen = false
     },
-    pushHistory(grid: MappedGrid) {
-      this.history.push({ grid: cloneGrid(grid), at: Date.now() })
+    pushHistory(grid: MappedGrid, label?: string) {
+      this.history.push({ grid: cloneGrid(grid), at: Date.now(), label })
       if (this.history.length > MAX_HISTORY) this.history.shift()
       this.future = []
     },
@@ -82,16 +83,23 @@ export const useEditorStore = defineStore('editor', {
     },
     jumpToSnapshot(index: number, current: MappedGrid): MappedGrid | null {
       this.endStroke()
-      const snapshots = [...this.history.map((h) => cloneGrid(h.grid)), cloneGrid(current)]
+      const snapshots = [
+        ...this.history.map((h) => ({ grid: cloneGrid(h.grid), label: h.label })),
+        { grid: cloneGrid(current), label: undefined as string | undefined },
+      ]
       if (index < 0 || index >= snapshots.length) return null
       const target = snapshots[index]
-      this.future = snapshots
-        .slice(index + 1)
-        .map((grid) => ({ grid: cloneGrid(grid), at: Date.now() }))
-      this.history = snapshots
-        .slice(0, index)
-        .map((grid) => ({ grid: cloneGrid(grid), at: Date.now() }))
-      return cloneGrid(target)
+      this.future = snapshots.slice(index + 1).map((item) => ({
+        grid: cloneGrid(item.grid),
+        at: Date.now(),
+        label: item.label,
+      }))
+      this.history = snapshots.slice(0, index).map((item) => ({
+        grid: cloneGrid(item.grid),
+        at: Date.now(),
+        label: item.label,
+      }))
+      return cloneGrid(target.grid)
     },
     resetHistory() {
       this.history = []

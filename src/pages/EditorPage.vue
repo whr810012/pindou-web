@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import type { MappedGrid } from '@wangdandan810012/bead-core'
 import { fillRegion, paintRect, flipGridHorizontal, flipGridVertical } from '@wangdandan810012/bead-core'
 import BeadCanvas from '@/components/BeadCanvas.vue'
 import EditorHistorySheet from '@/components/EditorHistorySheet.vue'
@@ -28,8 +29,10 @@ const historyVisible = ref(false)
 const viewScale = ref(1)
 const viewOffset = ref({ x: 0, y: 0 })
 const panEnabled = ref(false)
+const statusCollapsed = ref(false)
 const guideDismissed = ref(false)
 const GUIDE_KEY = 'pindou.editor.guide.dismissed'
+const STATUS_KEY = 'pindou.editor.status.collapsed'
 
 const grid = computed(() => project.grid)
 const rectMode = computed(() => editor.tool === 'rect')
@@ -45,24 +48,42 @@ const eraserLabel = computed(() =>
   eraserDisplayCode(eraserEntry.value, (id) => paletteStore.getDisplayCode(id)),
 )
 
+const replaceFromEntry = computed(() => {
+  if (!editor.replaceFromId) return null
+  return (
+    paletteStore.activeEntries.find((e) => e.id === editor.replaceFromId) ??
+    paletteStore.fullEntries.find((e) => e.id === editor.replaceFromId) ??
+    null
+  )
+})
+
+const replaceFromCode = computed(() =>
+  editor.replaceFromId ? paletteStore.getDisplayCode(editor.replaceFromId) : '',
+)
+
 const statusHint = computed(() => {
   if (editor.tool === 'replace' && !editor.replaceFromId) {
-    return '换色第 1 步：点击图纸上要替换的旧颜色'
+    return '第 1 步：点击图纸上要替换的旧颜色（再点同色可取消）'
   }
   if (editor.tool === 'replace' && editor.replaceFromId) {
-    return `换色第 2 步：在色板选择新颜色，将自动替换全图`
+    return `第 2 步：在色板点选新色即可替换全图「${replaceFromCode.value}」`
   }
   if (panEnabled.value) {
     return '平移模式：拖动画布查看，点顶栏「平移」退出'
   }
   if (editor.tool === 'eraser') {
-    return `擦除格子变为空白背景（${eraserLabel.value}），不计入用豆量；可用画笔重新绘制`
+    return `擦除为空白背景（${eraserLabel.value}），不计入用豆`
   }
   return toolMeta.value.hint
 })
 
+const replaceModeActive = computed(
+  () => editor.tool === 'replace' && !!editor.replaceFromId,
+)
+
 onMounted(async () => {
   guideDismissed.value = localStorage.getItem(GUIDE_KEY) === '1'
+  statusCollapsed.value = localStorage.getItem(STATUS_KEY) === '1'
   window.addEventListener('keydown', onKeyDown)
   if (paletteStore.activeEntries.length === 0) {
     await paletteStore.loadPalettes().catch(console.error)
@@ -82,17 +103,44 @@ function dismissGuide() {
   localStorage.setItem(GUIDE_KEY, '1')
 }
 
-function goBack() {
+function toggleStatusCollapsed() {
+  statusCollapsed.value = !statusCollapsed.value
+  localStorage.setItem(STATUS_KEY, statusCollapsed.value ? '1' : '0')
+}
+
+function leaveEditor() {
+  if (editor.canUndo) {
+    showToast({ title: '可稍后在项目中继续编辑', icon: 'none' })
+  }
   router.push('/workspace')
+}
+
+function goBack() {
+  leaveEditor()
+}
+
+function commitGridChange(next: MappedGrid, label: string) {
+  if (!project.grid) return
+  editor.pushHistory(project.grid, label)
+  project.setGrid(next)
+}
+
+function applyReplace(toId: string, toHex: string) {
+  if (!project.grid || !editor.replaceFromId) return
+  if (editor.replaceFromId === toId) {
+    editor.replaceFromId = ''
+    showToast({ title: '已取消换色（新旧色相同）', icon: 'none' })
+    return
+  }
+  const updated = replaceColorInGrid(project.grid, editor.replaceFromId, toId, toHex)
+  commitGridChange(updated, '换色')
+  editor.replaceFromId = ''
+  showToast({ title: '全图换色完成', icon: 'success' })
 }
 
 function applyCell(row: number, col: number) {
   if (!project.grid) return
   const cell = project.grid[row][col]
-
-  const needsStroke = editor.tool === 'brush' || editor.tool === 'eraser'
-  if (needsStroke) editor.beginStroke(project.grid)
-  else editor.pushHistory(project.grid)
 
   if (editor.tool === 'eraser') {
     if (cell.isExternal) return
@@ -101,6 +149,7 @@ function applyCell(row: number, col: number) {
       showToast({ title: '未找到背景色，请切换全色系色板', icon: 'none' })
       return
     }
+    editor.beginStroke(project.grid, '橡皮')
     project.eraseCell(row, col, entry.id, normalizePaletteHex(entry.hex))
     return
   }
@@ -110,6 +159,14 @@ function applyCell(row: number, col: number) {
       showToast({ title: '请先在色板选择颜色', icon: 'none' })
       return
     }
+    if (
+      !cell.isExternal &&
+      cell.paletteId === editor.selectedPaletteId &&
+      normalizePaletteHex(cell.hex) === normalizePaletteHex(editor.selectedHex)
+    ) {
+      return
+    }
+    editor.beginStroke(project.grid, '画笔')
     project.updateCell(row, col, editor.selectedPaletteId, editor.selectedHex)
     return
   }
@@ -123,6 +180,11 @@ function applyCell(row: number, col: number) {
   }
 
   if (editor.tool === 'fill') {
+    if (!editor.selectedPaletteId) {
+      showToast({ title: '请先在色板选择颜色', icon: 'none' })
+      return
+    }
+    if (cell.paletteId === editor.selectedPaletteId) return
     const filled = fillRegion(
       project.grid,
       row,
@@ -130,28 +192,25 @@ function applyCell(row: number, col: number) {
       editor.selectedPaletteId,
       editor.selectedHex,
     )
-    project.setGrid(filled)
+    commitGridChange(filled, '填充')
     return
   }
 
   if (editor.tool === 'replace' && editor.replaceFromId) {
-    editor.pushHistory(project.grid)
-    const updated = replaceColorInGrid(
-      project.grid,
-      editor.replaceFromId,
-      editor.selectedPaletteId,
-      editor.selectedHex,
-    )
-    project.setGrid(updated)
-    editor.replaceFromId = ''
-    showToast({ title: '全图换色完成', icon: 'success' })
-    return
+    if (!editor.selectedPaletteId) {
+      showToast({ title: '请先在色板选择新颜色', icon: 'none' })
+      return
+    }
+    applyReplace(editor.selectedPaletteId, editor.selectedHex)
   }
 }
 
 function onRectSelect({ row0, col0, row1, col1 }: { row0: number; col0: number; row1: number; col1: number }) {
   if (!project.grid) return
-  editor.pushHistory(project.grid)
+  if (!editor.selectedPaletteId) {
+    showToast({ title: '请先在色板选择颜色', icon: 'none' })
+    return
+  }
   const painted = paintRect(
     project.grid,
     row0,
@@ -161,18 +220,32 @@ function onRectSelect({ row0, col0, row1, col1 }: { row0: number; col0: number; 
     editor.selectedPaletteId,
     editor.selectedHex,
   )
-  project.setGrid(painted)
+  commitGridChange(painted, '框选')
   showToast({ title: '已填充选区', icon: 'success' })
 }
 
 function onCellTap({ row, col }: { row: number; col: number }) {
   if (editor.tool === 'rect') return
-  if (editor.tool === 'replace' && !editor.replaceFromId && project.grid) {
-    editor.replaceFromId = project.grid[row][col].paletteId
+  if (!project.grid) return
+  const cell = project.grid[row][col]
+
+  if (editor.tool === 'replace' && !editor.replaceFromId) {
+    if (cell.isExternal) return
+    editor.replaceFromId = cell.paletteId
     const code = paletteStore.getDisplayCode(editor.replaceFromId)
     showToast({ title: `已选旧色 ${code}，请选新色`, icon: 'none' })
     return
   }
+
+  if (editor.tool === 'replace' && editor.replaceFromId) {
+    if (cell.isExternal) return
+    if (cell.paletteId === editor.replaceFromId) {
+      editor.replaceFromId = ''
+      showToast({ title: '已取消换色', icon: 'none' })
+      return
+    }
+  }
+
   applyCell(row, col)
 }
 
@@ -221,15 +294,7 @@ function resetView() {
 function onPaletteSelect(entry: { id: string; hex: string }) {
   editor.selectColor(entry.id, entry.hex)
   if (editor.tool !== 'replace' || !editor.replaceFromId || !project.grid) return
-  const updated = replaceColorInGrid(
-    project.grid,
-    editor.replaceFromId,
-    entry.id,
-    entry.hex,
-  )
-  project.setGrid(updated)
-  editor.replaceFromId = ''
-  showToast({ title: '全图换色完成', icon: 'success' })
+  applyReplace(entry.id, entry.hex)
 }
 
 function togglePan() {
@@ -242,16 +307,19 @@ function onViewOffset(offset: { x: number; y: number }) {
 
 function flipHorizontal() {
   if (!project.grid) return
-  editor.pushHistory(project.grid)
-  project.setGrid(flipGridHorizontal(project.grid))
+  commitGridChange(flipGridHorizontal(project.grid), '水平翻转')
   showToast({ title: '已水平翻转', icon: 'success' })
 }
 
 function flipVertical() {
   if (!project.grid) return
-  editor.pushHistory(project.grid)
-  project.setGrid(flipGridVertical(project.grid))
+  commitGridChange(flipGridVertical(project.grid), '垂直翻转')
   showToast({ title: '已垂直翻转', icon: 'success' })
+}
+
+function changeTool(tool: typeof editor.tool) {
+  editor.setTool(tool)
+  if (tool !== 'replace') editor.replaceFromId = ''
 }
 
 function onKeyDown(event: KeyboardEvent) {
@@ -280,12 +348,16 @@ function onKeyDown(event: KeyboardEvent) {
     return
   }
   if (key === 'escape') {
+    if (editor.replaceFromId) {
+      editor.replaceFromId = ''
+      showToast({ title: '已取消换色', icon: 'none' })
+      return
+    }
     goBack()
     return
   }
   if (toolMap[key]) {
-    editor.setTool(toolMap[key])
-    if (toolMap[key] !== 'replace') editor.replaceFromId = ''
+    changeTool(toolMap[key])
   }
 }
 </script>
@@ -307,18 +379,42 @@ function onKeyDown(event: KeyboardEvent) {
     </div>
 
     <template v-else>
-      <div v-if="!guideDismissed" class="editor-guide card-hint">
-        <strong>精修模式：</strong>下方选工具 → 色板选色 → 在画布上点击或拖动。
-        滚轮缩放，需要移动视图时开启「平移」。
-        <button type="button" class="guide-dismiss" @click="dismissGuide">知道了</button>
-      </div>
-
-      <div class="tool-hint" :class="{ 'tool-hint--warn': editor.tool === 'replace' }">
-        <span class="tool-hint-icon">{{ toolMeta.icon }}</span>
-        <span class="tool-hint-text">
-          <strong>{{ toolMeta.label }}</strong>
-          {{ statusHint }}
-        </span>
+      <div
+        class="status-bar"
+        :class="{
+          'status-bar--warn': editor.tool === 'replace',
+          'status-bar--collapsed': statusCollapsed,
+        }"
+      >
+        <button type="button" class="status-bar__main" @click="toggleStatusCollapsed">
+          <span class="status-bar__icon">{{ toolMeta.icon }}</span>
+          <span class="status-bar__body">
+            <span class="status-bar__title">
+              {{ toolMeta.label }}
+              <span v-if="toolMeta.shortcut" class="status-bar__kbd">{{ toolMeta.shortcut }}</span>
+            </span>
+            <span v-if="!statusCollapsed" class="status-bar__hint">{{ statusHint }}</span>
+            <span
+              v-if="!statusCollapsed && !guideDismissed"
+              class="status-bar__guide"
+            >
+              色板选色后点击或拖动画布；滚轮缩放，开启「平移」可移动视图。
+              <button type="button" class="status-bar__guide-dismiss" @click.stop="dismissGuide">
+                知道了
+              </button>
+            </span>
+          </span>
+          <span class="status-bar__chevron">{{ statusCollapsed ? '▾' : '▴' }}</span>
+        </button>
+        <div v-if="replaceModeActive && !statusCollapsed" class="status-bar__replace">
+          <span
+            class="status-bar__swatch"
+            :style="{ backgroundColor: replaceFromEntry?.hex || '#ccc' }"
+          />
+          <span>旧色 {{ replaceFromCode }}</span>
+          <span class="status-bar__arrow">→</span>
+          <span>点色板完成替换</span>
+        </div>
       </div>
 
       <EditorViewportBar
@@ -358,33 +454,38 @@ function onKeyDown(event: KeyboardEvent) {
         />
       </div>
 
-      <FloatingPalette
-        v-if="editor.tool !== 'eraser'"
-        :entries="paletteStore.activeEntries"
-        :selected-id="editor.selectedPaletteId"
-        :selected-hex="editor.selectedHex"
-        :code-lookup="(id) => paletteStore.getDisplayCode(id)"
-        @select="onPaletteSelect"
-      />
-      <div v-else class="eraser-bar">
-        <div class="eraser-preview">
-          <span class="eraser-icon">🧹</span>
-          <div>
-            <span class="eraser-title">橡皮模式</span>
-            <span class="eraser-desc">擦除后显示灰色空白格，背景色号 {{ eraserLabel }}</span>
+      <div class="editor-dock">
+        <FloatingPalette
+          v-if="editor.tool !== 'eraser'"
+          :entries="paletteStore.activeEntries"
+          :selected-id="editor.selectedPaletteId"
+          :selected-hex="editor.selectedHex"
+          :replace-mode="replaceModeActive"
+          :replace-from-code="replaceFromCode"
+          :replace-from-hex="replaceFromEntry?.hex || ''"
+          :code-lookup="(id) => paletteStore.getDisplayCode(id)"
+          @select="onPaletteSelect"
+        />
+        <div v-else class="eraser-bar">
+          <div class="eraser-preview">
+            <span class="eraser-icon">🧹</span>
+            <div>
+              <span class="eraser-title">橡皮模式</span>
+              <span class="eraser-desc">擦成空白，色号 {{ eraserLabel }}</span>
+            </div>
           </div>
         </div>
+        <FloatingToolbar
+          :tool="editor.tool"
+          :can-undo="editor.canUndo"
+          :can-redo="editor.canRedo"
+          :history-count="editor.snapshotCount"
+          @change="changeTool"
+          @undo="undo"
+          @redo="redo"
+          @history="historyVisible = true"
+        />
       </div>
-      <FloatingToolbar
-        :tool="editor.tool"
-        :can-undo="editor.canUndo"
-        :can-redo="editor.canRedo"
-        :history-count="editor.snapshotCount"
-        @change="(t) => { editor.setTool(t); if (t !== 'replace') editor.replaceFromId = '' }"
-        @undo="undo"
-        @redo="redo"
-        @history="historyVisible = true"
-      />
       <EditorHistorySheet
         :show="historyVisible"
         @close="historyVisible = false"
@@ -422,60 +523,134 @@ function onKeyDown(event: KeyboardEvent) {
   margin-bottom: $pindou-space-sm;
 }
 
-.editor-guide {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  line-height: 1.5;
-}
-
-.guide-dismiss {
-  margin-left: auto;
-  border: none;
-  background: transparent;
-  color: $pindou-primary;
-  font-size: $pindou-font-sm;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.tool-hint {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 10px 12px;
+.status-bar {
   margin-bottom: $pindou-space-sm;
   background: $pindou-bg-card;
   border-radius: $pindou-radius-sm;
   border: 1px solid $pindou-border-light;
+  overflow: hidden;
+}
+
+.status-bar--warn {
+  background: $pindou-warning-bg;
+  border-color: transparent;
+}
+
+.status-bar__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+}
+
+.status-bar__icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+.status-bar__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-bar__title {
+  font-size: $pindou-font-sm;
+  font-weight: 700;
+  color: $pindou-text;
+}
+
+.status-bar--warn .status-bar__title {
+  color: $pindou-warning;
+}
+
+.status-bar__kbd {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.06);
+  color: $pindou-text-muted;
+  vertical-align: middle;
+}
+
+.status-bar__hint {
   font-size: $pindou-font-sm;
   color: $pindou-text-secondary;
   line-height: 1.45;
 }
 
-.tool-hint--warn {
-  background: $pindou-warning-bg;
-  border-color: transparent;
+.status-bar--warn .status-bar__hint {
   color: $pindou-warning;
 }
 
-.tool-hint-icon {
-  font-size: 18px;
+.status-bar__guide {
+  font-size: $pindou-font-xs;
+  color: $pindou-text-muted;
+  line-height: 1.4;
+}
+
+.status-bar__guide-dismiss {
+  margin-left: 6px;
+  border: none;
+  background: transparent;
+  color: $pindou-primary;
+  font-size: $pindou-font-xs;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.status-bar__chevron {
+  flex-shrink: 0;
+  color: $pindou-text-muted;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.status-bar__replace {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px 10px;
+  font-size: $pindou-font-xs;
+  color: $pindou-warning;
+}
+
+.status-bar__swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   flex-shrink: 0;
 }
 
-.tool-hint-text strong {
-  color: $pindou-text;
-  margin-right: 6px;
+.status-bar__arrow {
+  opacity: 0.7;
 }
 
 .canvas-area {
   overflow: auto;
-  max-height: calc(100vh - 320px);
+  max-height: calc(100vh - 300px);
   border-radius: $pindou-radius-sm;
   background: $pindou-bg-muted;
   padding: 8px;
+  margin-bottom: calc(260px + var(--pindou-safe-bottom, 0px));
+
+  @media (max-width: 640px) {
+    max-height: calc(100vh - 280px);
+    margin-bottom: calc(280px + var(--pindou-safe-bottom, 0px));
+  }
 }
 
 .empty-state {
@@ -486,16 +661,29 @@ function onKeyDown(event: KeyboardEvent) {
   padding: 48px 24px;
 }
 
-.eraser-bar {
+.editor-dock {
   position: fixed;
   left: 12px;
   right: 12px;
-  bottom: 148px;
+  bottom: calc(#{$pindou-space-lg} + var(--pindou-safe-bottom, 0px));
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: $pindou-content-max;
+  margin: 0 auto;
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
+.eraser-bar {
   background: rgba(255, 255, 255, 0.97);
   border-radius: 12px;
   padding: 12px 14px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  z-index: 99;
   border: 1px dashed $pindou-border-light;
 }
 

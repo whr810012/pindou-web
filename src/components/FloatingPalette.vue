@@ -2,12 +2,22 @@
 import type { PaletteEntry } from '@wangdandan810012/bead-core'
 import { computed, ref } from 'vue'
 
-const props = defineProps<{
-  entries: PaletteEntry[]
-  selectedId: string
-  selectedHex: string
-  codeLookup: (id: string) => string
-}>()
+const props = withDefaults(
+  defineProps<{
+    entries: PaletteEntry[]
+    selectedId: string
+    selectedHex: string
+    codeLookup: (id: string) => string
+    replaceMode?: boolean
+    replaceFromCode?: string
+    replaceFromHex?: string
+  }>(),
+  {
+    replaceMode: false,
+    replaceFromCode: '',
+    replaceFromHex: '',
+  },
+)
 
 const emit = defineEmits<{
   select: [entry: PaletteEntry]
@@ -31,11 +41,19 @@ const selectedCode = computed(() => props.codeLookup(props.selectedId))
 </script>
 
 <template>
-  <div class="floating-palette">
+  <div class="floating-palette" :class="{ 'floating-palette--replace': replaceMode }">
+    <div v-if="replaceMode" class="replace-banner">
+      <span
+        v-if="replaceFromHex"
+        class="replace-swatch"
+        :style="{ backgroundColor: replaceFromHex }"
+      />
+      <span>选择新色即可替换「{{ replaceFromCode || '旧色' }}」</span>
+    </div>
     <div class="current">
       <div class="current-swatch" :style="{ backgroundColor: selectedHex }" />
       <div class="current-meta">
-        <span class="current-label">当前画笔</span>
+        <span class="current-label">{{ replaceMode ? '将换成' : '当前画笔' }}</span>
         <span class="current-code">{{ selectedCode || '未选色' }}</span>
       </div>
       <input
@@ -73,15 +91,36 @@ const selectedCode = computed(() => props.codeLookup(props.selectedId))
 
 <style scoped lang="scss">
 .floating-palette {
-  position: fixed;
-  left: 12px;
-  right: 12px;
-  bottom: 148px;
   background: rgba(255, 255, 255, 0.97);
   border-radius: 12px;
   padding: 8px 10px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  z-index: 99;
+}
+
+.floating-palette--replace {
+  border: 1px solid rgba(232, 156, 36, 0.55);
+  box-shadow: 0 4px 16px rgba(232, 156, 36, 0.18);
+}
+
+.replace-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: $pindou-warning-bg;
+  color: $pindou-warning;
+  font-size: $pindou-font-xs;
+  font-weight: 600;
+}
+
+.replace-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
 }
 
 .current {

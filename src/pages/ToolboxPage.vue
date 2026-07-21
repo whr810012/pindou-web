@@ -4,8 +4,8 @@ import { usePageSeo } from '@/utils/seo'
 usePageSeo('toolbox')
 
 const downloads = {
-  installer: '/downloads/dandan-note-0.1.1-x64-setup.exe',
-  portable: '/downloads/dandan-note-0.1.1-x64-portable.exe',
+  installer: '/downloads/dandan-note-0.1.2-x64-setup.exe',
+  portable: '/downloads/dandan-note-0.1.2-x64-portable.exe',
 }
 </script>
 
@@ -78,7 +78,7 @@ const downloads = {
               <h3>蛋蛋便签</h3>
               <p>Windows 桌面便签与待办</p>
             </div>
-            <span class="tool-card__version">v0.1.1</span>
+            <span class="tool-card__version">v0.1.2</span>
           </div>
 
           <p class="tool-card__intro">

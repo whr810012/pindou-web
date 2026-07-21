@@ -1,21 +1,34 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#5B6CFF"/>
-      <stop offset="100%" stop-color="#7C4DFF"/>
+      <stop offset="0%" stop-color="#FFF8EE"/>
+      <stop offset="58%" stop-color="#F1EEE9"/>
+      <stop offset="100%" stop-color="#E4E8FF"/>
+    </linearGradient>
+    <linearGradient id="egg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#DDE2FF"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <g fill="#ffffff" opacity="0.12">
-    <circle cx="180" cy="120" r="48"/>
-    <circle cx="1020" cy="520" r="72"/>
-    <circle cx="920" cy="140" r="36"/>
-    <circle cx="300" cy="500" r="56"/>
+  <g fill="#5969DF" opacity="0.1">
+    <circle cx="80" cy="90" r="5"/><circle cx="112" cy="90" r="5"/><circle cx="144" cy="90" r="5"/>
+    <circle cx="80" cy="122" r="5"/><circle cx="112" cy="122" r="5"/><circle cx="144" cy="122" r="5"/>
+    <circle cx="1050" cy="500" r="5"/><circle cx="1082" cy="500" r="5"/><circle cx="1114" cy="500" r="5"/>
+    <circle cx="1050" cy="532" r="5"/><circle cx="1082" cy="532" r="5"/><circle cx="1114" cy="532" r="5"/>
   </g>
-  <text x="80" y="280" fill="#ffffff" font-family="system-ui, sans-serif" font-size="72" font-weight="700">Pindou �F</text>
-  <text x="80" y="360" fill="#E8EAFF" font-family="system-ui, sans-serif" font-size="36">�Gl�F�� � ,0 � 	��(</text>
-  <g transform="translate(80, 420)">
-    <rect width="180" height="56" rx="28" fill="#ffffff" opacity="0.2"/>
-    <text x="90" y="36" fill="#ffffff" font-family="system-ui, sans-serif" font-size="22" text-anchor="middle">M9(��w</text>
-  </g>
+  <circle cx="950" cy="305" r="190" fill="none" stroke="#5969DF" stroke-width="2" stroke-dasharray="8 12" opacity="0.25"/>
+  <circle cx="950" cy="305" r="130" fill="none" stroke="#EB805E" stroke-width="2" stroke-dasharray="6 10" opacity="0.3"/>
+  <ellipse cx="950" cy="315" rx="102" ry="132" fill="url(#egg)" stroke="#FFFFFF" stroke-width="8"/>
+  <ellipse cx="916" cy="270" rx="18" ry="38" fill="#FFFFFF" opacity="0.72" transform="rotate(25 916 270)"/>
+  <circle cx="926" cy="325" r="7" fill="#202032"/>
+  <circle cx="978" cy="325" r="7" fill="#202032"/>
+  <path d="M936 352 Q952 368 968 352" fill="none" stroke="#EB805E" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="1080" cy="207" r="24" fill="#EB805E" stroke="#FFFFFF" stroke-width="7"/>
+  <rect x="795" y="418" width="54" height="54" rx="14" fill="#F2CF75" stroke="#FFFFFF" stroke-width="7" transform="rotate(-9 822 445)"/>
+  <path d="M812 445 L820 453 L835 435" fill="none" stroke="#6A5117" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="82" y="220" fill="#EB805E" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="5">DANDAN HUB</text>
+  <text x="78" y="330" fill="#202032" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="84" font-weight="700">蛋蛋中心</text>
+  <text x="82" y="405" fill="#5969DF" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="40" font-weight="700">一颗蛋蛋，孵化好用的点子。</text>
+  <text x="84" y="475" fill="#696573" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="24">Pindou 拼豆工坊 · 蛋蛋工具箱</text>
 </svg>

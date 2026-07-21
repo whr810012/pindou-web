@@ -1,20 +1,20 @@
 {
-  "name": "Pindou 拼豆 - 免费在线照片转拼豆图纸生成器",
-  "short_name": "Pindou 拼豆",
-  "description": "免费把照片变成带色号的拼豆图纸。支持 MARD/COCO 色卡、在线编辑与 PDF 导出，浏览器本地处理更安心。",
+  "name": "蛋蛋中心 Dandan Hub - 好用的小工具与创作产品",
+  "short_name": "蛋蛋中心 Dandan Hub",
+  "description": "一颗蛋蛋，孵化好用的点子。探索 Pindou 拼豆工坊与蛋蛋工具箱。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "lang": "zh-CN",
-  "background_color": "#F5F6FA",
-  "theme_color": "#5B6CFF",
+  "background_color": "#FFF8EE",
+  "theme_color": "#5969DF",
   "categories": [
     "design",
     "utilities"
   ],
   "icons": [
     {
-      "src": "/static/gallery/demo-icon.svg",
+      "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

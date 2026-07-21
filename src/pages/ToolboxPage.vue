@@ -11,6 +11,20 @@ const downloads = {
 
 <template>
   <div class="page page--app toolbox">
+    <header class="toolbox-header">
+      <router-link class="toolbox-header__brand" to="/">
+        <span class="toolbox-header__egg" aria-hidden="true" />
+        <span>
+          <strong>蛋蛋中心</strong>
+          <small>DANDAN HUB</small>
+        </span>
+      </router-link>
+      <nav aria-label="工具箱导航">
+        <router-link to="/">产品中心</router-link>
+        <router-link to="/pindou">拼豆工坊</router-link>
+      </nav>
+    </header>
+
     <section class="toolbox-hero">
       <div class="toolbox-hero__copy">
         <p class="toolbox-hero__eyebrow">
@@ -115,6 +129,71 @@ const downloads = {
   max-width: $pindou-content-wide;
   margin: 0 auto;
   padding-bottom: 64px;
+}
+
+.toolbox-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 4px 16px;
+
+  nav {
+    display: flex;
+    gap: 4px;
+  }
+
+  nav a {
+    padding: 7px 10px;
+    border-radius: $pindou-radius-pill;
+    color: $pindou-text-muted;
+    font-size: $pindou-font-xs;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color $pindou-duration-fast, background $pindou-duration-fast;
+
+    &:hover {
+      color: $pindou-primary;
+      background: rgba($pindou-primary, 0.08);
+    }
+  }
+}
+
+.toolbox-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: inherit;
+  text-decoration: none;
+
+  > span:last-child {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+
+  strong {
+    font-family: $pindou-font-display;
+    font-size: 14px;
+  }
+
+  small {
+    margin-top: 4px;
+    color: $pindou-text-muted;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+}
+
+.toolbox-header__egg {
+  width: 29px;
+  height: 34px;
+  border: 1px solid rgba($pindou-primary, 0.18);
+  border-radius: 50% 50% 46% 46% / 58% 58% 42% 42%;
+  background: linear-gradient(145deg, #fff, $pindou-primary-light);
+  box-shadow: $pindou-shadow-sm;
+  transform: rotate(-5deg);
 }
 
 .toolbox-hero {

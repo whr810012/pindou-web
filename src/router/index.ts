@@ -3,7 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: '/', name: 'landing', component: () => import('@/pages/LandingPage.vue') },
+    { path: '/', name: 'hub', component: () => import('@/pages/HubPage.vue') },
+    { path: '/pindou', name: 'pindou-landing', component: () => import('@/pages/LandingPage.vue') },
     { path: '/home', name: 'home', component: () => import('@/pages/HomePage.vue') },
     { path: '/workspace', name: 'workspace', component: () => import('@/pages/WorkspacePage.vue') },
     { path: '/editor', name: 'editor', component: () => import('@/pages/EditorPage.vue') },

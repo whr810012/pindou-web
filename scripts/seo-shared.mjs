@@ -14,6 +14,12 @@ export function resolveSiteUrl(config) {
 }
 
 const PAGE_META = {
+  '/pindou': {
+    breadcrumb: 'Pindou 拼豆工坊',
+    title: 'Pindou 拼豆 - 免费在线照片转拼豆图纸生成器',
+    description:
+      'Pindou 免费在线拼豆图纸生成器：上传照片一键转拼豆像素图，支持 MARD、COCO、漫漫等主流色号，在线编辑画笔精修、导出 PDF 采购清单。',
+  },
   '/gallery': {
     breadcrumb: '案例画廊',
     title: '拼豆图案例与参数推荐 - Pindou',
@@ -58,6 +64,23 @@ function buildBreadcrumbList(siteUrl, crumbs) {
   }
 }
 
+function buildFaqEntities(config) {
+  return config.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  }))
+}
+
+function buildHowToSteps(config) {
+  return config.howTo.steps.map((step, index) => ({
+    '@type': 'HowToStep',
+    position: index + 1,
+    name: step.name,
+    text: step.text,
+  }))
+}
+
 export function buildPageJsonLd(config, siteUrl, routePath) {
   const graph = []
   const pageMeta = PAGE_META[routePath]
@@ -69,6 +92,46 @@ export function buildPageJsonLd(config, siteUrl, routePath) {
       { name: pageMeta.breadcrumb, path: routePath },
     ]),
   )
+
+  if (routePath === '/pindou') {
+    graph.push(
+      {
+        '@type': 'WebPage',
+        '@id': `${siteUrl}/pindou#webpage`,
+        name: pageMeta.title,
+        url: `${siteUrl}/pindou`,
+        description: pageMeta.description,
+        inLanguage: 'zh-CN',
+        isPartOf: { '@id': `${siteUrl}/#website` },
+        mainEntity: { '@id': `${siteUrl}/pindou#webapp` },
+      },
+      {
+        '@type': 'WebApplication',
+        '@id': `${siteUrl}/pindou#webapp`,
+        name: 'Pindou 拼豆',
+        url: `${siteUrl}/workspace`,
+        description: pageMeta.description,
+        applicationCategory: 'DesignApplication',
+        operatingSystem: 'Web',
+        browserRequirements: 'Requires JavaScript',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'CNY' },
+        featureList: config.features,
+        provider: config.organization ? { '@id': `${siteUrl}/#organization` } : undefined,
+        inLanguage: 'zh-CN',
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: buildFaqEntities(config),
+      },
+      {
+        '@type': 'HowTo',
+        name: config.howTo.name,
+        description: config.howTo.description,
+        step: buildHowToSteps(config),
+        provider: config.organization ? { '@id': `${siteUrl}/#organization` } : undefined,
+      },
+    )
+  }
 
   if (routePath === '/gallery') {
     const items = loadGalleryItems()
@@ -110,7 +173,7 @@ export function buildPageJsonLd(config, siteUrl, routePath) {
       description: pageMeta.description,
       inLanguage: 'zh-CN',
       isPartOf: { '@id': `${siteUrl}/#website` },
-      mainEntity: { '@id': `${siteUrl}/#webapp` },
+      mainEntity: { '@id': `${siteUrl}/pindou#webapp` },
     })
   }
 
@@ -153,19 +216,6 @@ export function buildPageJsonLd(config, siteUrl, routePath) {
 }
 
 export function buildJsonLd(config, siteUrl) {
-  const faqEntities = config.faq.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a },
-  }))
-
-  const howToSteps = config.howTo.steps.map((step, index) => ({
-    '@type': 'HowToStep',
-    position: index + 1,
-    name: step.name,
-    text: step.text,
-  }))
-
   const orgConfig = config.organization
   const organization = orgConfig
     ? {
@@ -202,34 +252,25 @@ export function buildJsonLd(config, siteUrl) {
         description: config.defaultDescription,
         inLanguage: 'zh-CN',
         publisher: organization ? { '@id': `${siteUrl}/#organization` } : undefined,
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: `${siteUrl}/gallery?q={search_term_string}`,
-          'query-input': 'required name=search_term_string',
-        },
       },
       ...(organization ? [organization] : []),
       {
-        '@type': 'WebApplication',
-        '@id': `${siteUrl}/#webapp`,
-        name: config.siteName,
-        url: `${siteUrl}/workspace`,
-        description: config.defaultDescription,
-        applicationCategory: 'DesignApplication',
-        operatingSystem: 'Web',
-        browserRequirements: 'Requires JavaScript',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'CNY' },
-        featureList: config.features,
-        provider: organization ? { '@id': `${siteUrl}/#organization` } : undefined,
-        inLanguage: 'zh-CN',
-      },
-      { '@type': 'FAQPage', mainEntity: faqEntities },
-      {
-        '@type': 'HowTo',
-        name: config.howTo.name,
-        description: config.howTo.description,
-        step: howToSteps,
-        provider: organization ? { '@id': `${siteUrl}/#organization` } : undefined,
+        '@type': 'ItemList',
+        name: '蛋蛋中心产品',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Pindou 拼豆工坊',
+            url: `${siteUrl}/pindou`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: '蛋蛋工具箱',
+            url: `${siteUrl}/toolbox`,
+          },
+        ],
       },
     ],
   }

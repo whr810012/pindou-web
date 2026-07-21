@@ -11,12 +11,14 @@ export const OG_IMAGE_ALT = seoConfig.ogImageAlt
 export interface PageSeoOptions {
   title?: string
   description?: string
+  keywords?: string
   path?: string
   noindex?: boolean
 }
 
 export type PageSeoKey =
-  | 'landing'
+  | 'hub'
+  | 'pindouLanding'
   | 'home'
   | 'gallery'
   | 'workspace'
@@ -31,12 +33,23 @@ export type PageSeoKey =
 
 const PAGE_ROUTES: Record<
   PageSeoKey,
-  Required<Pick<PageSeoOptions, 'title' | 'description' | 'path'>> & { noindex?: boolean }
+  Required<Pick<PageSeoOptions, 'title' | 'description' | 'path'>> & {
+    keywords?: string
+    noindex?: boolean
+  }
 > = {
-  landing: {
+  hub: {
     path: '/',
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
+  },
+  pindouLanding: {
+    path: '/pindou',
+    title: 'Pindou 拼豆 - 免费在线照片转拼豆图纸生成器',
+    description:
+      'Pindou 免费在线拼豆图纸生成器：上传照片一键转拼豆像素图，支持 MARD、COCO、漫漫等主流色号，在线编辑画笔精修、导出 PDF 采购清单。',
+    keywords:
+      '拼豆,拼豆图纸,拼豆图纸生成器,照片转拼豆,图片转拼豆,像素豆,perler beads,拼豆工具,拼豆色号,MARD色号,COCO色号,在线拼豆',
   },
   home: {
     path: '/home',
@@ -144,7 +157,7 @@ export function setPageSeo(options: PageSeoOptions = {}) {
 
   document.title = title
   setMeta('name', 'description', description)
-  setMeta('name', 'keywords', DEFAULT_KEYWORDS)
+  setMeta('name', 'keywords', options.keywords ?? DEFAULT_KEYWORDS)
   setMeta('property', 'og:title', title)
   setMeta('property', 'og:description', description)
   setMeta('property', 'og:type', 'website')
@@ -177,6 +190,7 @@ export function usePageSeo(key: PageSeoKey) {
     setPageSeo({
       title: config.title,
       description: config.description,
+      keywords: config.keywords,
       path: config.path,
       noindex: config.noindex,
     })

@@ -10,6 +10,17 @@ const root = join(__dirname, '..')
 const ROUTES = [
   { path: '/', outFile: 'index.html', injectSelector: '#app' },
   {
+    path: '/pindou',
+    outDir: 'pindou',
+    outFile: 'index.html',
+    injectSelector: '#app',
+    title: 'Pindou 拼豆 - 免费在线照片转拼豆图纸生成器',
+    description:
+      'Pindou 免费在线拼豆图纸生成器：上传照片一键转拼豆像素图，支持 MARD、COCO、漫漫等主流色号，在线编辑画笔精修、导出 PDF 采购清单。',
+    keywords:
+      '拼豆,拼豆图纸,拼豆图纸生成器,照片转拼豆,图片转拼豆,像素豆,拼豆工具,拼豆色号,MARD色号,COCO色号,在线拼豆',
+  },
+  {
     path: '/gallery',
     outDir: 'gallery',
     outFile: 'index.html',
@@ -123,6 +134,13 @@ function mergePrerenderedHtml(baseHtml, appHtml, route, siteUrl, config) {
         /<meta name="twitter:description" content="[^"]*"\s*\/>/,
         `<meta name="twitter:description" content="${route.description}" />`,
       )
+  }
+
+  if (route.keywords) {
+    html = html.replace(
+      /<meta name="keywords" content="[^"]*"\s*\/>/,
+      `<meta name="keywords" content="${route.keywords}" />`,
+    )
   }
 
   html = html

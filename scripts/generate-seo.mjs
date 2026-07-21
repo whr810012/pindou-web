@@ -65,12 +65,12 @@ Sitemap: ${siteUrl}/sitemap.xml
     scope: '/',
     display: 'standalone',
     lang: 'zh-CN',
-    background_color: '#F5F6FA',
+    background_color: '#FFF8EE',
     theme_color: config.themeColor,
     categories: ['design', 'utilities'],
     icons: [
       {
-        src: '/static/gallery/demo-icon.svg',
+        src: '/favicon.svg',
         sizes: 'any',
         type: 'image/svg+xml',
         purpose: 'any',

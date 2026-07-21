@@ -14,11 +14,13 @@ const navItems = [
   { path: '/palette', label: '色板' },
 ]
 
-const isLanding = computed(() => route.path === '/')
+const isStandalonePage = computed(
+  () => route.path === '/' || route.path === '/pindou' || route.path === '/toolbox',
+)
 const isWideContent = computed(() => route.path === '/workspace')
 
 const hideNav = computed(() => {
-  if (isLanding.value) return true
+  if (isStandalonePage.value) return true
   const hidden = ['/editor', '/focus', '/preview3d']
   return hidden.some((p) => route.path === p || route.path.startsWith(`${p}/`))
 })
@@ -34,9 +36,9 @@ function go(path: string) {
 </script>
 
 <template>
-  <div class="app-shell" :class="{ 'app-shell--landing': isLanding }">
+  <div class="app-shell" :class="{ 'app-shell--landing': isStandalonePage }">
     <header v-if="!hideNav" class="app-header">
-      <a class="brand" href="/" @click.prevent="go('/')">
+      <a class="brand" href="/pindou" @click.prevent="go('/pindou')">
         <BrandLogo layout="stack" />
       </a>
       <nav class="app-nav" aria-label="主导航">
@@ -55,12 +57,12 @@ function go(path: string) {
     <main
       class="app-main"
       :class="{
-        'app-main--full': hideNav && !isLanding,
-        'app-main--landing': isLanding,
+        'app-main--full': hideNav && !isStandalonePage,
+        'app-main--landing': isStandalonePage,
       }"
     >
       <div
-        v-if="!isLanding && !hideNav"
+        v-if="!isStandalonePage && !hideNav"
         class="app-content"
         :class="{ 'app-content--wide': isWideContent }"
       >

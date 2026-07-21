@@ -47,6 +47,11 @@
       "path": "/bead-core",
       "changefreq": "monthly",
       "priority": "0.82"
+    },
+    {
+      "path": "/toolbox",
+      "changefreq": "monthly",
+      "priority": "0.8"
     }
   ],
   "galleryLandingPrefix": "/gallery",

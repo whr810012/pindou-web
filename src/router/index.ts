@@ -15,6 +15,7 @@ const router = createRouter({
     { path: '/text', name: 'pixel-text', component: () => import('@/pages/PixelTextPage.vue') },
     { path: '/guide', name: 'guide', component: () => import('@/pages/GuidePage.vue') },
     { path: '/bead-core', name: 'bead-core', component: () => import('@/pages/BeadCorePage.vue') },
+    { path: '/toolbox', name: 'toolbox', component: () => import('@/pages/ToolboxPage.vue') },
     { path: '/gallery/:slug', name: 'gallery-detail', component: () => import('@/pages/GalleryDetailPage.vue') },
   ],
   scrollBehavior: () => ({ top: 0 }),

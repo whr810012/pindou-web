@@ -45,6 +45,15 @@ const ROUTES = [
     description:
       'bead-core 详细使用介绍：安装、色板与像素约定、runPipeline 参数、浏览器/Node 读图、拼豆 Prep、编辑与统计示例。CIEDE2000 配色，零 UI 依赖，MIT。',
   },
+  {
+    path: '/toolbox',
+    outDir: 'toolbox',
+    outFile: 'index.html',
+    injectSelector: '#app',
+    title: '蛋蛋工具箱 - 免费实用小工具下载',
+    description:
+      '蛋蛋工具箱收录轻量实用的小工具。下载蛋蛋便签 Windows 桌面版，支持便签待办、桌面置顶、标签分类与本地数据保存。',
+  },
 ]
 
 function contentType(filePath) {

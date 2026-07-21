@@ -78,6 +78,7 @@ function goGallery() {
         <button type="button" class="landing__link" @click="goGallery">案例画廊</button>
         <button type="button" class="landing__link" @click="router.push('/guide')">拼豆教程</button>
         <button type="button" class="landing__link" @click="router.push('/bead-core')">开源库</button>
+        <button type="button" class="landing__link" @click="router.push('/toolbox')">蛋蛋工具箱</button>
         <PButton size="sm" type="primary" text="开始制作" @click="goWorkspace" />
       </nav>
     </header>

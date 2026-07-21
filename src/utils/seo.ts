@@ -27,6 +27,7 @@ export type PageSeoKey =
   | 'paletteEditor'
   | 'guide'
   | 'beadCore'
+  | 'toolbox'
 
 const PAGE_ROUTES: Record<
   PageSeoKey,
@@ -96,6 +97,12 @@ const PAGE_ROUTES: Record<
     title: 'bead-core 使用文档 - npm @wangdandan810012/bead-core | Pindou',
     description:
       'bead-core 详细使用介绍：安装、色板与像素约定、runPipeline 参数、浏览器/Node 读图、拼豆 Prep、编辑与统计示例。CIEDE2000 配色，零 UI 依赖，MIT。',
+  },
+  toolbox: {
+    path: '/toolbox',
+    title: '蛋蛋工具箱 - 免费实用小工具下载',
+    description:
+      '蛋蛋工具箱收录轻量实用的小工具。下载蛋蛋便签 Windows 桌面版，支持便签待办、桌面置顶、标签分类与本地数据保存。',
   },
 }
 

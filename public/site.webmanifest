@@ -1,7 +1,7 @@
 {
   "name": "蛋蛋中心 Dandan Hub - 好用的小工具与创作产品",
   "short_name": "蛋蛋中心 Dandan Hub",
-  "description": "一颗蛋蛋，孵化好用的点子。探索 Pindou 拼豆工坊与蛋蛋工具箱。",
+  "description": "一颗蛋蛋，孵化好用的点子。探索 Pindou 拼豆工坊、蛋蛋工具箱与本地加水印。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

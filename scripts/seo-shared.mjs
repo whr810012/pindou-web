@@ -270,6 +270,12 @@ export function buildJsonLd(config, siteUrl) {
             name: '蛋蛋工具箱',
             url: `${siteUrl}/toolbox`,
           },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: '加水印 - 本地媒体水印工具',
+            url: `${siteUrl}/watermark/`,
+          },
         ],
       },
     ],

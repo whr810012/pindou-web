@@ -28,6 +28,7 @@ usePageSeo('hub')
         <a href="#products">全部产品</a>
         <router-link to="/pindou">拼豆工坊</router-link>
         <router-link to="/toolbox">工具箱</router-link>
+        <a href="/watermark/">加水印</a>
       </nav>
     </header>
 
@@ -76,7 +77,7 @@ usePageSeo('hub')
             <p>PRODUCTS / 01</p>
             <h2 id="products-title">正在发光的产品</h2>
           </div>
-          <span>2 个产品 · 持续孵化中</span>
+          <span>3 个产品 · 持续孵化中</span>
         </div>
 
         <div class="hub-product-grid">
@@ -147,6 +148,42 @@ usePageSeo('hub')
               </span>
             </div>
           </router-link>
+
+          <a class="product-card product-card--watermark" href="/watermark/">
+            <div class="product-card__top">
+              <span class="product-card__number">03</span>
+              <span class="product-card__state">
+                <i aria-hidden="true" />
+                网页本地处理
+              </span>
+            </div>
+
+            <div class="watermark-art" aria-hidden="true">
+              <span class="watermark-art__grid" />
+              <span class="watermark-art__file">
+                <i class="watermark-art__photo" />
+                <b>DANDAN</b>
+                <i class="watermark-art__scan" />
+              </span>
+              <span class="watermark-art__seal">W</span>
+              <span class="watermark-art__tag">NO UPLOAD</span>
+            </div>
+
+            <div class="product-card__body">
+              <p class="product-card__category">LOCAL MEDIA UTILITY</p>
+              <h3>加水印 <span>Watermark</span></h3>
+              <p>在浏览器本地为图片、PDF 与视频添加文字、Logo 或隐藏标记，也能检测本工具生成的隐藏水印。</p>
+              <ul>
+                <li>图片 / PDF / 视频</li>
+                <li>可见与隐藏水印</li>
+                <li>文件不上传</li>
+              </ul>
+              <span class="product-card__action">
+                打开加水印
+                <i aria-hidden="true">↗</i>
+              </span>
+            </div>
+          </a>
         </div>
       </section>
 
@@ -698,6 +735,14 @@ usePageSeo('hub')
   }
 }
 
+.product-card--watermark {
+  background: linear-gradient(160deg, #eef3ff, #dce6ff 46%, #f6f8ee);
+
+  &:hover {
+    transform: translateY(-7px) rotate(-0.2deg);
+  }
+}
+
 .product-card__top {
   position: absolute;
   top: 18px;
@@ -738,7 +783,8 @@ usePageSeo('hub')
 }
 
 .pindou-art,
-.toolbox-art {
+.toolbox-art,
+.watermark-art {
   position: relative;
   height: 270px;
   overflow: hidden;
@@ -926,6 +972,100 @@ usePageSeo('hub')
   transform: rotate(-5deg);
 }
 
+.watermark-art {
+  background: #173e9b;
+}
+
+.watermark-art__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(#fff, 0.65) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(#fff, 0.65) 1px, transparent 1px);
+  background-size: 22px 22px;
+  transform: rotate(-6deg) scale(1.2);
+}
+
+.watermark-art__file {
+  position: absolute;
+  top: 46px;
+  left: 50%;
+  width: 194px;
+  height: 170px;
+  padding: 15px;
+  border: 4px solid rgba(#fff, 0.9);
+  border-radius: 10px;
+  background: #f7f4e9;
+  box-shadow: 0 22px 42px rgba(8, 24, 61, 0.3);
+  transform: translateX(-50%) rotate(4deg);
+
+  b {
+    position: absolute;
+    top: 77px;
+    left: 50%;
+    color: rgba(21, 79, 209, 0.48);
+    font-family: $pindou-font-display;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    transform: translateX(-50%) rotate(-18deg);
+  }
+}
+
+.watermark-art__photo {
+  display: block;
+  height: 110px;
+  border-radius: 4px;
+  background:
+    radial-gradient(circle at 68% 30%, #f7ce74 0 12px, transparent 13px),
+    linear-gradient(145deg, transparent 44%, #6f9ad9 45% 65%, #304e89 66%);
+}
+
+.watermark-art__scan {
+  position: absolute;
+  right: 15px;
+  bottom: 18px;
+  left: 15px;
+  height: 2px;
+  background: #ff7657;
+  box-shadow: 0 0 11px rgba(255, 101, 66, 0.7);
+}
+
+.watermark-art__seal {
+  position: absolute;
+  top: 28px;
+  right: 12%;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  border: 3px double #203153;
+  border-radius: 50%;
+  background: #d8ff4f;
+  color: #203153;
+  font-family: $pindou-font-display;
+  font-size: 26px;
+  font-weight: 800;
+  box-shadow: 0 8px 20px rgba(10, 28, 67, 0.24);
+  transform: rotate(11deg);
+}
+
+.watermark-art__tag {
+  position: absolute;
+  bottom: 24px;
+  left: 9%;
+  padding: 7px 10px;
+  border: 1px solid rgba(#fff, 0.5);
+  border-radius: 999px;
+  background: rgba(#132e6f, 0.72);
+  color: #d8ff4f;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  backdrop-filter: blur(6px);
+  transform: rotate(-5deg);
+}
+
 .product-card__body {
   display: flex;
   flex: 1;
@@ -986,6 +1126,10 @@ usePageSeo('hub')
   .product-card--toolbox & {
     color: var(--hub-orange);
   }
+
+  .product-card--watermark & {
+    color: #3157b5;
+  }
 }
 
 .product-card__action {
@@ -1012,6 +1156,10 @@ usePageSeo('hub')
 
     .product-card--toolbox & {
       background: var(--hub-orange);
+    }
+
+    .product-card--watermark & {
+      background: #173e9b;
     }
   }
 }
@@ -1104,12 +1252,26 @@ usePageSeo('hub')
     padding-top: 70px;
   }
 
+  .hub-principles__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 980px) {
+  .hub-product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 760px) and (max-width: 979px) {
   .hub-product-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .hub-principles__list {
-    grid-template-columns: repeat(3, 1fr);
+  .product-card--watermark {
+    grid-column: 1 / -1;
+    width: calc(50% - 8px);
+    justify-self: center;
   }
 }
 

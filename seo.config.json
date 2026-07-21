@@ -2,11 +2,11 @@
   "siteName": "蛋蛋中心 Dandan Hub",
   "defaultSiteUrl": "https://dandanhub.vip",
   "defaultTitle": "蛋蛋中心 Dandan Hub - 好用的小工具与创作产品",
-  "defaultDescription": "蛋蛋中心（Dandan Hub）是一个持续孵化中的产品中心，提供 Pindou 在线拼豆图纸工具与蛋蛋工具箱等轻量、实用、重视隐私的创作和桌面工具。",
-  "ogDescription": "一颗蛋蛋，孵化好用的点子。探索 Pindou 拼豆工坊与蛋蛋工具箱。",
-  "defaultKeywords": "蛋蛋中心,Dandan Hub,dandanhub,实用工具,在线工具,桌面工具,拼豆工具,蛋蛋工具箱,蛋蛋便签,Pindou",
+  "defaultDescription": "蛋蛋中心（Dandan Hub）是一个持续孵化中的产品中心，提供 Pindou 在线拼豆图纸工具、蛋蛋工具箱与图片/PDF/视频本地加水印工具。",
+  "ogDescription": "一颗蛋蛋，孵化好用的点子。探索 Pindou 拼豆工坊、蛋蛋工具箱与本地加水印。",
+  "defaultKeywords": "蛋蛋中心,Dandan Hub,dandanhub,实用工具,在线工具,桌面工具,拼豆工具,加水印,图片水印,PDF水印,视频水印,隐藏水印,蛋蛋工具箱,蛋蛋便签,Pindou",
   "ogImagePath": "/static/seo/og-cover.png",
-  "ogImageAlt": "蛋蛋中心 Dandan Hub 产品中心，包含 Pindou 拼豆工坊与蛋蛋工具箱",
+  "ogImageAlt": "蛋蛋中心 Dandan Hub 产品中心，包含 Pindou 拼豆工坊、蛋蛋工具箱与加水印工具",
   "themeColor": "#5969DF",
   "organization": {
     "name": "蛋蛋中心 Dandan Hub",
@@ -57,6 +57,11 @@
       "path": "/toolbox",
       "changefreq": "monthly",
       "priority": "0.8"
+    },
+    {
+      "path": "/watermark/",
+      "changefreq": "monthly",
+      "priority": "0.88"
     }
   ],
   "galleryLandingPrefix": "/gallery",

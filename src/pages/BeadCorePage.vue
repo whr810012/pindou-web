@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import BeadCoreCodeDemo from '@/components/BeadCoreCodeDemo.vue'
 import PButton from '@/components/ui/PButton.vue'
 import { usePageSeo } from '@/utils/seo'
 import {
@@ -119,6 +120,11 @@ function openGithub() {
       </p>
       <h3 class="bead-core-section__subtitle">色板结构</h3>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_PALETTE }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="palette"
+        title="色板 Playground"
+        hint="节选自落地页同款 pindou-full；左侧点选色号，右侧看当前色块。"
+      />
       <p class="bead-core-section__text">
         <code>codes</code> 键为品牌体系
         <code>MARD | COCO | MANMAN | PANPAN | MIXIAOWO</code>。不用的品牌填空字符串即可。
@@ -131,15 +137,26 @@ function openGithub() {
         完整路径：迷你色板 → 像素 → 预处理 → <code>runPipeline</code> → 裁边 → 统计。可直接复制运行逻辑。
       </p>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_QUICKSTART }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="pipeline"
+        title="从像素到拼豆图纸"
+        hint="左侧调 gridWidth / mode / mergeThreshold 等，右侧实时重跑流水线。"
+      />
     </section>
 
     <section id="load-image" class="card craft-intro-card bead-core-section">
       <h2 class="bead-core-section__title">4. 读取图片</h2>
       <h3 class="bead-core-section__subtitle">浏览器 Canvas</h3>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_BROWSER }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="browser"
+        title="Canvas 读图后的同类结果"
+        hint="原图为落地页对比图；用 getImageData 读入后，左侧调参实时跑流水线。"
+      />
       <h3 class="bead-core-section__subtitle">Node.js + sharp</h3>
       <p class="bead-core-section__text">
-        <code>sharp</code> 不是本库依赖，需自行 <code>npm install sharp</code>。
+        <code>sharp</code> 不是本库依赖，需自行 <code>npm install sharp</code>。服务端读文件得到同样的 RGBA
+        缓冲，管线输出与上图一致。
       </p>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_NODE }}</code></pre>
     </section>
@@ -147,6 +164,11 @@ function openGithub() {
     <section id="pipeline" class="card craft-intro-card bead-core-section">
       <h2 class="bead-core-section__title">5. runPipeline 参数</h2>
       <pre class="bead-core-pipeline" aria-label="流水线示意"><code>{{ BEAD_CORE_PIPELINE_ASCII }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="pipeline"
+        title="流水线 Playground"
+        hint="原图与成品对照均来自落地页；拖动参数看豆图块面如何变化。"
+      />
       <div class="bead-core-table-wrap">
         <table class="bead-core-table">
           <thead>
@@ -175,6 +197,11 @@ function openGithub() {
       <h2 class="bead-core-section__title">6. 分步调用</h2>
       <p class="bead-core-section__text">不需要完整流水线时，可单独使用各模块：</p>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_STEPWISE }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="pipeline"
+        title="分步组合 Playground"
+        hint="与完整 runPipeline 同类；改 maxColors 可体会限色效果。"
+      />
     </section>
 
     <section id="preprocess" class="card craft-intro-card bead-core-section">
@@ -184,6 +211,11 @@ function openGithub() {
         <code>DEFAULT_IMAGE_ADJUST</code> / <code>DEFAULT_PHOTO_OPTIMIZE</code> 作为起点。
       </p>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_PREPROCESS }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="preprocess"
+        title="预处理 Playground"
+        hint="以落地页原图为输入；拖动亮度 / 对比度 / 饱和度，开关锐化与降噪。"
+      />
     </section>
 
     <section id="prep" class="card craft-intro-card bead-core-section">
@@ -194,6 +226,11 @@ function openGithub() {
         <code>createPixelArtPrepPixels</code>。
       </p>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_PREP }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="prep"
+        title="Prep Playground"
+        hint="调节 maxGrid，观察中间图与 flatTile 豆图从细到粗的变化。"
+      />
     </section>
 
     <section id="edit" class="card craft-intro-card bead-core-section">
@@ -202,6 +239,11 @@ function openGithub() {
         编辑函数均返回<strong>新网格</strong>（不可变）。外部背景格会被跳过。
       </p>
       <pre class="bead-core-code"><code>{{ BEAD_CORE_CODE_EDIT }}</code></pre>
+      <BeadCoreCodeDemo
+        variant="edit"
+        title="编辑 Playground"
+        hint="选填充或画笔与颜色后，直接点画布试 fillRegion / paintRect；可重置。"
+      />
     </section>
 
     <section id="api" class="card craft-intro-card bead-core-section">

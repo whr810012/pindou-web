@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', name: 'hub', component: () => import('@/pages/HubPage.vue') },
-    { path: '/pindou', name: 'pindou-landing', component: () => import('@/pages/LandingPage.vue') },
+    { path: '/', name: 'pindou-landing', component: () => import('@/pages/LandingPage.vue') },
     { path: '/home', name: 'home', component: () => import('@/pages/HomePage.vue') },
     { path: '/workspace', name: 'workspace', component: () => import('@/pages/WorkspacePage.vue') },
     { path: '/editor', name: 'editor', component: () => import('@/pages/EditorPage.vue') },
@@ -16,8 +15,8 @@ const router = createRouter({
     { path: '/text', name: 'pixel-text', component: () => import('@/pages/PixelTextPage.vue') },
     { path: '/guide', name: 'guide', component: () => import('@/pages/GuidePage.vue') },
     { path: '/bead-core', name: 'bead-core', component: () => import('@/pages/BeadCorePage.vue') },
-    { path: '/toolbox', name: 'toolbox', component: () => import('@/pages/ToolboxPage.vue') },
     { path: '/gallery/:slug', name: 'gallery-detail', component: () => import('@/pages/GalleryDetailPage.vue') },
+    { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: () => ({ top: 0 }),
 })

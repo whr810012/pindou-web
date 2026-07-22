@@ -2,7 +2,7 @@
 
 Pindou 拼豆工具 — **Web 端**（Vue 3 + Vite），独立仓库版本。
 
-在线演示：<https://dandanhub.vip>
+在线演示：<https://dandanhub.vip/pindou/>
 
 ## 快速开始
 
@@ -37,7 +37,7 @@ npm run dev
 
 ```env
 # 构建与 SEO（Netlify 环境变量中同样配置）
-VITE_SITE_URL=https://dandanhub.vip
+VITE_SITE_URL=https://dandanhub.vip/pindou
 
 # 开发：Canvas 本地模拟 AI（无需后端与凭证）
 # VITE_AI_MOCK=true
@@ -124,7 +124,7 @@ VITE_SITE_URL=https://dandanhub.vip
 
 | 变量 | 说明 |
 |------|------|
-| `VITE_SITE_URL` | 正式站点 URL，如 `https://dandanhub.vip` |
+| `VITE_SITE_URL` | 正式站点 URL，如 `https://dandanhub.vip/pindou` |
 | `ALLOWED_ORIGIN` | CORS 来源（可选，默认 `*`） |
 
 **不要**在生产环境配置 `JIMENG_ACCESS_KEY_ID` / `JIMENG_API_KEY`（BYOK 由用户提供凭证）。
@@ -155,7 +155,7 @@ AI 图生图可能需 10～25 秒。`netlify.toml` 中 `ai-preprocess` 已设 `t
 1. [Google Search Console](https://search.google.com/search-console) → 添加资源 → 提交 `https://你的域名/sitemap.xml`
 2. [Bing Webmaster](https://www.bing.com/webmasters) → 同样提交 sitemap
 
-绑定自定义域名后，同步更新 `VITE_SITE_URL` 与 `seo.config.json` 中的 `defaultSiteUrl`，当前生产域名为 `https://dandanhub.vip`。
+应用构建基址固定为 `/pindou/`。绑定根域代理后，同步更新 `VITE_SITE_URL` 与 `seo.config.json` 中的 `defaultSiteUrl`，当前生产地址为 `https://dandanhub.vip/pindou`。
 
 ## 主要路由
 

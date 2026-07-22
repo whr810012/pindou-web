@@ -7,6 +7,7 @@ import BeforeAfterSlider from '@/components/BeforeAfterSlider.vue'
 import { usePageSeo } from '@/utils/seo'
 import compareMeta from '../../public/static/gallery/landing-compare-meta.json'
 import { CONTACT_EMAIL, CONTACT_WECHAT } from '@/constants/contact'
+import { assetUrl } from '@/utils/assetUrl'
 
 const router = useRouter()
 usePageSeo('pindouLanding')
@@ -40,8 +41,8 @@ const geoAnswers = quickAnswerTitles
   .map((question) => seoConfig.faq.find((item) => item.q === question))
   .filter((item): item is (typeof seoConfig.faq)[number] => Boolean(item))
 
-const compareBefore = '/static/gallery/landing-compare-before.jpg'
-const compareAfter = '/static/gallery/landing-compare-after.png'
+const compareBefore = assetUrl('/static/gallery/landing-compare-before.jpg')
+const compareAfter = assetUrl('/static/gallery/landing-compare-after.png')
 const compareAspect =
   compareMeta.width && compareMeta.height
     ? compareMeta.width / compareMeta.height
@@ -71,11 +72,11 @@ function goGallery() {
     </div>
 
     <header class="landing__header">
-      <router-link class="landing__brand" to="/pindou">
+      <router-link class="landing__brand" to="/">
         <BrandLogo layout="inline" />
       </router-link>
       <nav class="landing__nav" aria-label="落地页导航">
-        <button type="button" class="landing__link" @click="router.push('/')">蛋蛋中心</button>
+        <a class="landing__link" href="/">蛋蛋中心</a>
         <button type="button" class="landing__link" @click="goGallery">案例画廊</button>
         <button type="button" class="landing__link" @click="router.push('/guide')">拼豆教程</button>
         <button type="button" class="landing__link" @click="router.push('/bead-core')">开源库</button>
@@ -355,12 +356,15 @@ function goGallery() {
 }
 
 .landing__link {
+  display: inline-flex;
+  align-items: center;
   border: none;
   background: transparent;
   color: $pindou-text-secondary;
   font-size: $pindou-font-sm;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
   padding: 8px 12px;
   border-radius: $pindou-radius-pill;
   transition: color $pindou-duration-fast, background $pindou-duration-fast;

@@ -17,7 +17,6 @@ export interface PageSeoOptions {
 }
 
 export type PageSeoKey =
-  | 'hub'
   | 'pindouLanding'
   | 'home'
   | 'gallery'
@@ -29,7 +28,6 @@ export type PageSeoKey =
   | 'paletteEditor'
   | 'guide'
   | 'beadCore'
-  | 'toolbox'
 
 const PAGE_ROUTES: Record<
   PageSeoKey,
@@ -38,13 +36,8 @@ const PAGE_ROUTES: Record<
     noindex?: boolean
   }
 > = {
-  hub: {
-    path: '/',
-    title: DEFAULT_TITLE,
-    description: DEFAULT_DESCRIPTION,
-  },
   pindouLanding: {
-    path: '/pindou',
+    path: '/',
     title: 'Pindou 拼豆 - 免费在线照片转拼豆图纸生成器',
     description:
       'Pindou 免费在线拼豆图纸生成器：上传照片一键转拼豆像素图，支持 MARD、COCO、漫漫等主流色号，在线编辑画笔精修、导出 PDF 采购清单。',
@@ -111,18 +104,14 @@ const PAGE_ROUTES: Record<
     description:
       'bead-core 详细使用介绍：安装、色板与像素约定、runPipeline 参数、浏览器/Node 读图、拼豆 Prep、编辑与统计示例。CIEDE2000 配色，零 UI 依赖，MIT。',
   },
-  toolbox: {
-    path: '/toolbox',
-    title: '蛋蛋工具箱 - 免费实用小工具下载',
-    description:
-      '蛋蛋工具箱收录轻量实用的小工具。下载蛋蛋便签 Windows 桌面版，支持便签待办、桌面置顶、标签分类与本地数据保存。',
-  },
 }
 
 export function siteOrigin(): string {
   const fromEnv = import.meta.env.VITE_SITE_URL as string | undefined
   if (fromEnv) return fromEnv.replace(/\/$/, '')
-  if (typeof window !== 'undefined') return window.location.origin
+  if (typeof window !== 'undefined') {
+    return new URL(import.meta.env.BASE_URL, window.location.origin).href.replace(/\/$/, '')
+  }
   return seoConfig.defaultSiteUrl.replace(/\/$/, '')
 }
 

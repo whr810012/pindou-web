@@ -14,7 +14,7 @@ export function resolveSiteUrl(config) {
 }
 
 const PAGE_META = {
-  '/pindou': {
+  '/': {
     breadcrumb: 'Pindou 拼豆工坊',
     title: 'Pindou 拼豆 - 免费在线照片转拼豆图纸生成器',
     description:
@@ -93,21 +93,21 @@ export function buildPageJsonLd(config, siteUrl, routePath) {
     ]),
   )
 
-  if (routePath === '/pindou') {
+  if (routePath === '/') {
     graph.push(
       {
         '@type': 'WebPage',
-        '@id': `${siteUrl}/pindou#webpage`,
+        '@id': `${siteUrl}/#webpage`,
         name: pageMeta.title,
-        url: `${siteUrl}/pindou`,
+        url: `${siteUrl}/`,
         description: pageMeta.description,
         inLanguage: 'zh-CN',
         isPartOf: { '@id': `${siteUrl}/#website` },
-        mainEntity: { '@id': `${siteUrl}/pindou#webapp` },
+        mainEntity: { '@id': `${siteUrl}/#webapp` },
       },
       {
         '@type': 'WebApplication',
-        '@id': `${siteUrl}/pindou#webapp`,
+        '@id': `${siteUrl}/#webapp`,
         name: 'Pindou 拼豆',
         url: `${siteUrl}/workspace`,
         description: pageMeta.description,
@@ -173,7 +173,7 @@ export function buildPageJsonLd(config, siteUrl, routePath) {
       description: pageMeta.description,
       inLanguage: 'zh-CN',
       isPartOf: { '@id': `${siteUrl}/#website` },
-      mainEntity: { '@id': `${siteUrl}/pindou#webapp` },
+      mainEntity: { '@id': `${siteUrl}/#webapp` },
     })
   }
 
@@ -222,7 +222,7 @@ export function buildJsonLd(config, siteUrl) {
         '@type': 'Organization',
         '@id': `${siteUrl}/#organization`,
         name: organizationName(config),
-        url: siteUrl,
+        url: orgConfig.url || siteUrl,
         logo: orgConfig.logoPath ? `${siteUrl}${orgConfig.logoPath}` : undefined,
         email: orgConfig.email,
         areaServed: orgConfig.areaServed,
@@ -255,28 +255,15 @@ export function buildJsonLd(config, siteUrl) {
       },
       ...(organization ? [organization] : []),
       {
-        '@type': 'ItemList',
-        name: '蛋蛋中心产品',
-        itemListElement: [
-          {
-            '@type': 'ListItem',
-            position: 1,
-            name: 'Pindou 拼豆工坊',
-            url: `${siteUrl}/pindou`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 2,
-            name: '蛋蛋工具箱',
-            url: `${siteUrl}/toolbox`,
-          },
-          {
-            '@type': 'ListItem',
-            position: 3,
-            name: '加水印 - 本地媒体水印工具',
-            url: `${siteUrl}/watermark/`,
-          },
-        ],
+        '@type': 'WebApplication',
+        '@id': `${siteUrl}/#webapp`,
+        name: 'Pindou 拼豆',
+        url: `${siteUrl}/workspace`,
+        description: config.defaultDescription,
+        applicationCategory: 'DesignApplication',
+        operatingSystem: 'Web',
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'CNY' },
+        featureList: config.features,
       },
     ],
   }

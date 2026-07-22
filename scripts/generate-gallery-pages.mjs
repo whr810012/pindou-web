@@ -7,6 +7,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const root = join(__dirname, '..')
 const config = loadSeoConfig()
 const siteUrl = resolveSiteUrl(config)
+const appBase = `${new URL(siteUrl).pathname.replace(/\/$/, '')}/`
 const galleryItems = JSON.parse(
   readFileSync(join(root, 'public', 'static', 'gallery', 'gallery.json'), 'utf8'),
 ).items
@@ -89,7 +90,7 @@ ${JSON.stringify(
     <h1>${escapeHtml(item.title)}</h1>
     <p>${escapeHtml(item.description)}</p>
     <p>标签：${escapeHtml(tags)}</p>
-    <img src="${item.thumbnail}" alt="${escapeHtml(item.title)}拼豆图案例" width="320" height="320" />
+    <img src="${appBase}${item.thumbnail.replace(/^\/+/, '')}" alt="${escapeHtml(item.title)}拼豆图案例" width="320" height="320" />
     <p>推荐参数：${item.gridWidth} 格 · ${item.mode === 'average' ? '平均色' : '主导色'} · ${escapeHtml(item.palettePresetId.replace('pindou-', ''))} 色板</p>
     <p><a href="${siteUrl}/workspace">用此案例参数开始制作</a> · <a href="${siteUrl}/gallery">查看更多拼豆案例</a> · <a href="${siteUrl}/guide">拼豆新手教程</a> · <a href="${siteUrl}/">返回首页</a></p>
   </main>

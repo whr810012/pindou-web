@@ -27,8 +27,8 @@
   <circle cx="1080" cy="207" r="24" fill="#EB805E" stroke="#FFFFFF" stroke-width="7"/>
   <rect x="795" y="418" width="54" height="54" rx="14" fill="#F2CF75" stroke="#FFFFFF" stroke-width="7" transform="rotate(-9 822 445)"/>
   <path d="M812 445 L820 453 L835 435" fill="none" stroke="#6A5117" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="82" y="220" fill="#EB805E" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="5">DANDAN HUB</text>
-  <text x="78" y="330" fill="#202032" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="84" font-weight="700">蛋蛋中心</text>
-  <text x="82" y="405" fill="#5969DF" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="40" font-weight="700">一颗蛋蛋，孵化好用的点子。</text>
-  <text x="84" y="475" fill="#696573" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="24">Pindou 拼豆工坊 · 蛋蛋工具箱</text>
+  <text x="82" y="220" fill="#EB805E" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="5">PINDOU STUDIO</text>
+  <text x="78" y="330" fill="#202032" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="84" font-weight="700">拼豆工坊</text>
+  <text x="82" y="405" fill="#5969DF" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="40" font-weight="700">把照片变成可拼的图纸。</text>
+  <text x="84" y="475" fill="#696573" font-family="'Microsoft YaHei', 'Noto Sans SC', sans-serif" font-size="24">在线生成 · 精修 · 导出色号图</text>
 </svg>

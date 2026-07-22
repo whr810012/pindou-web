@@ -18,26 +18,19 @@
   NODE_VERSION = "20"
   PLAYWRIGHT_BROWSERS_PATH = "0"
 
-[[headers]]
-  for = "/watermark/*"
-  [headers.values]
-    Cross-Origin-Opener-Policy = "same-origin"
-    Cross-Origin-Embedder-Policy = "require-corp"
-    Cross-Origin-Resource-Policy = "same-origin"
-
 [[redirects]]
-  from = "/api/ai-preprocess"
+  from = "/pindou/api/ai-preprocess"
   to = "/.netlify/functions/ai-preprocess"
   status = 200
 
 [[redirects]]
-  from = "/api/xhs-parse"
+  from = "/pindou/api/xhs-parse"
   to = "/.netlify/functions/xhs-parse"
   status = 200
 
 [[redirects]]
-  from = "/watermark/*"
-  to = "https://dandan-watermark.netlify.app/watermark/:splat"
+  from = "/pindou/*"
+  to = "/:splat"
   status = 200
   force = true
 

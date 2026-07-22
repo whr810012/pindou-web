@@ -12,6 +12,7 @@ import {
   processCurrentProject,
 } from '@/utils/pipeline'
 import { createSourcePreview } from '@/utils/thumbnail'
+import { assetUrl } from '@/utils/assetUrl'
 
 usePageSeo('gallery')
 
@@ -64,7 +65,7 @@ const caseLandingLinks = computed(() =>
   items.value.map((item) => ({
     id: item.id,
     title: item.title,
-    href: `/gallery/${item.id}/`,
+    href: router.resolve(`/gallery/${item.id}/`).href,
   })),
 )
 
@@ -72,8 +73,16 @@ onMounted(async () => {
   await paletteStore.loadPalettes()
   try {
     const [galleryData, templateData] = await Promise.all([fetchGallery(), fetchTemplates()])
-    items.value = galleryData.items
-    templates.value = templateData.items
+    items.value = galleryData.items.map((item) => ({
+      ...item,
+      thumbnail: assetUrl(item.thumbnail),
+      projectFile: item.projectFile ? assetUrl(item.projectFile) : undefined,
+    }))
+    templates.value = templateData.items.map((item) => ({
+      ...item,
+      thumbnail: assetUrl(item.thumbnail),
+      image: assetUrl(item.image),
+    }))
   } catch (error) {
     console.error(error)
     showToast({ title: '加载失败', icon: 'none' })
@@ -103,7 +112,7 @@ function fetchTemplates(): Promise<{ items: TemplateItem[] }> {
 }
 
 function caseLandingHref(id: string) {
-  return `/gallery/${id}/`
+  return router.resolve(`/gallery/${id}/`).href
 }
 
 function modeLabel(mode: GalleryItem['mode']) {

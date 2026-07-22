@@ -1,20 +1,20 @@
 {
-  "name": "蛋蛋中心 Dandan Hub - 好用的小工具与创作产品",
-  "short_name": "蛋蛋中心 Dandan Hub",
-  "description": "一颗蛋蛋，孵化好用的点子。探索 Pindou 拼豆工坊、蛋蛋工具箱与本地加水印。",
-  "start_url": "/",
-  "scope": "/",
+  "name": "Pindou 拼豆 - 免费在线照片转拼豆图纸生成器",
+  "short_name": "Pindou 拼豆工坊",
+  "description": "上传照片一键生成带色号的拼豆图纸，默认在浏览器本地处理。",
+  "start_url": "/pindou/",
+  "scope": "/pindou/",
   "display": "standalone",
   "lang": "zh-CN",
   "background_color": "#FFF8EE",
-  "theme_color": "#5969DF",
+  "theme_color": "#4A62D6",
   "categories": [
     "design",
     "utilities"
   ],
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/pindou/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

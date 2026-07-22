@@ -2,6 +2,7 @@ import type { Router } from 'vue-router'
 import type { PlatformPorts } from '@pindou/app-shared'
 import { h5ImageAdapter } from '@/adapters/image-web'
 import { MAX_GRID_WIDTH } from '@/adapters/types'
+import { assetUrl } from '@/utils/assetUrl'
 
 export function createWebPlatform(router: Router): PlatformPorts {
   const storage: PlatformPorts['storage'] = {
@@ -79,7 +80,7 @@ export function createWebPlatform(router: Router): PlatformPorts {
 
   const http: PlatformPorts['http'] = {
     async fetchJson<T>(url: string): Promise<T> {
-      const res = await fetch(url)
+      const res = await fetch(assetUrl(url))
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       return res.json() as Promise<T>
     },

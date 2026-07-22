@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { usePaletteStore } from '@pindou/app-shared'
+import { usePaletteStore } from '@/stores/palette'
 import AppLayout from '@/components/AppLayout.vue'
 import SiteAnalytics from '@/components/SiteAnalytics.vue'
 

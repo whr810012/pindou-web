@@ -9,6 +9,7 @@ const mode = process.argv.includes('--post') ? 'post' : 'pre'
 
 const config = loadSeoConfig()
 const siteUrl = resolveSiteUrl(config)
+const appBase = `${new URL(siteUrl).pathname.replace(/\/$/, '')}/`
 const today = new Date().toISOString().slice(0, 10)
 const ogImage = `${siteUrl}${config.ogImagePath}`
 const ogImageAlt = config.ogImageAlt
@@ -61,8 +62,8 @@ Sitemap: ${siteUrl}/sitemap.xml
     name: config.defaultTitle,
     short_name: config.siteName,
     description: config.ogDescription,
-    start_url: '/',
-    scope: '/',
+    start_url: appBase,
+    scope: appBase,
     display: 'standalone',
     lang: 'zh-CN',
     background_color: '#FFF8EE',
@@ -70,7 +71,7 @@ Sitemap: ${siteUrl}/sitemap.xml
     categories: ['design', 'utilities'],
     icons: [
       {
-        src: '/favicon.svg',
+        src: `${appBase}favicon.svg`,
         sizes: 'any',
         type: 'image/svg+xml',
         purpose: 'any',

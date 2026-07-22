@@ -7,12 +7,13 @@ import {
   runPipeline,
   trimGrid,
 } from '@wangdandan810012/bead-core'
+import { assetUrl } from '@/utils/assetUrl'
 
 /** 落地页效果对比原图（与 LandingPage 一致） */
-export const LANDING_COMPARE_BEFORE = '/static/gallery/landing-compare-before.jpg'
-export const LANDING_COMPARE_AFTER = '/static/gallery/landing-compare-after.png'
+export const LANDING_COMPARE_BEFORE = assetUrl('/static/gallery/landing-compare-before.jpg')
+export const LANDING_COMPARE_AFTER = assetUrl('/static/gallery/landing-compare-after.png')
 /** 与落地页一致用全色系，demo 图已缩边以保证滑块流畅 */
-export const DEMO_PALETTE_URL = '/static/palettes/full.json'
+export const DEMO_PALETTE_URL = assetUrl('/static/palettes/full.json')
 
 /** 编辑控件用的少量色号 */
 export const EDIT_SWATCH_IDS = [

@@ -1,8 +1,10 @@
+import { assetUrl } from '@/utils/assetUrl'
+
 const DEV_XHS_URL = 'http://127.0.0.1:8788/api/xhs-parse'
 
 const ENDPOINT =
   import.meta.env.VITE_XHS_PARSE_URL ||
-  (import.meta.env.PROD ? '/.netlify/functions/xhs-parse' : DEV_XHS_URL)
+  (import.meta.env.PROD ? assetUrl('/api/xhs-parse') : DEV_XHS_URL)
 
 export const XHS_IMPORT_ENABLED = Boolean(ENDPOINT)
 

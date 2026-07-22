@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import BrandLogo from '@/components/BrandLogo.vue'
 
 const route = useRoute()
-const router = useRouter()
 
 const navItems = [
   { path: '/home', label: '首页', exact: true },
@@ -14,9 +13,7 @@ const navItems = [
   { path: '/palette', label: '色板' },
 ]
 
-const isStandalonePage = computed(
-  () => route.path === '/' || route.path === '/pindou' || route.path === '/toolbox',
-)
+const isStandalonePage = computed(() => route.path === '/')
 const isWideContent = computed(() => route.path === '/workspace')
 
 const hideNav = computed(() => {
@@ -30,28 +27,24 @@ function isActive(item: (typeof navItems)[number]) {
   return route.path === item.path || route.path.startsWith(`${item.path}/`)
 }
 
-function go(path: string) {
-  if (route.path !== path) router.push(path)
-}
 </script>
 
 <template>
   <div class="app-shell" :class="{ 'app-shell--landing': isStandalonePage }">
     <header v-if="!hideNav" class="app-header">
-      <a class="brand" href="/pindou" @click.prevent="go('/pindou')">
+      <router-link class="brand" to="/">
         <BrandLogo layout="stack" />
-      </a>
+      </router-link>
       <nav class="app-nav" aria-label="主导航">
-        <a
+        <router-link
           v-for="item in navItems"
           :key="item.path"
           class="nav-link"
           :class="{ active: isActive(item), 'nav-link--cta': item.highlight }"
-          :href="item.path"
-          @click.prevent="go(item.path)"
+          :to="item.path"
         >
           {{ item.label }}
-        </a>
+        </router-link>
       </nav>
     </header>
     <main

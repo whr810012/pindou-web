@@ -54,6 +54,7 @@ import {
   defaultPreviewContainerWidth,
   observeElementWidth,
 } from '@/utils/fitCellSize'
+import { assetUrl } from '@/utils/assetUrl'
 
 usePageSeo('workspace')
 
@@ -319,10 +320,10 @@ const dragOver = ref(false)
 const dragDepth = ref(0)
 
 const SAMPLE_IMAGES = [
-  { label: '小猫', path: '/static/gallery/demo-cat.svg' },
-  { label: '花朵', path: '/static/gallery/demo-flower.svg' },
-  { label: '风景', path: '/static/gallery/demo-landscape.svg' },
-  { label: '头像', path: '/static/gallery/demo-icon.svg' },
+  { label: '小猫', path: assetUrl('/static/gallery/demo-cat.svg') },
+  { label: '花朵', path: assetUrl('/static/gallery/demo-flower.svg') },
+  { label: '风景', path: assetUrl('/static/gallery/demo-landscape.svg') },
+  { label: '头像', path: assetUrl('/static/gallery/demo-icon.svg') },
 ]
 
 const hasSource = computed(() => !!project.sourcePixels || !!project.sourcePreview)

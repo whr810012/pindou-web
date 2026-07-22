@@ -1,3 +1,5 @@
+import { assetUrl } from '@/utils/assetUrl'
+
 export interface ModalResult {
   confirm: boolean
   cancel: boolean
@@ -100,7 +102,7 @@ export function request(options: {
   success?: (res: { data: unknown }) => void
   fail?: () => void
 }) {
-  fetch(options.url)
+  fetch(assetUrl(options.url))
     .then((r) => r.json())
     .then((data) => options.success?.({ data }))
     .catch(() => options.fail?.())

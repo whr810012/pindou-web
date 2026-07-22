@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import PDrawer from '@/components/ui/PDrawer.vue'
+import { assetUrl } from '@/utils/assetUrl'
 
 interface TemplateItem {
   id: string
@@ -20,9 +21,13 @@ const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const res = await fetch('/static/templates/templates.json')
+    const res = await fetch(assetUrl('/static/templates/templates.json'))
     const data = (await res.json()) as { items: TemplateItem[] }
-    items.value = data.items ?? []
+    items.value = (data.items ?? []).map((item) => ({
+      ...item,
+      thumbnail: assetUrl(item.thumbnail),
+      image: assetUrl(item.image),
+    }))
   } catch (error) {
     console.error(error)
   } finally {

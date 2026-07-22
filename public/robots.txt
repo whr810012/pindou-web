@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dandanhub.vip/sitemap.xml
+Sitemap: https://dandanhub.vip/pindou/sitemap.xml

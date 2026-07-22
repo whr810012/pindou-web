@@ -1,5 +1,6 @@
 import { compressImageForAi, type CompressImageOptions } from '@/utils/compressImageForAi'
 import { getJimengApiKey, hasJimengApiKey } from '@/utils/aiKeyStorage'
+import { assetUrl } from '@/utils/assetUrl'
 
 export type AiPreprocessStyle = 'cartoon' | 'sketch' | 'flat' | 'enhance' | 'matting'
 
@@ -28,7 +29,7 @@ const DEV_AI_URL = 'http://127.0.0.1:8787/api/ai-preprocess'
 
 const ENDPOINT =
   import.meta.env.VITE_AI_PREPROCESS_URL ||
-  (import.meta.env.PROD ? '/.netlify/functions/ai-preprocess' : DEV_AI_URL)
+  (import.meta.env.PROD ? assetUrl('/api/ai-preprocess') : DEV_AI_URL)
 
 export const AI_PREPROCESS_ENABLED = Boolean(ENDPOINT) && !AI_MOCK_ENABLED
 

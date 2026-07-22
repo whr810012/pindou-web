@@ -16,10 +16,15 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@wangdandan810012/bead-core": "^0.3.0",
-    "pinia": "^2.1.7"
+    "@wangdandan810012/bead-core": "^0.3.0"
+  },
+  "peerDependencies": {
+    "pinia": "^2.1.7",
+    "vue": "^3.4.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.5"
+    "pinia": "^2.1.7",
+    "typescript": "^5.4.5",
+    "vue": "^3.4.21"
   }
 }

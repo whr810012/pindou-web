@@ -8,3 +8,5 @@ packages/*/dist/
 .idea/
 .vscode/
 coverage/
+docs/
+frontend-design/
